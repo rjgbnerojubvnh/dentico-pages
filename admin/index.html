@@ -280,7 +280,8 @@ body{font-family:'Tajawal',sans-serif;background:#F0EBE0;color:var(--text);direc
     </button>
   </nav>
   <div class="sidebar-footer">
-    <button class="btn-preview-live" onclick="exportPage()">⬇️ تصدير الصفحة</button>
+    <button class="btn-preview-live" onclick="exportPage()" style="margin-bottom:8px">⬇️ تصدير الصفحة</button>
+    <button onclick="showTokenModal()" style="width:100%;background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.7);border:1px solid rgba(255,255,255,0.15);padding:9px;border-radius:8px;font-family:'Tajawal',sans-serif;font-size:13px;font-weight:600;cursor:pointer;">🔑 تغيير GitHub Token</button>
   </div>
 </aside>
 
@@ -290,7 +291,7 @@ body{font-family:'Tajawal',sans-serif;background:#F0EBE0;color:var(--text);direc
     <div class="topbar-title" id="panelTitle">🏠 قسم الهيرو</div>
     <div class="topbar-actions">
       <a href="../pages/botox-filler.html" target="_blank" class="btn-outline">👁 معاينة</a>
-      <button class="btn-save" id="saveBtn" onclick="saveAll()">💾 حفظ التغييرات</button>
+      <button class="btn-save" id="saveBtn" onclick="saveAll()">💾 حفظ ونشر</button>
     </div>
   </div>
 
@@ -749,8 +750,29 @@ body{font-family:'Tajawal',sans-serif;background:#F0EBE0;color:var(--text);direc
 </main>
 </div>
 
+<!-- TOKEN MODAL -->
+<div id="tokenModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:1000;align-items:center;justify-content:center;">
+  <div style="background:#fff;border-radius:20px;padding:36px;max-width:440px;width:90%;direction:rtl;font-family:'Tajawal',sans-serif;">
+    <div style="font-size:22px;font-weight:900;margin-bottom:8px">🔑 ربط GitHub</div>
+    <p style="font-size:14px;color:#7A7A7A;margin-bottom:24px;line-height:1.7">أدخل الـ GitHub Token عشان يحفظ التغييرات على موقعك تلقائياً. يُحفظ في متصفحك فقط ولا يُرسل لأي مكان.</p>
+    <div style="margin-bottom:16px">
+      <label style="font-size:13px;font-weight:700;color:#4A4A4A;display:block;margin-bottom:6px">GitHub Personal Access Token</label>
+      <input id="tokenInput" type="password" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx"
+        style="width:100%;padding:11px 14px;border:1px solid rgba(46,64,54,0.2);border-radius:8px;font-family:'Tajawal',sans-serif;font-size:14px;outline:none;direction:ltr">
+    </div>
+    <p style="font-size:12px;color:#7A7A7A;margin-bottom:20px">
+      👉 أنشئه من: <a href="https://github.com/settings/tokens/new" target="_blank" style="color:#2E4036;font-weight:700">github.com/settings/tokens/new</a><br>
+      فعّل ✅ <strong>repo</strong> فقط
+    </p>
+    <div style="display:flex;gap:10px">
+      <button onclick="saveToken()" style="flex:1;background:#2E4036;color:#fff;border:none;padding:13px;border-radius:8px;font-family:'Tajawal',sans-serif;font-size:15px;font-weight:800;cursor:pointer;">حفظ وربط</button>
+      <button onclick="closeTokenModal()" style="padding:13px 20px;border:1.5px solid rgba(46,64,54,0.2);border-radius:8px;background:none;font-family:'Tajawal',sans-serif;font-size:14px;cursor:pointer;">إلغاء</button>
+    </div>
+  </div>
+</div>
+
 <!-- TOAST -->
-<div class="toast" id="toast">✅ تم الحفظ بنجاح!</div>
+<div class="toast" id="toast"></div>
 
 <script>
 // ── DEFAULT DATA ──
@@ -898,23 +920,398 @@ function toggleSection(header){
   arrow.style.transform = body.classList.contains('open') ? '' : 'rotate(-90deg)';
 }
 
-// ── SAVE ──
-function saveAll(){
-  localStorage.setItem('dentico_data', JSON.stringify(data));
+// ── GITHUB CONFIG ──
+const GITHUB_REPO = 'rjgbnerojubvnh/dentico-pages';
+const GITHUB_FILE = 'pages/botox-filler.html';
+
+function getToken(){ return localStorage.getItem('gh_token')||''; }
+
+function showTokenModal(){
+  document.getElementById('tokenModal').style.display='flex';
+}
+function closeTokenModal(){
+  document.getElementById('tokenModal').style.display='none';
+}
+function saveToken(){
+  const t = document.getElementById('tokenInput').value.trim();
+  if(!t){ alert('أدخل الـ Token أولاً'); return; }
+  localStorage.setItem('gh_token', t);
+  closeTokenModal();
+  showToast('✅ تم حفظ الـ Token!');
+}
+
+// ── BUILD PAGE HTML ──
+function buildPageHTML(){
+  const d = data;
+  const primary = document.getElementById('c_primary')?.value || '#2E4036';
+  const gold    = document.getElementById('c_gold')?.value    || '#C9A84C';
+  const bg      = document.getElementById('c_bg')?.value      || '#F5F0E8';
+
+  const starsStr = '★'.repeat(+document.getElementById('h_stars_count')?.value||5);
+
+  const featuresHTML = d.features.map(f=>`
+      <div class="hf-item"><span class="hf-check">✓</span>${f}</div>`).join('');
+
+  const cardsHTML = d.contentCards.map(c=>`
+    <div class="inside-card">
+      <div class="ic-icon">${c.icon}</div>
+      <div class="ic-title">${c.title}</div>
+      <p class="ic-desc">${c.desc}</p>
+    </div>`).join('');
+
+  const testiHTML = d.testimonials.map(t=>`
+    <div class="testi-card">
+      <div class="testi-stars">${'★'.repeat(t.stars)}</div>
+      <p class="testi-text">${t.text}</p>
+      <div class="testi-author">
+        <div class="testi-avatar">${t.name.split(' ').map(w=>w[0]).join('').slice(0,2)}</div>
+        <div><div class="testi-name">${t.name}</div><div class="testi-role">${t.role}</div></div>
+      </div>
+    </div>`).join('');
+
+  const faqHTML = d.faqs.map((f,i)=>`
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        ${f.q}<span class="faq-arrow">▼</span>
+      </button>
+      <div class="faq-a">${f.a}</div>
+    </div>`).join('');
+
+  const videosHTML = d.videos.map(v=>`
+    <div class="preview-card">
+      <div class="pc-thumb">
+        <img src="${document.getElementById('h_image')?.value||''}" alt="">
+        <div class="pc-play"></div>
+        <div class="pc-duration">${v.duration}</div>
+        <div class="pc-tag">مجاني</div>
+      </div>
+      <div class="pc-body">
+        <div class="pc-title">${v.title}</div>
+        <div class="pc-meta">${v.meta}</div>
+      </div>
+    </div>`).join('');
+
+  const statsHTML = [1,2,3,4].map(n=>`
+    <div class="stat-item">
+      <div class="stat-num">${document.getElementById('s'+n+'_num')?.value||''}</div>
+      <div class="stat-label">${document.getElementById('s'+n+'_label')?.value||''}</div>
+    </div>`).join('');
+
+  const g = (id)=>document.getElementById(id)?.value||'';
+
+  return `<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="${g('set_desc')}">
+<title>${g('set_title')}</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --cream:${bg};--cream2:#EDE8DC;--cream3:#E4DDD0;
+  --green:${primary};--green2:#3A5246;--green3:#243328;
+  --gold:${gold};--text:#1A1A1A;--text2:#4A4A4A;--text3:#7A7A7A;
+  --white:#FFFFFF;--border:rgba(46,64,54,0.12);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Tajawal',sans-serif;background:var(--cream);color:var(--text);overflow-x:hidden;direction:rtl}
+nav{position:sticky;top:0;z-index:200;background:rgba(245,240,232,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 60px;display:flex;align-items:center;justify-content:space-between;height:60px;}
+.nav-logo{font-size:20px;font-weight:800;color:var(--green);display:flex;align-items:center;gap:8px}
+.nav-logo span{width:34px;height:34px;background:var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--cream);font-size:14px;font-weight:800}
+.nav-links{display:flex;align-items:center;gap:28px}
+.nav-links a{font-size:14px;font-weight:500;color:var(--text2);text-decoration:none;transition:color 0.2s}
+.nav-links a:hover{color:var(--green)}
+.nav-cta{background:var(--green);color:var(--white);padding:9px 22px;border-radius:8px;font-size:14px;font-weight:700;text-decoration:none;transition:all 0.2s;border:none;cursor:pointer;font-family:'Tajawal',sans-serif;}
+.nav-cta:hover{background:var(--green2)}
+.hero{display:grid;grid-template-columns:1fr 1fr;min-height:calc(100vh - 60px);background:var(--cream);}
+.hero-right{padding:60px 60px 60px 40px;display:flex;flex-direction:column;justify-content:center;}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(46,64,54,0.08);color:var(--green);padding:5px 14px;border-radius:100px;font-size:12px;font-weight:700;margin-bottom:22px;width:fit-content;}
+.hero-badge::before{content:'★';font-size:11px}
+.hero h1{font-size:clamp(32px,3.5vw,52px);font-weight:900;line-height:1.2;color:var(--text);margin-bottom:18px;}
+.hero h1 em{font-style:normal;color:var(--green)}
+.hero-desc{font-size:15px;color:var(--text2);line-height:1.8;margin-bottom:28px;max-width:440px}
+.stars-row{display:flex;align-items:center;gap:10px;margin-bottom:28px}
+.stars{color:var(--gold);font-size:16px;letter-spacing:2px}
+.stars-text{font-size:13px;color:var(--text3);font-weight:500}
+.price-block{background:var(--white);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:24px;}
+.price-row{display:flex;align-items:flex-end;gap:16px;margin-bottom:14px;flex-wrap:wrap}
+.price-old{font-size:20px;color:var(--text3);text-decoration:line-through;font-weight:500}
+.price-new{font-size:44px;font-weight:900;color:var(--green);line-height:1}
+.price-badge{background:var(--green);color:var(--white);font-size:12px;font-weight:800;padding:4px 12px;border-radius:100px;margin-bottom:6px;}
+.price-iraq{background:rgba(46,64,54,0.06);border-radius:8px;padding:10px 14px;font-size:13px;color:var(--green);font-weight:700;margin-bottom:20px;}
+.btn-buy{display:block;width:100%;background:var(--green);color:var(--white);border:none;padding:16px;border-radius:10px;font-family:'Tajawal',sans-serif;font-size:17px;font-weight:800;cursor:pointer;transition:all 0.2s;margin-bottom:10px;text-decoration:none;text-align:center;}
+.btn-buy:hover{background:var(--green2);transform:translateY(-2px)}
+.btn-trial{display:block;width:100%;background:transparent;color:var(--green);border:1.5px solid var(--green);padding:13px;border-radius:10px;font-family:'Tajawal',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:all 0.2s;text-decoration:none;text-align:center;}
+.btn-trial:hover{background:rgba(46,64,54,0.05)}
+.guarantee{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text3);margin-top:12px;justify-content:center;}
+.guarantee::before{content:'🔒';font-size:14px}
+.hero-features{display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
+.hf-item{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text2)}
+.hf-check{width:22px;height:22px;background:rgba(46,64,54,0.08);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--green);font-size:13px;font-weight:900;flex-shrink:0;}
+.hero-left{position:relative;overflow:hidden;background:var(--green3);}
+.hero-video-wrap{width:100%;height:100%;position:relative;}
+.hero-video-wrap img{width:100%;height:100%;object-fit:cover;opacity:0.75;}
+.hero-video-overlay{position:absolute;inset:0;background:linear-gradient(to right,var(--green3) 0%,transparent 50%);}
+.play-btn{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:64px;height:64px;background:rgba(255,255,255,0.95);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform 0.2s;box-shadow:0 4px 20px rgba(0,0,0,0.3);}
+.play-btn:hover{transform:translate(-50%,-50%) scale(1.1)}
+.play-btn::after{content:'';border-style:solid;border-width:10px 0 10px 18px;border-color:transparent transparent transparent var(--green);margin-right:-4px;}
+.hero-caption{position:absolute;bottom:30px;right:30px;left:30px;background:rgba(46,64,54,0.9);backdrop-filter:blur(8px);border-radius:12px;padding:14px 18px;color:var(--white);font-size:13px;font-weight:700;}
+.hero-caption span{color:var(--gold);font-size:18px;font-weight:900;display:block;margin-top:4px}
+.stats-bar{background:var(--green);display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid rgba(255,255,255,0.1);}
+.stat-item{padding:28px 20px;text-align:center;border-left:1px solid rgba(255,255,255,0.1);}
+.stat-item:last-child{border-left:none}
+.stat-num{font-size:32px;font-weight:900;color:var(--white);line-height:1}
+.stat-label{font-size:13px;color:rgba(255,255,255,0.65);margin-top:5px;font-weight:500}
+.section{padding:80px 80px}
+.section-alt{background:var(--white)}
+.s-eyebrow{font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--green);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.s-eyebrow::before{content:'';width:24px;height:2px;background:currentColor;flex-shrink:0}
+.s-title{font-size:clamp(26px,3vw,38px);font-weight:900;line-height:1.2;margin-bottom:12px}
+.s-sub{font-size:16px;color:var(--text2);max-width:500px;line-height:1.75}
+.inside-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:48px;}
+.inside-card{background:var(--cream);border:1px solid var(--border);border-radius:14px;padding:24px;transition:all 0.25s;}
+.inside-card:hover{border-color:var(--green);transform:translateY(-3px);box-shadow:0 8px 28px rgba(46,64,54,0.1)}
+.ic-icon{width:44px;height:44px;background:rgba(46,64,54,0.08);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:14px;}
+.ic-title{font-size:15px;font-weight:800;color:var(--text);margin-bottom:8px}
+.ic-desc{font-size:13px;color:var(--text2);line-height:1.7}
+.instructor-section{display:grid;grid-template-columns:1fr 1fr;gap:0;background:var(--cream2);}
+.ins-content{padding:80px 60px 80px 80px;display:flex;flex-direction:column;justify-content:center}
+.ins-img{position:relative;overflow:hidden;min-height:500px}
+.ins-img img{width:100%;height:100%;object-fit:cover;object-position:center top}
+.ins-stats{display:flex;gap:40px;margin-top:36px}
+.ins-stat-num{font-size:36px;font-weight:900;color:var(--green)}
+.ins-stat-label{font-size:13px;color:var(--text3);margin-top:3px}
+.preview-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:48px;}
+.preview-card{background:var(--cream);border:1px solid var(--border);border-radius:14px;overflow:hidden;cursor:pointer;transition:all 0.25s;}
+.preview-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,0.1)}
+.pc-thumb{position:relative;height:160px;overflow:hidden;background:var(--green3);}
+.pc-thumb img{width:100%;height:100%;object-fit:cover;opacity:0.7;}
+.pc-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:46px;height:46px;background:rgba(255,255,255,0.9);border-radius:50%;display:flex;align-items:center;justify-content:center;}
+.pc-play::after{content:'';border-style:solid;border-width:7px 0 7px 13px;border-color:transparent transparent transparent var(--green);margin-right:-3px;}
+.pc-duration{position:absolute;bottom:10px;left:10px;background:rgba(0,0,0,0.7);color:var(--white);font-size:11px;padding:2px 8px;border-radius:4px;font-weight:600;}
+.pc-tag{position:absolute;top:10px;right:10px;background:var(--gold);color:var(--green3);font-size:11px;font-weight:800;padding:3px 10px;border-radius:4px;}
+.pc-body{padding:16px}
+.pc-title{font-size:14px;font-weight:700;color:var(--text);margin-bottom:6px;line-height:1.4}
+.pc-meta{font-size:12px;color:var(--text3);font-weight:500}
+.testimonials-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:48px;}
+.testi-card{background:var(--cream);border:1px solid var(--border);border-radius:14px;padding:24px;}
+.testi-stars{color:var(--gold);font-size:14px;letter-spacing:2px;margin-bottom:12px}
+.testi-text{font-size:14px;color:var(--text2);line-height:1.75;margin-bottom:16px}
+.testi-author{display:flex;align-items:center;gap:10px}
+.testi-avatar{width:36px;height:36px;border-radius:50%;background:var(--green);color:var(--white);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;}
+.testi-name{font-size:14px;font-weight:700;color:var(--text)}
+.testi-role{font-size:12px;color:var(--text3)}
+.faq-list{margin-top:48px;display:flex;flex-direction:column;gap:0}
+.faq-item{border-bottom:1px solid var(--border);overflow:hidden;}
+.faq-q{width:100%;background:none;border:none;padding:20px 0;text-align:right;font-family:'Tajawal',sans-serif;font-size:16px;font-weight:700;color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:16px;transition:color 0.2s;}
+.faq-q:hover{color:var(--green)}
+.faq-arrow{width:24px;height:24px;border-radius:50%;background:rgba(46,64,54,0.08);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px;transition:all 0.3s;}
+.faq-item.open .faq-arrow{background:var(--green);color:var(--white);transform:rotate(180deg)}
+.faq-a{max-height:0;overflow:hidden;font-size:14px;color:var(--text2);line-height:1.8;transition:max-height 0.35s ease,padding 0.2s;padding-bottom:0;}
+.faq-item.open .faq-a{max-height:200px;padding-bottom:20px}
+.wa-float{position:fixed;bottom:28px;left:28px;width:54px;height:54px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:0 4px 16px rgba(37,211,102,0.5);text-decoration:none;z-index:300;}
+footer{background:#243328;color:var(--white);padding:60px 80px 30px;}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.1);padding-top:24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-top:40px;}
+.footer-bottom p{font-size:12px;color:rgba(255,255,255,0.35)}
+@media(max-width:1024px){
+  .hero{grid-template-columns:1fr}.hero-left{display:none}.hero-right{padding:50px 30px}
+  nav{padding:0 24px}.nav-links{display:none}.section{padding:60px 30px}
+  .inside-grid{grid-template-columns:1fr}.preview-grid{grid-template-columns:1fr}
+  .instructor-section{grid-template-columns:1fr}.ins-content{padding:50px 30px}
+  .testimonials-grid{grid-template-columns:1fr}.stats-bar{grid-template-columns:repeat(2,1fr)}
+  footer{padding:50px 30px 24px}
+}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-logo"><span>د</span>ديـنـتـيـكو</div>
+  <div class="nav-links">
+    <a href="#inside">الكورس</a>
+    <a href="#preview">محاضرات تجريبية</a>
+    <a href="#instructor">المدرب</a>
+    <a href="#testimonials">آراء الأطباء</a>
+    <a href="#faq">الأسئلة الشائعة</a>
+  </div>
+  <a href="${g('h_buy_link')}" target="_blank" class="nav-cta">${g('h_buy_text')}</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-video-wrap">
+      <img src="${g('h_image')}" alt="الكورس">
+      <div class="hero-video-overlay"></div>
+      <div class="play-btn"></div>
+      <div class="hero-caption">${g('h_caption')}<span>▶ ابدأ المشاهدة الآن</span></div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-badge">${g('h_badge')}</div>
+    <h1>${g('h_title1')}<br><em>${g('h_title2')}</em></h1>
+    <div class="stars-row">
+      <span class="stars">${starsStr}</span>
+      <span class="stars-text">${g('h_stars_text')}</span>
+    </div>
+    <p class="hero-desc">${g('h_desc')}</p>
+    <div class="hero-features">${featuresHTML}</div>
+    <div class="price-block">
+      <div class="price-row">
+        <div>
+          <div class="price-badge">${g('p_badge')}</div>
+          <div style="display:flex;align-items:baseline;gap:12px">
+            <span class="price-old">${g('p_old')}</span>
+            <span class="price-new">${g('p_new')}</span>
+          </div>
+        </div>
+      </div>
+      <div class="price-iraq">${g('p_iraq_full')}</div>
+      <a href="${g('h_buy_link')}" target="_blank" class="btn-buy">${g('h_buy_text')}</a>
+      <a href="#preview" class="btn-trial">${g('h_trial_text')}</a>
+      <div class="guarantee">${g('h_guarantee')}</div>
+    </div>
+  </div>
+</section>
+
+<div class="stats-bar">${statsHTML}</div>
+
+<section class="section" id="inside">
+  <div class="s-eyebrow">المحتوى</div>
+  <h2 class="s-title">${g('c_title')}</h2>
+  <p class="s-sub">${g('c_sub')}</p>
+  <div class="inside-grid">${cardsHTML}</div>
+</section>
+
+<section class="section section-alt" id="preview">
+  <div class="s-eyebrow">تجربة مجانية</div>
+  <h2 class="s-title">شاهدي قبل أن تشتري</h2>
+  <div class="preview-grid">${videosHTML}</div>
+</section>
+
+<div class="instructor-section" id="instructor">
+  <div class="ins-content">
+    <div class="s-eyebrow">المدرب</div>
+    <h2 class="s-title" style="max-width:100%">${g('i_name')}</h2>
+    <p style="color:var(--gold);font-weight:700;margin-bottom:16px">${g('i_title')}</p>
+    <p style="color:var(--text2);line-height:1.8;margin-bottom:28px">${g('i_bio')}</p>
+    <div class="ins-stats">
+      <div><div class="ins-stat-num">${g('i_stat1_num')}</div><div class="ins-stat-label">${g('i_stat1_label')}</div></div>
+      <div><div class="ins-stat-num">${g('i_stat2_num')}</div><div class="ins-stat-label">${g('i_stat2_label')}</div></div>
+      <div><div class="ins-stat-num">${g('i_stat3_num')}</div><div class="ins-stat-label">${g('i_stat3_label')}</div></div>
+    </div>
+  </div>
+  <div class="ins-img"><img src="${g('i_image')}" alt="${g('i_name')}"></div>
+</div>
+
+<section class="section section-alt" id="testimonials">
+  <div class="s-eyebrow">آراء الأطباء</div>
+  <h2 class="s-title">أكثر من 2000 طبيب وأخصائية</h2>
+  <div class="testimonials-grid">${testiHTML}</div>
+</section>
+
+<section class="section" id="faq">
+  <div class="s-eyebrow">الأسئلة الشائعة</div>
+  <h2 class="s-title">كل ما توّد معرفته</h2>
+  <div class="faq-list">${faqHTML}</div>
+</section>
+
+<footer>
+  <div style="font-size:22px;font-weight:900">ديـنـتـيـكو</div>
+  <div class="footer-bottom">
+    <p>© 2026 ديـنـتـيـكو لكورسات طب الأسنان — جميع الحقوق محفوظة</p>
+  </div>
+</footer>
+
+<a href="https://wa.me/${g('set_wa')}" class="wa-float" target="_blank">💬</a>
+
+<script>
+function toggleFaq(btn){
+  const item=btn.closest('.faq-item');
+  const isOpen=item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i=>i.classList.remove('open'));
+  if(!isOpen)item.classList.add('open');
+}
+</script>
+</body>
+</html>`;
+}
+
+// ── SAVE TO GITHUB ──
+async function saveAll(){
+  const token = getToken();
+  if(!token){ showTokenModal(); return; }
+
   const btn = document.getElementById('saveBtn');
-  btn.textContent = '✅ تم الحفظ!';
-  btn.classList.add('saved');
+  btn.textContent = '⏳ جاري الحفظ...';
+  btn.disabled = true;
+
+  try {
+    // 1. Get current file SHA
+    const headers = {
+      'Authorization': `token ${token}`,
+      'Accept': 'application/vnd.github.v3+json'
+    };
+
+    const fileRes = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${GITHUB_FILE}`, {headers});
+    let sha = '';
+    if(fileRes.ok){
+      const fileData = await fileRes.json();
+      sha = fileData.sha;
+    }
+
+    // 2. Build new HTML
+    const html = buildPageHTML();
+    const encoded = btoa(unescape(encodeURIComponent(html)));
+
+    // 3. Push to GitHub
+    const pushRes = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${GITHUB_FILE}`, {
+      method: 'PUT',
+      headers: {...headers, 'Content-Type':'application/json'},
+      body: JSON.stringify({
+        message: 'تحديث صفحة الكورس من لوحة التحكم',
+        content: encoded,
+        sha: sha
+      })
+    });
+
+    if(!pushRes.ok){
+      const err = await pushRes.json();
+      throw new Error(err.message||'فشل الحفظ');
+    }
+
+    // 4. Save data locally too
+    localStorage.setItem('dentico_data', JSON.stringify(data));
+
+    btn.textContent = '✅ تم النشر!';
+    btn.classList.add('saved');
+    showToast('✅ تم النشر على الموقع! سيتحدث خلال 30 ثانية');
+    setTimeout(()=>{ btn.textContent='💾 حفظ ونشر'; btn.classList.remove('saved'); btn.disabled=false; }, 3000);
+
+  } catch(e) {
+    btn.textContent = '❌ خطأ في الحفظ';
+    btn.disabled = false;
+    showToast('❌ خطأ: ' + e.message);
+    setTimeout(()=>{ btn.textContent='💾 حفظ ونشر'; }, 3000);
+    console.error(e);
+  }
+}
+
+function showToast(msg){
   const toast = document.getElementById('toast');
+  toast.textContent = msg;
   toast.classList.add('show');
-  setTimeout(()=>{ btn.textContent='💾 حفظ التغييرات'; btn.classList.remove('saved'); toast.classList.remove('show'); }, 2500);
+  setTimeout(()=>toast.classList.remove('show'), 3500);
 }
 
 // ── EXPORT ──
 function exportPage(){
-  const link = document.createElement('a');
-  link.href = '../pages/botox-filler.html';
-  link.download = 'botox-filler.html';
-  link.click();
+  const html = buildPageHTML();
+  const blob = new Blob([html], {type:'text/html'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'botox-filler.html';
+  a.click();
 }
 
 // ── DEVICE PREVIEW ──
@@ -926,6 +1323,9 @@ function setDevice(w, btn){
 
 // ── INIT ──
 renderAll();
+if(!getToken()){
+  setTimeout(showTokenModal, 800);
+}
 </script>
 </body>
 </html>
