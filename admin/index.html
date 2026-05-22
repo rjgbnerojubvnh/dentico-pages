@@ -1280,8 +1280,9 @@ async function saveAll(){
       throw new Error(err.message||'فشل الحفظ');
     }
 
-    // 4. Save data locally too
+    // 4. Save data and fields locally
     localStorage.setItem('dentico_data', JSON.stringify(data));
+    saveFields();
 
     btn.textContent = '✅ تم النشر!';
     btn.classList.add('saved');
@@ -1321,8 +1322,49 @@ function setDevice(w, btn){
   btn.classList.add('active');
 }
 
+// ── SAVE / LOAD FIELDS ──
+const FIELD_IDS = [
+  'h_title1','h_title2','h_desc','h_badge','h_stars_text','h_stars_count',
+  'h_image','h_caption','h_buy_link','h_buy_text','h_trial_text','h_guarantee',
+  'p_old','p_new','p_badge','p_iraq','p_iraq_full',
+  'pc1_title','pc1_price','pc1_old','pc1_btn',
+  'pc2_title','pc2_price','pc2_unit','pc2_btn',
+  'pc3_title','pc3_price','pc3_sub','pc3_btn',
+  'c_title','c_sub',
+  'i_name','i_title','i_bio','i_image',
+  'i_stat1_num','i_stat1_label','i_stat2_num','i_stat2_label','i_stat3_num','i_stat3_label',
+  's1_num','s1_label','s2_num','s2_label','s3_num','s3_label','s4_num','s4_label',
+  'c_primary','c_primary_text','c_gold','c_gold_text','c_bg','c_bg_text',
+  'set_wa','set_email','set_tg','set_title','set_desc'
+];
+
+function saveFields(){
+  const fields = {};
+  FIELD_IDS.forEach(id=>{
+    const el = document.getElementById(id);
+    if(el) fields[id] = el.value;
+  });
+  localStorage.setItem('dentico_fields', JSON.stringify(fields));
+}
+
+function loadFields(){
+  const saved = localStorage.getItem('dentico_fields');
+  if(!saved) return;
+  const fields = JSON.parse(saved);
+  FIELD_IDS.forEach(id=>{
+    const el = document.getElementById(id);
+    if(el && fields[id] !== undefined) el.value = fields[id];
+  });
+}
+
+// ── AUTO-SAVE FIELDS ON CHANGE ──
+document.addEventListener('input', e=>{
+  if(e.target.matches('input,textarea,select')) saveFields();
+});
+
 // ── INIT ──
 renderAll();
+loadFields();
 if(!getToken()){
   setTimeout(showTokenModal, 800);
 }
