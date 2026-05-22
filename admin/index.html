@@ -7,1367 +7,503 @@
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{
-  --green:#2E4036;--green2:#3A5246;--gold:#C9A84C;
-  --cream:#F5F0E8;--white:#fff;
-  --border:rgba(46,64,54,0.12);--text:#1A1A1A;--text2:#4A4A4A;--text3:#7A7A7A;
-}
+:root{--green:#2E4036;--green2:#3A5246;--gold:#C9A84C;--cream:#F5F0E8;--white:#fff;--border:rgba(46,64,54,0.12);--text:#1A1A1A;--text2:#4A4A4A;--text3:#7A7A7A}
 body{font-family:'Tajawal',sans-serif;background:#F0EBE0;color:var(--text);direction:rtl}
-
-/* LAYOUT */
-.layout{display:grid;grid-template-columns:320px 1fr;min-height:100vh}
-
-/* SIDEBAR */
-.sidebar{
-  background:var(--green);position:sticky;top:0;height:100vh;
-  overflow-y:auto;display:flex;flex-direction:column;
-}
-.sidebar-logo{
-  padding:20px 24px;border-bottom:1px solid rgba(255,255,255,0.1);
-  display:flex;align-items:center;gap:10px;
-}
-.sidebar-logo span{font-size:18px;font-weight:900;color:#fff}
+.layout{display:grid;grid-template-columns:300px 1fr;min-height:100vh}
+.sidebar{background:var(--green);position:sticky;top:0;height:100vh;overflow-y:auto;display:flex;flex-direction:column}
+.sidebar-logo{padding:18px 20px;border-bottom:1px solid rgba(255,255,255,0.1);font-size:17px;font-weight:900;color:#fff}
 .sidebar-logo em{font-style:normal;color:var(--gold)}
-.sidebar-nav{padding:12px 0;flex:1}
-.nav-section{padding:8px 20px 4px;font-size:11px;font-weight:700;color:rgba(255,255,255,0.35);letter-spacing:2px;text-transform:uppercase}
-.nav-item{
-  display:flex;align-items:center;gap:10px;
-  padding:11px 20px;font-size:14px;font-weight:600;
-  color:rgba(255,255,255,0.7);cursor:pointer;
-  transition:all 0.15s;border:none;background:none;
-  width:100%;text-align:right;
-}
-.nav-item:hover{background:rgba(255,255,255,0.08);color:#fff}
-.nav-item.active{background:rgba(255,255,255,0.12);color:#fff}
-.nav-item .ni-icon{font-size:18px;width:22px;text-align:center;flex-shrink:0}
-.sidebar-footer{padding:16px 20px;border-top:1px solid rgba(255,255,255,0.1)}
-.btn-preview-live{
-  width:100%;background:var(--gold);color:var(--green);
-  border:none;padding:11px;border-radius:8px;
-  font-family:'Tajawal',sans-serif;font-size:14px;font-weight:800;
-  cursor:pointer;transition:all 0.2s;
-}
-.btn-preview-live:hover{filter:brightness(1.1)}
-
-/* MAIN */
+.sidebar-nav{padding:10px 0;flex:1}
+.nav-sec{padding:8px 16px 3px;font-size:10px;font-weight:700;color:rgba(255,255,255,0.3);letter-spacing:2px;text-transform:uppercase}
+.nav-item{display:flex;align-items:center;gap:8px;padding:10px 16px;font-size:13px;font-weight:600;color:rgba(255,255,255,0.65);cursor:pointer;transition:all 0.15s;border:none;background:none;width:100%;text-align:right}
+.nav-item:hover,.nav-item.active{background:rgba(255,255,255,0.1);color:#fff}
+.sidebar-footer{padding:14px 16px;border-top:1px solid rgba(255,255,255,0.1);display:flex;flex-direction:column;gap:8px}
+.btn-publish{width:100%;background:var(--gold);color:var(--green);border:none;padding:11px;border-radius:8px;font-family:'Tajawal',sans-serif;font-size:14px;font-weight:800;cursor:pointer}
+.btn-publish:disabled{opacity:0.6;cursor:not-allowed}
+.btn-token{width:100%;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.6);border:1px solid rgba(255,255,255,0.12);padding:8px;border-radius:8px;font-family:'Tajawal',sans-serif;font-size:12px;cursor:pointer}
 .main{background:var(--cream);overflow-y:auto}
-.topbar{
-  background:var(--white);border-bottom:1px solid var(--border);
-  padding:0 32px;height:58px;
-  display:flex;align-items:center;justify-content:space-between;
-  position:sticky;top:0;z-index:10;
-}
-.topbar-title{font-size:16px;font-weight:800}
-.topbar-actions{display:flex;gap:10px;align-items:center}
-.btn-save{
-  background:var(--green);color:#fff;border:none;
-  padding:9px 24px;border-radius:8px;
-  font-family:'Tajawal',sans-serif;font-size:14px;font-weight:800;
-  cursor:pointer;transition:all 0.2s;
-}
-.btn-save:hover{background:var(--green2)}
-.btn-save.saved{background:#27AE60}
-.btn-outline{
-  background:transparent;color:var(--green);
-  border:1.5px solid var(--green);padding:8px 18px;border-radius:8px;
-  font-family:'Tajawal',sans-serif;font-size:14px;font-weight:700;
-  cursor:pointer;transition:all 0.2s;text-decoration:none;
-}
-.btn-outline:hover{background:rgba(46,64,54,0.06)}
-
-/* PANEL */
-.panel{padding:28px 32px;display:none}
+.topbar{background:var(--white);border-bottom:1px solid var(--border);padding:0 28px;height:54px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
+.topbar-title{font-size:15px;font-weight:800}
+.btn-export{background:transparent;color:var(--green);border:1.5px solid var(--green);padding:7px 16px;border-radius:7px;font-family:'Tajawal',sans-serif;font-size:13px;font-weight:700;cursor:pointer}
+.panel{padding:24px 28px;display:none}
 .panel.active{display:block}
-.panel-title{font-size:20px;font-weight:900;margin-bottom:4px}
-.panel-sub{font-size:14px;color:var(--text3);margin-bottom:28px}
-
-/* SECTIONS */
-.editor-section{
-  background:var(--white);border:1px solid var(--border);
-  border-radius:14px;margin-bottom:16px;overflow:hidden;
-}
-.es-header{
-  padding:16px 20px;display:flex;align-items:center;
-  justify-content:space-between;cursor:pointer;
-  border-bottom:1px solid var(--border);
-  background:rgba(46,64,54,0.02);
-}
-.es-header:hover{background:rgba(46,64,54,0.04)}
-.es-title{font-size:15px;font-weight:800;display:flex;align-items:center;gap:8px}
-.es-icon{font-size:18px}
-.es-arrow{transition:transform 0.2s;font-size:12px;color:var(--text3)}
-.es-body{padding:20px;display:none}
-.es-body.open{display:block}
-
-/* FORM FIELDS */
-.field{margin-bottom:18px}
-.field label{
-  display:block;font-size:13px;font-weight:700;
-  color:var(--text2);margin-bottom:6px;
-}
-.field input,.field textarea,.field select{
-  width:100%;padding:10px 14px;
-  border:1px solid var(--border);border-radius:8px;
-  font-family:'Tajawal',sans-serif;font-size:14px;
-  color:var(--text);background:var(--cream);outline:none;
-  transition:border 0.2s;resize:vertical;
-}
-.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--green)}
-.field textarea{min-height:80px}
-.field-hint{font-size:12px;color:var(--text3);margin-top:4px}
-.field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-
-/* COLOR PICKER */
-.color-field{display:flex;align-items:center;gap:10px}
-.color-field input[type=color]{
-  width:44px;height:36px;padding:2px;
-  border:1px solid var(--border);border-radius:8px;
-  cursor:pointer;background:var(--cream);
-}
-.color-field input[type=text]{flex:1}
-
-/* TOGGLE */
-.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:6px 0}
-.toggle-label{font-size:14px;font-weight:600;color:var(--text2)}
-.toggle{
-  width:44px;height:24px;background:#ccc;border-radius:100px;
-  position:relative;cursor:pointer;transition:background 0.2s;border:none;
-}
-.toggle.on{background:var(--green)}
-.toggle::after{
-  content:'';position:absolute;top:3px;right:3px;
-  width:18px;height:18px;background:#fff;border-radius:50%;
-  transition:transform 0.2s;
-}
-.toggle.on::after{transform:translateX(-20px)}
-
-/* CARDS EDITOR */
-.cards-list{display:flex;flex-direction:column;gap:10px;margin-bottom:14px}
-.card-item{
-  background:var(--cream);border:1px solid var(--border);
-  border-radius:10px;padding:14px 16px;
-  display:flex;gap:12px;align-items:flex-start;
-}
-.card-item-icon{font-size:22px;flex-shrink:0;margin-top:2px}
-.card-item-body{flex:1}
-.card-item-body input{
-  width:100%;padding:7px 10px;border:1px solid var(--border);
-  border-radius:6px;font-family:'Tajawal',sans-serif;font-size:13px;
-  background:#fff;margin-bottom:6px;color:var(--text);outline:none;
-}
-.card-item-body input:focus{border-color:var(--green)}
-.card-item-del{
-  background:none;border:none;color:#ccc;cursor:pointer;
-  font-size:18px;padding:4px;transition:color 0.2s;
-}
-.card-item-del:hover{color:#E05555}
-.btn-add-card{
-  width:100%;padding:10px;border:1.5px dashed rgba(46,64,54,0.25);
-  border-radius:8px;background:none;
-  font-family:'Tajawal',sans-serif;font-size:14px;font-weight:700;
-  color:var(--text3);cursor:pointer;transition:all 0.2s;
-}
-.btn-add-card:hover{border-color:var(--green);color:var(--green)}
-
-/* PRICING CARDS */
-.pricing-editor{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
-.price-card-edit{
-  background:var(--cream);border:1px solid var(--border);
-  border-radius:10px;padding:14px;
-}
-.price-card-edit label{font-size:11px;font-weight:700;color:var(--text3);display:block;margin-bottom:4px;margin-top:10px}
-.price-card-edit label:first-child{margin-top:0}
-.price-card-edit input{
-  width:100%;padding:7px 10px;border:1px solid var(--border);
-  border-radius:6px;font-family:'Tajawal',sans-serif;
-  font-size:13px;background:#fff;color:var(--text);outline:none;
-}
-.price-card-edit input:focus{border-color:var(--green)}
-
-/* TESTIMONIALS */
-.testi-item{
-  background:var(--cream);border:1px solid var(--border);
-  border-radius:10px;padding:14px 16px;margin-bottom:10px;
-}
-.testi-item-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
-.testi-item-title{font-size:13px;font-weight:700;color:var(--text2)}
-
-/* FAQ */
-.faq-item-edit{
-  background:var(--cream);border:1px solid var(--border);
-  border-radius:10px;padding:14px 16px;margin-bottom:10px;
-  display:flex;gap:10px;align-items:flex-start;
-}
-.faq-item-edit-body{flex:1;display:flex;flex-direction:column;gap:8px}
-.faq-item-edit-body input,.faq-item-edit-body textarea{
-  width:100%;padding:8px 10px;border:1px solid var(--border);
-  border-radius:6px;font-family:'Tajawal',sans-serif;font-size:13px;
-  background:#fff;color:var(--text);outline:none;resize:vertical;
-}
-.faq-item-edit-body input:focus,.faq-item-edit-body textarea:focus{border-color:var(--green)}
-
-/* SAVED TOAST */
-.toast{
-  position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(80px);
-  background:var(--green);color:#fff;padding:12px 28px;
-  border-radius:100px;font-size:14px;font-weight:700;
-  transition:transform 0.3s;z-index:999;
-}
+.panel-title{font-size:18px;font-weight:900;margin-bottom:4px}
+.panel-sub{font-size:13px;color:var(--text3);margin-bottom:24px}
+.card{background:var(--white);border:1px solid var(--border);border-radius:12px;margin-bottom:14px;overflow:hidden}
+.card-head{padding:14px 18px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;background:rgba(46,64,54,0.02)}
+.card-head:hover{background:rgba(46,64,54,0.04)}
+.card-head-title{font-size:14px;font-weight:800}
+.card-arrow{font-size:11px;color:var(--text3);transition:transform 0.2s}
+.card-body{padding:18px;border-top:1px solid var(--border);display:none}
+.card-body.open{display:block}
+.f{margin-bottom:14px}
+.f label{display:block;font-size:12px;font-weight:700;color:var(--text2);margin-bottom:5px}
+.f input,.f textarea,.f select{width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:7px;font-family:'Tajawal',sans-serif;font-size:13px;color:var(--text);background:var(--cream);outline:none;transition:border 0.2s;resize:vertical}
+.f input:focus,.f textarea:focus{border-color:var(--green)}
+.f textarea{min-height:70px}
+.f-hint{font-size:11px;color:var(--text3);margin-top:3px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.color-wrap{display:flex;align-items:center;gap:8px}
+.color-wrap input[type=color]{width:40px;height:34px;padding:2px;border:1px solid var(--border);border-radius:7px;cursor:pointer;background:var(--cream)}
+.color-wrap input[type=text]{flex:1}
+.list-item{background:var(--cream);border:1px solid var(--border);border-radius:9px;padding:12px 14px;display:flex;gap:10px;align-items:flex-start;margin-bottom:8px}
+.list-item-body{flex:1;display:flex;flex-direction:column;gap:6px}
+.list-item-body input,.list-item-body textarea{width:100%;padding:7px 10px;border:1px solid var(--border);border-radius:6px;font-family:'Tajawal',sans-serif;font-size:12px;background:#fff;color:var(--text);outline:none}
+.list-item-body input:focus,.list-item-body textarea:focus{border-color:var(--green)}
+.list-item-body textarea{min-height:55px;resize:vertical}
+.del-btn{background:none;border:none;color:#ccc;cursor:pointer;font-size:16px;padding:2px;transition:color 0.2s;flex-shrink:0}
+.del-btn:hover{color:#E05555}
+.add-btn{width:100%;padding:9px;border:1.5px dashed rgba(46,64,54,0.2);border-radius:8px;background:none;font-family:'Tajawal',sans-serif;font-size:13px;font-weight:700;color:var(--text3);cursor:pointer;transition:all 0.2s;margin-top:4px}
+.add-btn:hover{border-color:var(--green);color:var(--green)}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(70px);background:var(--green);color:#fff;padding:11px 24px;border-radius:100px;font-size:13px;font-weight:700;transition:transform 0.3s;z-index:999;white-space:nowrap}
 .toast.show{transform:translateX(-50%) translateY(0)}
-
-/* PREVIEW FRAME */
-.preview-panel{padding:0;height:calc(100vh - 58px)}
-.preview-toolbar{
-  padding:12px 20px;background:var(--white);
-  border-bottom:1px solid var(--border);
-  display:flex;align-items:center;gap:12px;
-}
-.device-btn{
-  padding:6px 14px;border-radius:6px;border:1px solid var(--border);
-  background:none;font-family:'Tajawal',sans-serif;font-size:13px;
-  cursor:pointer;transition:all 0.2s;font-weight:600;
-}
-.device-btn.active,.device-btn:hover{background:var(--green);color:#fff;border-color:var(--green)}
-#previewFrame{
-  width:100%;border:none;
-  height:calc(100vh - 115px);
-  transition:width 0.3s;
-  display:block;margin:0 auto;
-}
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:500;align-items:center;justify-content:center}
+.modal{background:#fff;border-radius:18px;padding:32px;max-width:420px;width:90%;direction:rtl;font-family:'Tajawal',sans-serif}
+.modal h3{font-size:20px;font-weight:900;margin-bottom:6px}
+.modal p{font-size:13px;color:#7A7A7A;line-height:1.7;margin-bottom:20px}
+.modal input{width:100%;padding:10px 12px;border:1px solid rgba(46,64,54,0.2);border-radius:8px;font-family:'Tajawal',sans-serif;font-size:13px;outline:none;direction:ltr;margin-bottom:14px}
+.modal-btns{display:flex;gap:10px}
+.modal-btns .mbtn1{flex:1;background:var(--green);color:#fff;border:none;padding:12px;border-radius:8px;font-family:'Tajawal',sans-serif;font-size:14px;font-weight:800;cursor:pointer}
+.modal-btns .mbtn2{padding:12px 18px;border:1.5px solid rgba(46,64,54,0.2);border-radius:8px;background:none;font-family:'Tajawal',sans-serif;font-size:13px;cursor:pointer}
 </style>
 </head>
 <body>
 <div class="layout">
-
-<!-- SIDEBAR -->
 <aside class="sidebar">
-  <div class="sidebar-logo">
-    <span>Dentico <em>Admin</em></span>
-  </div>
+  <div class="sidebar-logo">Dentico <em>Admin</em></div>
   <nav class="sidebar-nav">
-    <div class="nav-section">الصفحة</div>
-    <button class="nav-item active" onclick="showPanel('hero')">
-      <span class="ni-icon">🏠</span> قسم الهيرو
-    </button>
-    <button class="nav-item" onclick="showPanel('content')">
-      <span class="ni-icon">📦</span> محتوى الكورس
-    </button>
-    <button class="nav-item" onclick="showPanel('preview-videos')">
-      <span class="ni-icon">▶️</span> المحاضرات التجريبية
-    </button>
-    <button class="nav-item" onclick="showPanel('instructor')">
-      <span class="ni-icon">👨‍⚕️</span> المدرب
-    </button>
-    <button class="nav-item" onclick="showPanel('pricing')">
-      <span class="ni-icon">💰</span> الأسعار
-    </button>
-    <button class="nav-item" onclick="showPanel('testimonials')">
-      <span class="ni-icon">⭐</span> آراء الأطباء
-    </button>
-    <button class="nav-item" onclick="showPanel('faq')">
-      <span class="ni-icon">❓</span> الأسئلة الشائعة
-    </button>
-    <div class="nav-section">التصميم</div>
-    <button class="nav-item" onclick="showPanel('design')">
-      <span class="ni-icon">🎨</span> الألوان والخطوط
-    </button>
-    <button class="nav-item" onclick="showPanel('settings')">
-      <span class="ni-icon">⚙️</span> الإعدادات
-    </button>
-    <div class="nav-section">معاينة</div>
-    <button class="nav-item" onclick="showPanel('preview')">
-      <span class="ni-icon">👁</span> معاينة الصفحة
-    </button>
+    <div class="nav-sec">الصفحة</div>
+    <button class="nav-item active" onclick="show(this,'hero')">🏠 الهيرو والسعر</button>
+    <button class="nav-item" onclick="show(this,'content')">📦 محتوى الكورس</button>
+    <button class="nav-item" onclick="show(this,'videos')">▶️ المحاضرات التجريبية</button>
+    <button class="nav-item" onclick="show(this,'instructor')">👨‍⚕️ المدرب</button>
+    <button class="nav-item" onclick="show(this,'testimonials')">⭐ آراء الأطباء</button>
+    <button class="nav-item" onclick="show(this,'faq')">❓ الأسئلة الشائعة</button>
+    <div class="nav-sec">التصميم</div>
+    <button class="nav-item" onclick="show(this,'design')">🎨 الألوان والإحصائيات</button>
+    <button class="nav-item" onclick="show(this,'settings')">⚙️ الإعدادات</button>
   </nav>
   <div class="sidebar-footer">
-    <button class="btn-preview-live" onclick="exportPage()" style="margin-bottom:8px">⬇️ تصدير الصفحة</button>
-    <button onclick="showTokenModal()" style="width:100%;background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.7);border:1px solid rgba(255,255,255,0.15);padding:9px;border-radius:8px;font-family:'Tajawal',sans-serif;font-size:13px;font-weight:600;cursor:pointer;">🔑 تغيير GitHub Token</button>
+    <button class="btn-publish" id="pubBtn" onclick="publish()">🚀 حفظ ونشر على الموقع</button>
+    <button class="btn-token" onclick="showModal()">🔑 تغيير GitHub Token</button>
   </div>
 </aside>
-
-<!-- MAIN -->
 <main class="main">
   <div class="topbar">
-    <div class="topbar-title" id="panelTitle">🏠 قسم الهيرو</div>
-    <div class="topbar-actions">
-      <a href="../pages/botox-filler.html" target="_blank" class="btn-outline">👁 معاينة</a>
-      <button class="btn-save" id="saveBtn" onclick="saveAll()">💾 حفظ ونشر</button>
-    </div>
+    <div class="topbar-title" id="panelTitle">🏠 الهيرو والسعر</div>
+    <button class="btn-export" onclick="exportPage()">⬇️ تصدير الصفحة</button>
   </div>
 
-  <!-- ═══ PANEL: HERO ═══ -->
-  <div class="panel active" id="panel-hero">
-    <div class="panel-title">🏠 قسم الهيرو</div>
-    <p class="panel-sub">أول ما يشوفه الزبون — اجعله مقنعاً</p>
-
-    <div class="editor-section">
-      <div class="es-header" onclick="toggleSection(this)">
-        <span class="es-title"><span class="es-icon">📝</span> العنوان الرئيسي</span>
-        <span class="es-arrow">▼</span>
-      </div>
-      <div class="es-body open">
-        <div class="field">
-          <label>السطر الأول</label>
-          <input type="text" id="h_title1" value="كورس البوتوكس والفيلر الاحترافي">
-        </div>
-        <div class="field">
-          <label>السطر الثاني (بالأخضر)</label>
-          <input type="text" id="h_title2" value="من التشريح حتى الإتقان">
-        </div>
-        <div class="field">
-          <label>الوصف المختصر</label>
-          <textarea id="h_desc">كورس شامل يغطي تقنيات البوتوكس والفيلر من الأساسيات حتى المستوى المتقدم، مع تشريح وجهي وخرائط أوعية وحالات حقيقية — مع تحديثات 2024 كاملة.</textarea>
-        </div>
-        <div class="field">
-          <label>الشارة (Badge)</label>
-          <input type="text" id="h_badge" value="كورس إلكتروني احترافي">
+  <!-- HERO -->
+  <div class="panel active" id="p-hero">
+    <div class="panel-title">🏠 الهيرو والسعر</div>
+    <p class="panel-sub">أول ما يشوفه الزبون</p>
+    <div class="card">
+      <div class="card-head" onclick="togCard(this)"><span class="card-head-title">📝 العنوان والوصف</span><span class="card-arrow">▼</span></div>
+      <div class="card-body open">
+        <div class="f"><label>السطر الأول</label><input data-k="h_title1"></div>
+        <div class="f"><label>السطر الثاني (بالأخضر)</label><input data-k="h_title2"></div>
+        <div class="f"><label>الوصف</label><textarea data-k="h_desc"></textarea></div>
+        <div class="f"><label>الشارة (Badge)</label><input data-k="h_badge"></div>
+        <div class="row">
+          <div class="f"><label>نص التقييم</label><input data-k="h_stars_text"></div>
+          <div class="f"><label>عدد النجوم (1-5)</label><input type="number" min="1" max="5" data-k="h_stars_count"></div>
         </div>
       </div>
     </div>
-
-    <div class="editor-section">
-      <div class="es-header" onclick="toggleSection(this)">
-        <span class="es-title"><span class="es-icon">✅</span> قائمة المميزات</span>
-        <span class="es-arrow">▼</span>
-      </div>
-      <div class="es-body open">
-        <div class="cards-list" id="featuresList"></div>
-        <button class="btn-add-card" onclick="addFeature()">+ أضف ميزة</button>
-      </div>
-    </div>
-
-    <div class="editor-section">
-      <div class="es-header" onclick="toggleSection(this)">
-        <span class="es-title"><span class="es-icon">⭐</span> التقييم</span>
-        <span class="es-arrow">▼</span>
-      </div>
-      <div class="es-body open">
-        <div class="field-row">
-          <div class="field">
-            <label>نص التقييم</label>
-            <input type="text" id="h_stars_text" value="4.9 — أكثر من 2000 طبيب وأخصائية">
-          </div>
-          <div class="field">
-            <label>عدد النجوم (1-5)</label>
-            <input type="number" id="h_stars_count" value="5" min="1" max="5">
-          </div>
+    <div class="card">
+      <div class="card-head" onclick="togCard(this)"><span class="card-head-title">💰 الأسعار</span><span class="card-arrow">▼</span></div>
+      <div class="card-body open">
+        <div class="row">
+          <div class="f"><label>السعر الأصلي (مشطوب)</label><input data-k="p_old"></div>
+          <div class="f"><label>السعر الجديد</label><input data-k="p_new"></div>
         </div>
+        <div class="row">
+          <div class="f"><label>نص الخصم</label><input data-k="p_badge"></div>
+          <div class="f"><label>سعر العراق</label><input data-k="p_iraq"></div>
+        </div>
+        <div class="f"><label>نص سعر العراق كامل</label><input data-k="p_iraq_full"></div>
       </div>
     </div>
-
-    <div class="editor-section">
-      <div class="es-header" onclick="toggleSection(this)">
-        <span class="es-title"><span class="es-icon">🖼</span> صورة الهيرو</span>
-        <span class="es-arrow">▼</span>
-      </div>
-      <div class="es-body open">
-        <div class="field">
-          <label>رابط الصورة (URL)</label>
-          <input type="text" id="h_image" value="https://dentalcourse.store/cdn/shop/files/ra-summit-botox-and-filler-online-course-raj-acquilla-with-2024-updates-1238124555.jpg?v=1778640251&width=1200">
-          <div class="field-hint">ضع رابط الصورة مباشرة — يفضل صورة عريضة 1200x800</div>
+    <div class="card">
+      <div class="card-head" onclick="togCard(this)"><span class="card-head-title">🔗 الأزرار والروابط</span><span class="card-arrow">▼</span></div>
+      <div class="card-body open">
+        <div class="f"><label>رابط شوبيفاي</label><input data-k="h_buy_link"></div>
+        <div class="row">
+          <div class="f"><label>نص زر الشراء</label><input data-k="h_buy_text"></div>
+          <div class="f"><label>نص زر التجريبية</label><input data-k="h_trial_text"></div>
         </div>
-        <div class="field">
-          <label>نص الكابشن على الصورة</label>
-          <input type="text" id="h_caption" value="شاهدي 6 محاضرات تجريبية مجانًا">
-        </div>
+        <div class="f"><label>نص الضمان</label><input data-k="h_guarantee"></div>
       </div>
     </div>
-
-    <div class="editor-section">
-      <div class="es-header" onclick="toggleSection(this)">
-        <span class="es-title"><span class="es-icon">🔗</span> روابط الأزرار</span>
-        <span class="es-arrow">▼</span>
+    <div class="card">
+      <div class="card-head" onclick="togCard(this)"><span class="card-head-title">🖼 الصورة</span><span class="card-arrow">▼</span></div>
+      <div class="card-body open">
+        <div class="f"><label>رابط الصورة (URL)</label><input data-k="h_image"><div class="f-hint">رابط URL مباشر للصورة</div></div>
+        <div class="f"><label>نص الكابشن</label><input data-k="h_caption"></div>
       </div>
-      <div class="es-body open">
-        <div class="field">
-          <label>رابط "اشتري الآن" (شوبيفاي)</label>
-          <input type="text" id="h_buy_link" value="https://dentalcourse.store/products/ra-summit-botox-and-filler-online-course-raj-acquilla-with-2024-updates">
-        </div>
-        <div class="field">
-          <label>نص زر الشراء</label>
-          <input type="text" id="h_buy_text" value="اشتري الآن ⚡">
-        </div>
-        <div class="field">
-          <label>نص زر المحاضرة التجريبية</label>
-          <input type="text" id="h_trial_text" value="▶ شاهد محاضرة تجريبية مجانًا">
-        </div>
-        <div class="field">
-          <label>نص الضمان</label>
-          <input type="text" id="h_guarantee" value="ضمان استرداد كامل خلال 7 أيام · تسليم فوري">
-        </div>
+    </div>
+    <div class="card">
+      <div class="card-head" onclick="togCard(this)"><span class="card-head-title">✅ قائمة المميزات</span><span class="card-arrow">▼</span></div>
+      <div class="card-body open">
+        <div id="featuresList"></div>
+        <button class="add-btn" onclick="S.features.push('ميزة جديدة');save();renderFeatures()">+ أضف ميزة</button>
       </div>
     </div>
   </div>
 
-  <!-- ═══ PANEL: PRICING ═══ -->
-  <div class="panel" id="panel-pricing">
-    <div class="panel-title">💰 الأسعار</div>
-    <p class="panel-sub">عدّل أسعار الكورس لكل فئة</p>
-
-    <div class="editor-section">
-      <div class="es-header" onclick="toggleSection(this)">
-        <span class="es-title"><span class="es-icon">💵</span> بلوك السعر في الهيرو</span>
-        <span class="es-arrow">▼</span>
-      </div>
-      <div class="es-body open">
-        <div class="field-row">
-          <div class="field">
-            <label>السعر الأصلي (مشطوب)</label>
-            <input type="text" id="p_old" value="$350">
-          </div>
-          <div class="field">
-            <label>السعر الجديد</label>
-            <input type="text" id="p_new" value="$20">
-          </div>
-        </div>
-        <div class="field-row">
-          <div class="field">
-            <label>نص الخصم (Badge)</label>
-            <input type="text" id="p_badge" value="وفّر 94%">
-          </div>
-          <div class="field">
-            <label>سعر العراق</label>
-            <input type="text" id="p_iraq" value="20,000 دينار">
-          </div>
-        </div>
-        <div class="field">
-          <label>نص سعر العراق كامل</label>
-          <input type="text" id="p_iraq_full" value="🇮🇶 للأطباء داخل العراق: 20,000 دينار فقط">
-        </div>
-      </div>
-    </div>
-
-    <div class="editor-section">
-      <div class="es-header" onclick="toggleSection(this)">
-        <span class="es-title"><span class="es-icon">📊</span> بطاقات الأسعار (قسم منفصل)</span>
-        <span class="es-arrow">▼</span>
-      </div>
-      <div class="es-body open">
-        <div class="pricing-editor">
-          <div class="price-card-edit">
-            <label>العنوان</label>
-            <input type="text" id="pc1_title" value="🌍 خارج العراق">
-            <label>السعر</label>
-            <input type="text" id="pc1_price" value="$20">
-            <label>السعر الأصلي</label>
-            <input type="text" id="pc1_old" value="$350">
-            <label>نص الزر</label>
-            <input type="text" id="pc1_btn" value="اشتري الآن">
-          </div>
-          <div class="price-card-edit" style="border:2px solid var(--gold)">
-            <label>العنوان (البطاقة المميزة)</label>
-            <input type="text" id="pc2_title" value="🇮🇶 داخل العراق">
-            <label>السعر</label>
-            <input type="text" id="pc2_price" value="20,000">
-            <label>الوحدة</label>
-            <input type="text" id="pc2_unit" value="دينار عراقي فقط">
-            <label>نص الزر</label>
-            <input type="text" id="pc2_btn" value="اشتري الآن ⚡">
-          </div>
-          <div class="price-card-edit">
-            <label>العنوان</label>
-            <input type="text" id="pc3_title" value="💬 التواصل المباشر">
-            <label>نص السعر</label>
-            <input type="text" id="pc3_price" value="واتساب">
-            <label>الوصف</label>
-            <input type="text" id="pc3_sub" value="للاستفسار قبل الشراء">
-            <label>نص الزر</label>
-            <input type="text" id="pc3_btn" value="تواصل معنا">
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ═══ PANEL: CONTENT ═══ -->
-  <div class="panel" id="panel-content">
+  <!-- CONTENT -->
+  <div class="panel" id="p-content">
     <div class="panel-title">📦 محتوى الكورس</div>
-    <p class="panel-sub">عدّل كاردات "كل ما ستحصل عليه"</p>
-
-    <div class="editor-section">
-      <div class="es-header" onclick="toggleSection(this)">
-        <span class="es-title"><span class="es-icon">📝</span> عنوان القسم</span>
-        <span class="es-arrow">▼</span>
-      </div>
-      <div class="es-body open">
-        <div class="field-row">
-          <div class="field">
-            <label>العنوان</label>
-            <input type="text" id="c_title" value="كل ما ستحصلين عليه">
-          </div>
-          <div class="field">
-            <label>العنوان الفرعي</label>
-            <input type="text" id="c_sub" value="تغطي مكتبة مشمولة بالكورس كل جوانب حقن البوتوكس والفيلر بدقة علمية">
-          </div>
-        </div>
+    <p class="panel-sub">كاردات "كل ما ستحصل عليه"</p>
+    <div class="card">
+      <div class="card-head" onclick="togCard(this)"><span class="card-head-title">📝 عنوان القسم</span><span class="card-arrow">▼</span></div>
+      <div class="card-body open">
+        <div class="f"><label>العنوان</label><input data-k="c_title"></div>
+        <div class="f"><label>العنوان الفرعي</label><input data-k="c_sub"></div>
       </div>
     </div>
-
-    <div class="editor-section">
-      <div class="es-header" onclick="toggleSection(this)">
-        <span class="es-title"><span class="es-icon">🃏</span> الكاردات</span>
-        <span class="es-arrow">▼</span>
-      </div>
-      <div class="es-body open">
+    <div class="card">
+      <div class="card-head" onclick="togCard(this)"><span class="card-head-title">🃏 الكاردات</span><span class="card-arrow">▼</span></div>
+      <div class="card-body open">
         <div id="contentCardsList"></div>
-        <button class="btn-add-card" onclick="addContentCard()">+ أضف كارد</button>
+        <button class="add-btn" onclick="S.contentCards.push({icon:'📌',title:'عنوان',desc:'وصف'});save();renderCards()">+ أضف كارد</button>
       </div>
     </div>
   </div>
 
-  <!-- ═══ PANEL: INSTRUCTOR ═══ -->
-  <div class="panel" id="panel-instructor">
+  <!-- VIDEOS -->
+  <div class="panel" id="p-videos">
+    <div class="panel-title">▶️ المحاضرات التجريبية</div>
+    <p class="panel-sub">بطاقات المحاضرات المجانية</p>
+    <div id="videosList"></div>
+    <button class="add-btn" onclick="S.videos.push({title:'عنوان المحاضرة',duration:'30 دقيقة',meta:'المدرب · الوحدة'});save();renderVideos()">+ أضف محاضرة</button>
+  </div>
+
+  <!-- INSTRUCTOR -->
+  <div class="panel" id="p-instructor">
     <div class="panel-title">👨‍⚕️ المدرب</div>
     <p class="panel-sub">معلومات وبيانات المدرب</p>
-
-    <div class="editor-section">
-      <div class="es-header" onclick="toggleSection(this)">
-        <span class="es-title"><span class="es-icon">👤</span> معلومات المدرب</span>
-        <span class="es-arrow">▼</span>
-      </div>
-      <div class="es-body open">
-        <div class="field-row">
-          <div class="field">
-            <label>اسم المدرب</label>
-            <input type="text" id="i_name" value="Dr. Raj Acquilla">
-          </div>
-          <div class="field">
-            <label>اللقب / التخصص</label>
-            <input type="text" id="i_title" value="متخصص طب التجميل — مؤسس RA Academy">
-          </div>
+    <div class="card">
+      <div class="card-head" onclick="togCard(this)"><span class="card-head-title">👤 المعلومات</span><span class="card-arrow">▼</span></div>
+      <div class="card-body open">
+        <div class="row">
+          <div class="f"><label>الاسم</label><input data-k="i_name"></div>
+          <div class="f"><label>اللقب</label><input data-k="i_title"></div>
         </div>
-        <div class="field">
-          <label>السيرة الذاتية</label>
-          <textarea id="i_bio" style="min-height:120px">دكتور راج أكويلا من أبرز أطباء التجميل على مستوى العالم ومؤسس RA Academy. متخصص في حقن البوتوكس والفيلر لأكثر من 14 عاماً، يُعدّ من أكثر المدربين طلباً في أوروبا وآسيا.</textarea>
-        </div>
-        <div class="field">
-          <label>صورة المدرب (URL)</label>
-          <input type="text" id="i_image" value="https://dentalcourse.store/cdn/shop/files/ra-summit-botox-and-filler-online-course-raj-acquilla-with-2024-updates-1238124555.jpg?v=1778640251&width=800">
-        </div>
+        <div class="f"><label>السيرة الذاتية</label><textarea data-k="i_bio" style="min-height:100px"></textarea></div>
+        <div class="f"><label>صورة المدرب (URL)</label><input data-k="i_image"></div>
       </div>
     </div>
-
-    <div class="editor-section">
-      <div class="es-header" onclick="toggleSection(this)">
-        <span class="es-title"><span class="es-icon">📊</span> الإحصائيات</span>
-        <span class="es-arrow">▼</span>
-      </div>
-      <div class="es-body open">
-        <div class="field-row">
-          <div class="field"><label>رقم ١</label><input type="text" id="i_stat1_num" value="+15K"></div>
-          <div class="field"><label>تسمية ١</label><input type="text" id="i_stat1_label" value="مريض حقيقي"></div>
-        </div>
-        <div class="field-row">
-          <div class="field"><label>رقم ٢</label><input type="text" id="i_stat2_num" value="+2000"></div>
-          <div class="field"><label>تسمية ٢</label><input type="text" id="i_stat2_label" value="طبيب درّبه"></div>
-        </div>
-        <div class="field-row">
-          <div class="field"><label>رقم ٣</label><input type="text" id="i_stat3_num" value="+14"></div>
-          <div class="field"><label>تسمية ٣</label><input type="text" id="i_stat3_label" value="سنة خبرة"></div>
-        </div>
+    <div class="card">
+      <div class="card-head" onclick="togCard(this)"><span class="card-head-title">📊 الإحصائيات</span><span class="card-arrow">▼</span></div>
+      <div class="card-body open">
+        <div class="row"><div class="f"><label>رقم ١</label><input data-k="i_s1n"></div><div class="f"><label>تسمية ١</label><input data-k="i_s1l"></div></div>
+        <div class="row"><div class="f"><label>رقم ٢</label><input data-k="i_s2n"></div><div class="f"><label>تسمية ٢</label><input data-k="i_s2l"></div></div>
+        <div class="row"><div class="f"><label>رقم ٣</label><input data-k="i_s3n"></div><div class="f"><label>تسمية ٣</label><input data-k="i_s3l"></div></div>
       </div>
     </div>
   </div>
 
-  <!-- ═══ PANEL: TESTIMONIALS ═══ -->
-  <div class="panel" id="panel-testimonials">
+  <!-- TESTIMONIALS -->
+  <div class="panel" id="p-testimonials">
     <div class="panel-title">⭐ آراء الأطباء</div>
-    <p class="panel-sub">عدّل أو أضف تقييمات جديدة</p>
+    <p class="panel-sub">أضف أو عدّل التقييمات</p>
     <div id="testiList"></div>
-    <button class="btn-add-card" onclick="addTestimonial()" style="margin-top:10px">+ أضف تقييم</button>
+    <button class="add-btn" onclick="S.testimonials.push({name:'اسم الطبيب',role:'التخصص',text:'نص التقييم',stars:5});save();renderTestis()">+ أضف تقييم</button>
   </div>
 
-  <!-- ═══ PANEL: FAQ ═══ -->
-  <div class="panel" id="panel-faq">
+  <!-- FAQ -->
+  <div class="panel" id="p-faq">
     <div class="panel-title">❓ الأسئلة الشائعة</div>
-    <p class="panel-sub">عدّل أو أضف أسئلة جديدة</p>
+    <p class="panel-sub">أضف أو عدّل الأسئلة</p>
     <div id="faqList"></div>
-    <button class="btn-add-card" onclick="addFaq()" style="margin-top:10px">+ أضف سؤال</button>
+    <button class="add-btn" onclick="S.faqs.push({q:'سؤال جديد؟',a:'الجواب هنا'});save();renderFaqs()">+ أضف سؤال</button>
   </div>
 
-  <!-- ═══ PANEL: PREVIEW VIDEOS ═══ -->
-  <div class="panel" id="panel-preview-videos">
-    <div class="panel-title">▶️ المحاضرات التجريبية</div>
-    <p class="panel-sub">عدّل بطاقات المحاضرات المجانية</p>
-    <div id="videosList"></div>
-    <button class="btn-add-card" onclick="addVideo()" style="margin-top:10px">+ أضف محاضرة</button>
-  </div>
-
-  <!-- ═══ PANEL: DESIGN ═══ -->
-  <div class="panel" id="panel-design">
-    <div class="panel-title">🎨 الألوان والتصميم</div>
-    <p class="panel-sub">خصّص ألوان الصفحة</p>
-
-    <div class="editor-section">
-      <div class="es-header" onclick="toggleSection(this)">
-        <span class="es-title"><span class="es-icon">🎨</span> الألوان الرئيسية</span>
-        <span class="es-arrow">▼</span>
-      </div>
-      <div class="es-body open">
-        <div class="field">
-          <label>اللون الرئيسي (الأخضر)</label>
-          <div class="color-field">
-            <input type="color" id="c_primary" value="#2E4036" oninput="document.getElementById('c_primary_text').value=this.value">
-            <input type="text" id="c_primary_text" value="#2E4036" oninput="document.getElementById('c_primary').value=this.value">
+  <!-- DESIGN -->
+  <div class="panel" id="p-design">
+    <div class="panel-title">🎨 الألوان والإحصائيات</div>
+    <p class="panel-sub">خصّص مظهر الصفحة</p>
+    <div class="card">
+      <div class="card-head" onclick="togCard(this)"><span class="card-head-title">🎨 الألوان</span><span class="card-arrow">▼</span></div>
+      <div class="card-body open">
+        <div class="f"><label>اللون الرئيسي</label>
+          <div class="color-wrap">
+            <input type="color" id="cp_c">
+            <input type="text" id="cp_t">
           </div>
         </div>
-        <div class="field">
-          <label>اللون الذهبي (الأزرار والتمييز)</label>
-          <div class="color-field">
-            <input type="color" id="c_gold" value="#C9A84C" oninput="document.getElementById('c_gold_text').value=this.value">
-            <input type="text" id="c_gold_text" value="#C9A84C" oninput="document.getElementById('c_gold').value=this.value">
+        <div class="f"><label>اللون الذهبي</label>
+          <div class="color-wrap">
+            <input type="color" id="cg_c">
+            <input type="text" id="cg_t">
           </div>
         </div>
-        <div class="field">
-          <label>لون الخلفية</label>
-          <div class="color-field">
-            <input type="color" id="c_bg" value="#F5F0E8" oninput="document.getElementById('c_bg_text').value=this.value">
-            <input type="text" id="c_bg_text" value="#F5F0E8" oninput="document.getElementById('c_bg').value=this.value">
+        <div class="f"><label>لون الخلفية</label>
+          <div class="color-wrap">
+            <input type="color" id="cb_c">
+            <input type="text" id="cb_t">
           </div>
         </div>
       </div>
     </div>
-
-    <div class="editor-section">
-      <div class="es-header" onclick="toggleSection(this)">
-        <span class="es-title"><span class="es-icon">📊</span> شريط الإحصائيات</span>
-        <span class="es-arrow">▼</span>
-      </div>
-      <div class="es-body open">
-        <div class="field-row">
-          <div class="field"><label>رقم ١</label><input type="text" id="s1_num" value="53+"></div>
-          <div class="field"><label>تسمية ١</label><input type="text" id="s1_label" value="ساعة محتوى HD"></div>
-        </div>
-        <div class="field-row">
-          <div class="field"><label>رقم ٢</label><input type="text" id="s2_num" value="+2000"></div>
-          <div class="field"><label>تسمية ٢</label><input type="text" id="s2_label" value="طبيب وأخصائية"></div>
-        </div>
-        <div class="field-row">
-          <div class="field"><label>رقم ٣</label><input type="text" id="s3_num" value="+14"></div>
-          <div class="field"><label>تسمية ٣</label><input type="text" id="s3_label" value="سنة خبرة المدرب"></div>
-        </div>
-        <div class="field-row">
-          <div class="field"><label>رقم ٤</label><input type="text" id="s4_num" value="2024"></div>
-          <div class="field"><label>تسمية ٤</label><input type="text" id="s4_label" value="آخر تحديث"></div>
-        </div>
+    <div class="card">
+      <div class="card-head" onclick="togCard(this)"><span class="card-head-title">📊 شريط الإحصائيات</span><span class="card-arrow">▼</span></div>
+      <div class="card-body open">
+        <div class="row"><div class="f"><label>رقم ١</label><input data-k="st1n"></div><div class="f"><label>تسمية ١</label><input data-k="st1l"></div></div>
+        <div class="row"><div class="f"><label>رقم ٢</label><input data-k="st2n"></div><div class="f"><label>تسمية ٢</label><input data-k="st2l"></div></div>
+        <div class="row"><div class="f"><label>رقم ٣</label><input data-k="st3n"></div><div class="f"><label>تسمية ٣</label><input data-k="st3l"></div></div>
+        <div class="row"><div class="f"><label>رقم ٤</label><input data-k="st4n"></div><div class="f"><label>تسمية ٤</label><input data-k="st4l"></div></div>
       </div>
     </div>
   </div>
 
-  <!-- ═══ PANEL: SETTINGS ═══ -->
-  <div class="panel" id="panel-settings">
-    <div class="panel-title">⚙️ الإعدادات العامة</div>
-    <p class="panel-sub">إعدادات الصفحة والروابط</p>
-
-    <div class="editor-section">
-      <div class="es-header" onclick="toggleSection(this)">
-        <span class="es-title"><span class="es-icon">🔗</span> روابط التواصل</span>
-        <span class="es-arrow">▼</span>
-      </div>
-      <div class="es-body open">
-        <div class="field">
-          <label>رقم واتساب (مع كود الدولة)</label>
-          <input type="text" id="set_wa" value="447400753956">
-          <div class="field-hint">بدون + في البداية</div>
-        </div>
-        <div class="field">
-          <label>البريد الإلكتروني</label>
-          <input type="text" id="set_email" value="support@dentalcourse.store">
-        </div>
-        <div class="field">
-          <label>رابط تليغرام</label>
-          <input type="text" id="set_tg" value="https://t.me/dntl_coo">
-        </div>
+  <!-- SETTINGS -->
+  <div class="panel" id="p-settings">
+    <div class="panel-title">⚙️ الإعدادات</div>
+    <p class="panel-sub">إعدادات الصفحة والتواصل</p>
+    <div class="card">
+      <div class="card-head" onclick="togCard(this)"><span class="card-head-title">🔗 التواصل</span><span class="card-arrow">▼</span></div>
+      <div class="card-body open">
+        <div class="f"><label>رقم واتساب (بدون +)</label><input data-k="wa"></div>
+        <div class="f"><label>البريد الإلكتروني</label><input data-k="email"></div>
       </div>
     </div>
-
-    <div class="editor-section">
-      <div class="es-header" onclick="toggleSection(this)">
-        <span class="es-title"><span class="es-icon">🌐</span> SEO</span>
-        <span class="es-arrow">▼</span>
-      </div>
-      <div class="es-body open">
-        <div class="field">
-          <label>عنوان الصفحة (Tab Title)</label>
-          <input type="text" id="set_title" value="أكاديمية ديـنـتـيـكو | كورس البوتوكس والفيلر الاحترافي">
-        </div>
-        <div class="field">
-          <label>وصف الصفحة (Meta Description)</label>
-          <textarea id="set_desc">كورس بوتوكس وفيلر المتقدم — أكاديمية ديـنـتـيـكو. تفاصيل الكورس، محاضرات تجريبية مجانية، ودعم مدى الحياة.</textarea>
-        </div>
+    <div class="card">
+      <div class="card-head" onclick="togCard(this)"><span class="card-head-title">🌐 SEO</span><span class="card-arrow">▼</span></div>
+      <div class="card-body open">
+        <div class="f"><label>عنوان الصفحة (Tab)</label><input data-k="seo_title"></div>
+        <div class="f"><label>وصف الصفحة</label><textarea data-k="seo_desc"></textarea></div>
       </div>
     </div>
-
-    <div class="editor-section">
-      <div class="es-header" onclick="toggleSection(this)">
-        <span class="es-title"><span class="es-icon">👁</span> إظهار/إخفاء الأقسام</span>
-        <span class="es-arrow">▼</span>
-      </div>
-      <div class="es-body open">
-        <div class="toggle-row">
-          <span class="toggle-label">شريط الإحصائيات</span>
-          <button class="toggle on" onclick="this.classList.toggle('on')"></button>
-        </div>
-        <div class="toggle-row">
-          <span class="toggle-label">المحاضرات التجريبية</span>
-          <button class="toggle on" onclick="this.classList.toggle('on')"></button>
-        </div>
-        <div class="toggle-row">
-          <span class="toggle-label">قسم المدرب</span>
-          <button class="toggle on" onclick="this.classList.toggle('on')"></button>
-        </div>
-        <div class="toggle-row">
-          <span class="toggle-label">آراء الأطباء</span>
-          <button class="toggle on" onclick="this.classList.toggle('on')"></button>
-        </div>
-        <div class="toggle-row">
-          <span class="toggle-label">الأسئلة الشائعة</span>
-          <button class="toggle on" onclick="this.classList.toggle('on')"></button>
-        </div>
-        <div class="toggle-row">
-          <span class="toggle-label">كورسات أخرى</span>
-          <button class="toggle on" onclick="this.classList.toggle('on')"></button>
-        </div>
-        <div class="toggle-row">
-          <span class="toggle-label">زر واتساب العائم</span>
-          <button class="toggle on" onclick="this.classList.toggle('on')"></button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ═══ PANEL: PREVIEW ═══ -->
-  <div class="panel preview-panel" id="panel-preview">
-    <div class="preview-toolbar">
-      <span style="font-size:14px;font-weight:700">معاينة الصفحة</span>
-      <button class="device-btn active" onclick="setDevice('100%',this)">🖥 Desktop</button>
-      <button class="device-btn" onclick="setDevice('768px',this)">📱 Tablet</button>
-      <button class="device-btn" onclick="setDevice('390px',this)">📱 Mobile</button>
-    </div>
-    <iframe id="previewFrame" src="../pages/botox-filler.html"></iframe>
   </div>
 
 </main>
 </div>
 
 <!-- TOKEN MODAL -->
-<div id="tokenModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:1000;align-items:center;justify-content:center;">
-  <div style="background:#fff;border-radius:20px;padding:36px;max-width:440px;width:90%;direction:rtl;font-family:'Tajawal',sans-serif;">
-    <div style="font-size:22px;font-weight:900;margin-bottom:8px">🔑 ربط GitHub</div>
-    <p style="font-size:14px;color:#7A7A7A;margin-bottom:24px;line-height:1.7">أدخل الـ GitHub Token عشان يحفظ التغييرات على موقعك تلقائياً. يُحفظ في متصفحك فقط ولا يُرسل لأي مكان.</p>
-    <div style="margin-bottom:16px">
-      <label style="font-size:13px;font-weight:700;color:#4A4A4A;display:block;margin-bottom:6px">GitHub Personal Access Token</label>
-      <input id="tokenInput" type="password" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx"
-        style="width:100%;padding:11px 14px;border:1px solid rgba(46,64,54,0.2);border-radius:8px;font-family:'Tajawal',sans-serif;font-size:14px;outline:none;direction:ltr">
-    </div>
-    <p style="font-size:12px;color:#7A7A7A;margin-bottom:20px">
-      👉 أنشئه من: <a href="https://github.com/settings/tokens/new" target="_blank" style="color:#2E4036;font-weight:700">github.com/settings/tokens/new</a><br>
-      فعّل ✅ <strong>repo</strong> فقط
-    </p>
-    <div style="display:flex;gap:10px">
-      <button onclick="saveToken()" style="flex:1;background:#2E4036;color:#fff;border:none;padding:13px;border-radius:8px;font-family:'Tajawal',sans-serif;font-size:15px;font-weight:800;cursor:pointer;">حفظ وربط</button>
-      <button onclick="closeTokenModal()" style="padding:13px 20px;border:1.5px solid rgba(46,64,54,0.2);border-radius:8px;background:none;font-family:'Tajawal',sans-serif;font-size:14px;cursor:pointer;">إلغاء</button>
+<div class="modal-bg" id="modal">
+  <div class="modal">
+    <h3>🔑 ربط GitHub</h3>
+    <p>أدخل الـ GitHub Token عشان يحفظ التغييرات على موقعك تلقائياً. يُحفظ في متصفحك فقط.<br><br>
+    أنشئه من: <a href="https://github.com/settings/tokens/new" target="_blank" style="color:#2E4036;font-weight:700">github.com/settings/tokens/new</a> وفعّل ✅ <strong>repo</strong></p>
+    <input id="tokenInput" type="password" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
+    <div class="modal-btns">
+      <button class="mbtn1" onclick="saveToken()">حفظ وربط</button>
+      <button class="mbtn2" onclick="closeModal()">إلغاء</button>
     </div>
   </div>
 </div>
-
-<!-- TOAST -->
 <div class="toast" id="toast"></div>
 
 <script>
-// ── DEFAULT DATA ──
-let data = {
-  features: [
-    "53+ ساعة محتوى HD مع أبرز المتخصصين العالميين",
-    "وصول مدى الحياة مع جميع التحديثات المستقبلية",
-    "شهادة إتمام رقمية معتمدة من RA Academy",
-    "تسليم فوري عبر تليغرام بعد الشراء"
-  ],
-  contentCards: [
-    {icon:"🎥", title:"53+ ساعة فيديو HD", desc:"محاضرات، نقاشات، وعروض حية مع أبرز المتخصصين"},
-    {icon:"🏅", title:"شهادة إلكترونية", desc:"شهادة إتمام معتمدة رقمياً تصلك فور إكمال الكورس"},
-    {icon:"♾️", title:"وصول مدى الحياة", desc:"ادفع مرة واحتفظ بالمحتوى إلى الأبد مع التحديثات"},
-    {icon:"🧠", title:"تشريح ووقاية", desc:"مناطق الخطر وطائرات الحقن الآمنة"},
-    {icon:"💉", title:"جلسات بوتوكس متقدمة", desc:"الجبهة، الغضبة، حول العين، الماستر وأكثر"},
-    {icon:"💋", title:"فيلر بكل تقنياته", desc:"Russian lip، tenting، microbolus وغيرها"}
-  ],
-  testimonials: [
-    {name:"د. سارة المنصور", role:"طبيبة تجميل — الرياض", text:"الكورس غيّر طريقة تعاملي مع المريض كلياً — الآن أفهم التشريح بعمق وأقدر أتجنب المناطق الخطرة بثقة عالية.", stars:5},
-    {name:"د. مريم الهاشمي", role:"أخصائية جلدية — دبي", text:"53 ساعة من المحتوى الاحترافي بـ 20 دولار فقط — لا يصدّق! أفضل استثمار في مسيرتي المهنية.", stars:5},
-    {name:"د. أحمد العبدالله", role:"طبيب تجميل — الكويت", text:"ما توقعت المستوى يكون هذا — المحتوى يستحق عشرة أضعاف سعره. أنصح فيه كل طبيب تجميل.", stars:5},
-    {name:"د. نورة الجابري", role:"طبيبة عامة — عمان", text:"أخذت الكورس قبل ما أبدأ عيادتي وكان القرار الصح. ديـنـتـيـكو موثوق 100%.", stars:5}
-  ],
-  faqs: [
-    {q:"كيف يتم تسليم الكورس؟", a:"بعد إتمام الشراء، تتواصل معنا عبر التليغرام وتحصل على رابط الوصول الكامل للكورس فوراً."},
-    {q:"هل الوصول للأبد أم محدود بوقت؟", a:"وصولك مدى الحياة تماماً — ادفع مرة واحدة واحتفظ بالمحتوى إلى الأبد، بما في ذلك جميع التحديثات المستقبلية."},
-    {q:"ما هي الشهادة التي سأحصل عليها؟", a:"تحصل على شهادة إتمام رقمية معتمدة من RA Academy بعد إكمال الكورس."},
-    {q:"هل يناسبني الكورس كمبتدئ؟", a:"نعم! الكورس مصمم ليناسب جميع المستويات — يبدأ من الأساسيات ويتدرج نحو التقنيات المتقدمة."},
-    {q:"ما هي طرق الدفع المتاحة؟", a:"نقبل Visa، Mastercard، Apple Pay، Google Pay، Klarna، Skrill، وAmex. جميع المعاملات آمنة ومشفرة."}
-  ],
-  videos: [
-    {title:"رسم الوجه بدقة رقمية — خريطة العضلات والأوعية", duration:"32 دقيقة", meta:"د. راج أكويلا · مقدمة الكورس"},
-    {title:"حق البوتوكس في منطقة النظرة", duration:"28 دقيقة", meta:"د. راج أكويلا · الوحدة الثانية"},
-    {title:"قراءة وجه المريض وخطة العلاج الأولى", duration:"41 دقيقة", meta:"د. راج أكويلا · التقييم والتخطيط"},
-    {title:"الفيلر التحت عيني: أمان وعلاج", duration:"22 دقيقة", meta:"د. راج أكويلا · منطقة الخطر"},
-    {title:"إدارة المضاعفات والطوارئ", duration:"35 دقيقة", meta:"د. راج أكويلا · السلامة أولاً"},
-    {title:"نقاش البوتوكس والفيلر والطموزون", duration:"19 دقيقة", meta:"د. راج أكويلا · نقاش الخبراء"}
-  ]
+// ══ STATE ══
+const DEFAULTS = {
+  h_title1:'كورس البوتوكس والفيلر الاحترافي',h_title2:'من التشريح حتى الإتقان',
+  h_desc:'كورس شامل يغطي تقنيات البوتوكس والفيلر من الأساسيات حتى المستوى المتقدم، مع تشريح وجهي وخرائط أوعية وحالات حقيقية.',
+  h_badge:'كورس إلكتروني احترافي',h_stars_text:'4.9 — أكثر من 2000 طبيب وأخصائية',h_stars_count:'5',
+  h_image:'https://dentalcourse.store/cdn/shop/files/ra-summit-botox-and-filler-online-course-raj-acquilla-with-2024-updates-1238124555.jpg?v=1778640251&width=1200',
+  h_caption:'شاهدي 6 محاضرات تجريبية مجانًا',
+  h_buy_link:'https://dentalcourse.store/products/ra-summit-botox-and-filler-online-course-raj-acquilla-with-2024-updates',
+  h_buy_text:'اشتري الآن ⚡',h_trial_text:'▶ شاهد محاضرة تجريبية مجانًا',h_guarantee:'ضمان استرداد كامل خلال 7 أيام · تسليم فوري',
+  p_old:'$350',p_new:'$20',p_badge:'وفّر 94%',p_iraq:'20,000 دينار',p_iraq_full:'🇮🇶 للأطباء داخل العراق: 20,000 دينار فقط',
+  c_title:'كل ما ستحصلين عليه',c_sub:'تغطي مكتبة مشمولة بالكورس كل جوانب حقن البوتوكس والفيلر بدقة علمية',
+  i_name:'Dr. Raj Acquilla',i_title:'متخصص طب التجميل — مؤسس RA Academy',
+  i_bio:'دكتور راج أكويلا من أبرز أطباء التجميل على مستوى العالم ومؤسس RA Academy. متخصص في حقن البوتوكس والفيلر لأكثر من 14 عاماً.',
+  i_image:'https://dentalcourse.store/cdn/shop/files/ra-summit-botox-and-filler-online-course-raj-acquilla-with-2024-updates-1238124555.jpg?v=1778640251&width=800',
+  i_s1n:'+15K',i_s1l:'مريض حقيقي',i_s2n:'+2000',i_s2l:'طبيب درّبه',i_s3n:'+14',i_s3l:'سنة خبرة',
+  st1n:'53+',st1l:'ساعة محتوى HD',st2n:'+2000',st2l:'طبيب وأخصائية',st3n:'+14',st3l:'سنة خبرة المدرب',st4n:'2024',st4l:'آخر تحديث',
+  wa:'447400753956',email:'support@dentalcourse.store',
+  seo_title:'أكاديمية ديـنـتـيـكو | كورس البوتوكس والفيلر الاحترافي',seo_desc:'كورس بوتوكس وفيلر المتقدم — أكاديمية ديـنـتـيـكو.',
+  colors:{primary:'#2E4036',gold:'#C9A84C',bg:'#F5F0E8'},
+  features:['53+ ساعة محتوى HD مع أبرز المتخصصين العالميين','وصول مدى الحياة مع جميع التحديثات المستقبلية','شهادة إتمام رقمية معتمدة من RA Academy','تسليم فوري عبر تليغرام بعد الشراء'],
+  contentCards:[{icon:'🎥',title:'53+ ساعة فيديو HD',desc:'محاضرات، نقاشات، وعروض حية مع أبرز المتخصصين'},{icon:'🏅',title:'شهادة إلكترونية',desc:'شهادة إتمام معتمدة رقمياً تصلك فور إكمال الكورس'},{icon:'♾️',title:'وصول مدى الحياة',desc:'ادفع مرة واحتفظ بالمحتوى إلى الأبد مع التحديثات'},{icon:'🧠',title:'تشريح ووقاية',desc:'مناطق الخطر وطائرات الحقن الآمنة'},{icon:'💉',title:'جلسات بوتوكس متقدمة',desc:'الجبهة، الغضبة، حول العين، الماستر وأكثر'},{icon:'💋',title:'فيلر بكل تقنياته',desc:'Russian lip، tenting، microbolus وغيرها'}],
+  testimonials:[{name:'د. سارة المنصور',role:'طبيبة تجميل — الرياض',text:'الكورس غيّر طريقة تعاملي مع المريض كلياً.',stars:5},{name:'د. مريم الهاشمي',role:'أخصائية جلدية — دبي',text:'53 ساعة من المحتوى الاحترافي بـ 20 دولار فقط!',stars:5},{name:'د. أحمد العبدالله',role:'طبيب تجميل — الكويت',text:'المحتوى يستحق عشرة أضعاف سعره.',stars:5},{name:'د. نورة الجابري',role:'طبيبة عامة — عمان',text:'ديـنـتـيـكو موثوق 100%.',stars:5}],
+  faqs:[{q:'كيف يتم تسليم الكورس؟',a:'بعد إتمام الشراء، تتواصل معنا عبر التليغرام وتحصل على رابط الوصول الكامل فوراً.'},{q:'هل الوصول للأبد؟',a:'نعم، وصولك مدى الحياة مع جميع التحديثات المستقبلية.'},{q:'ما هي الشهادة؟',a:'شهادة إتمام رقمية معتمدة من RA Academy.'},{q:'هل يناسبني كمبتدئ؟',a:'نعم! يبدأ من الأساسيات ويتدرج نحو التقنيات المتقدمة.'},{q:'طرق الدفع؟',a:'Visa، Mastercard، Apple Pay، Google Pay، Klarna، Skrill.'}],
+  videos:[{title:'رسم الوجه بدقة رقمية',duration:'32 دقيقة',meta:'د. راج أكويلا · مقدمة'},{title:'حق البوتوكس في منطقة النظرة',duration:'28 دقيقة',meta:'د. راج أكويلا · الوحدة الثانية'},{title:'قراءة وجه المريض وخطة العلاج',duration:'41 دقيقة',meta:'د. راج أكويلا · التخطيط'},{title:'الفيلر التحت عيني',duration:'22 دقيقة',meta:'د. راج أكويلا · منطقة الخطر'},{title:'إدارة المضاعفات',duration:'35 دقيقة',meta:'د. راج أكويلا · السلامة'},{title:'نقاش البوتوكس والفيلر',duration:'19 دقيقة',meta:'د. راج أكويلا · نقاش'}]
 };
 
-// Load from localStorage if exists
-const saved = localStorage.getItem('dentico_data');
-if(saved) data = JSON.parse(saved);
+// Load or init state
+let S = JSON.parse(localStorage.getItem('dentico_S')||'null');
+if(!S) S = JSON.parse(JSON.stringify(DEFAULTS));
 
-// ── RENDER LISTS ──
+// ══ SAVE ══
+let saveTimer;
+function save(){
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(()=>localStorage.setItem('dentico_S',JSON.stringify(S)),300);
+}
+
+// ══ BIND INPUTS ══
+function bindAll(){
+  // Text/textarea inputs
+  document.querySelectorAll('[data-k]').forEach(el=>{
+    const k=el.dataset.k;
+    el.value = S[k]!==undefined ? S[k] : '';
+    el.oninput = ()=>{ S[k]=el.value; save(); };
+  });
+  // Color pickers
+  const colors=[['cp',S.colors,'primary'],['cg',S.colors,'gold'],['cb',S.colors,'bg']];
+  colors.forEach(([id,obj,key])=>{
+    const c=document.getElementById(id+'_c'), t=document.getElementById(id+'_t');
+    if(!c||!t) return;
+    c.value=t.value=obj[key];
+    c.oninput=()=>{ obj[key]=c.value; t.value=c.value; save(); };
+    t.oninput=()=>{ if(/^#[0-9A-Fa-f]{6}$/.test(t.value)){obj[key]=t.value;c.value=t.value;save();} };
+  });
+}
+
+// ══ RENDER LISTS ══
+const esc=s=>String(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
+
 function renderFeatures(){
-  document.getElementById('featuresList').innerHTML = data.features.map((f,i)=>`
-    <div class="card-item">
-      <span class="card-item-icon">✅</span>
-      <div class="card-item-body">
-        <input type="text" value="${f}" oninput="data.features[${i}]=this.value" placeholder="نص الميزة">
+  document.getElementById('featuresList').innerHTML=S.features.map((f,i)=>`
+    <div class="list-item">
+      <div class="list-item-body">
+        <input value="${esc(f)}" oninput="S.features[${i}]=this.value;save()" placeholder="نص الميزة">
       </div>
-      <button class="card-item-del" onclick="removeItem('features',${i})">✕</button>
+      <button class="del-btn" onclick="S.features.splice(${i},1);save();renderFeatures()">✕</button>
     </div>`).join('');
 }
 
-function renderContentCards(){
-  document.getElementById('contentCardsList').innerHTML = data.contentCards.map((c,i)=>`
-    <div class="card-item">
-      <div class="card-item-body">
-        <input type="text" value="${c.icon}" oninput="data.contentCards[${i}].icon=this.value" placeholder="أيقونة (emoji)" style="max-width:80px;display:inline-block;margin-left:6px">
-        <input type="text" value="${c.title}" oninput="data.contentCards[${i}].title=this.value" placeholder="العنوان">
-        <input type="text" value="${c.desc}" oninput="data.contentCards[${i}].desc=this.value" placeholder="الوصف">
+function renderCards(){
+  document.getElementById('contentCardsList').innerHTML=S.contentCards.map((c,i)=>`
+    <div class="list-item">
+      <div class="list-item-body">
+        <input value="${esc(c.icon)}" oninput="S.contentCards[${i}].icon=this.value;save()" placeholder="أيقونة" style="max-width:70px">
+        <input value="${esc(c.title)}" oninput="S.contentCards[${i}].title=this.value;save()" placeholder="العنوان">
+        <textarea oninput="S.contentCards[${i}].desc=this.value;save()" placeholder="الوصف">${esc(c.desc)}</textarea>
       </div>
-      <button class="card-item-del" onclick="removeItem('contentCards',${i})">✕</button>
+      <button class="del-btn" onclick="S.contentCards.splice(${i},1);save();renderCards()">✕</button>
     </div>`).join('');
 }
 
-function renderTestimonials(){
-  document.getElementById('testiList').innerHTML = data.testimonials.map((t,i)=>`
-    <div class="testi-item">
-      <div class="testi-item-header">
-        <span class="testi-item-title">تقييم ${i+1}</span>
-        <button class="card-item-del" onclick="removeItem('testimonials',${i})">✕</button>
+function renderTestis(){
+  document.getElementById('testiList').innerHTML=S.testimonials.map((t,i)=>`
+    <div class="list-item" style="flex-direction:column">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <span style="font-size:12px;font-weight:700;color:var(--text2)">تقييم ${i+1}</span>
+        <button class="del-btn" onclick="S.testimonials.splice(${i},1);save();renderTestis()">✕</button>
       </div>
-      <div class="field-row">
-        <div class="field"><label>الاسم</label><input type="text" value="${t.name}" oninput="data.testimonials[${i}].name=this.value"></div>
-        <div class="field"><label>المنصب / المدينة</label><input type="text" value="${t.role}" oninput="data.testimonials[${i}].role=this.value"></div>
+      <div class="row" style="margin-bottom:6px">
+        <input value="${esc(t.name)}" oninput="S.testimonials[${i}].name=this.value;save()" placeholder="الاسم">
+        <input value="${esc(t.role)}" oninput="S.testimonials[${i}].role=this.value;save()" placeholder="المنصب">
       </div>
-      <div class="field"><label>نص التقييم</label><textarea oninput="data.testimonials[${i}].text=this.value">${t.text}</textarea></div>
-      <div class="field"><label>عدد النجوم</label><input type="number" value="${t.stars}" min="1" max="5" oninput="data.testimonials[${i}].stars=+this.value" style="max-width:80px"></div>
+      <textarea oninput="S.testimonials[${i}].text=this.value;save()" placeholder="نص التقييم">${esc(t.text)}</textarea>
+      <input type="number" min="1" max="5" value="${t.stars}" oninput="S.testimonials[${i}].stars=+this.value;save()" placeholder="النجوم" style="max-width:80px;margin-top:6px">
     </div>`).join('');
 }
 
 function renderFaqs(){
-  document.getElementById('faqList').innerHTML = data.faqs.map((f,i)=>`
-    <div class="faq-item-edit">
-      <div class="faq-item-edit-body">
-        <input type="text" value="${f.q}" oninput="data.faqs[${i}].q=this.value" placeholder="السؤال">
-        <textarea oninput="data.faqs[${i}].a=this.value" placeholder="الجواب">${f.a}</textarea>
+  document.getElementById('faqList').innerHTML=S.faqs.map((f,i)=>`
+    <div class="list-item">
+      <div class="list-item-body">
+        <input value="${esc(f.q)}" oninput="S.faqs[${i}].q=this.value;save()" placeholder="السؤال">
+        <textarea oninput="S.faqs[${i}].a=this.value;save()" placeholder="الجواب">${esc(f.a)}</textarea>
       </div>
-      <button class="card-item-del" onclick="removeItem('faqs',${i})">✕</button>
+      <button class="del-btn" onclick="S.faqs.splice(${i},1);save();renderFaqs()">✕</button>
     </div>`).join('');
 }
 
 function renderVideos(){
-  document.getElementById('videosList').innerHTML = data.videos.map((v,i)=>`
-    <div class="card-item">
-      <div class="card-item-body">
-        <input type="text" value="${v.title}" oninput="data.videos[${i}].title=this.value" placeholder="عنوان المحاضرة">
-        <input type="text" value="${v.duration}" oninput="data.videos[${i}].duration=this.value" placeholder="المدة (مثال: 32 دقيقة)" style="max-width:160px;display:inline-block;margin-left:6px">
-        <input type="text" value="${v.meta}" oninput="data.videos[${i}].meta=this.value" placeholder="المدرب · الوحدة">
-      </div>
-      <button class="card-item-del" onclick="removeItem('videos',${i})">✕</button>
-    </div>`).join('');
-}
-
-// ── ADD / REMOVE ──
-function addFeature(){ data.features.push("ميزة جديدة"); renderFeatures(); }
-function addContentCard(){ data.contentCards.push({icon:"📌",title:"عنوان جديد",desc:"وصف الكارد"}); renderContentCards(); }
-function addTestimonial(){ data.testimonials.push({name:"اسم الطبيب",role:"التخصص — المدينة",text:"نص التقييم هنا...",stars:5}); renderTestimonials(); }
-function addFaq(){ data.faqs.push({q:"سؤال جديد؟",a:"الجواب هنا"}); renderFaqs(); }
-function addVideo(){ data.videos.push({title:"عنوان المحاضرة",duration:"30 دقيقة",meta:"المدرب · الوحدة"}); renderVideos(); }
-
-function removeItem(key,i){ data[key].splice(i,1); renderAll(); }
-
-function renderAll(){
-  renderFeatures(); renderContentCards(); renderTestimonials(); renderFaqs(); renderVideos();
-}
-
-// ── PANEL NAVIGATION ──
-const panelTitles = {
-  hero:'🏠 قسم الهيرو', content:'📦 محتوى الكورس',
-  'preview-videos':'▶️ المحاضرات التجريبية', instructor:'👨‍⚕️ المدرب',
-  pricing:'💰 الأسعار', testimonials:'⭐ آراء الأطباء',
-  faq:'❓ الأسئلة الشائعة', design:'🎨 الألوان والتصميم',
-  settings:'⚙️ الإعدادات', preview:'👁 معاينة الصفحة'
-};
-function showPanel(id){
-  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-  document.getElementById('panel-'+id).classList.add('active');
-  document.querySelectorAll('.nav-item').forEach(n=>{
-    if(n.getAttribute('onclick')?.includes(id)) n.classList.add('active');
-  });
-  document.getElementById('panelTitle').textContent = panelTitles[id]||'';
-}
-
-// ── TOGGLE SECTION ──
-function toggleSection(header){
-  const body = header.nextElementSibling;
-  const arrow = header.querySelector('.es-arrow');
-  body.classList.toggle('open');
-  arrow.style.transform = body.classList.contains('open') ? '' : 'rotate(-90deg)';
-}
-
-// ── GITHUB CONFIG ──
-const GITHUB_REPO = 'rjgbnerojubvnh/dentico-pages';
-const GITHUB_FILE = 'pages/botox-filler.html';
-
-function getToken(){ return localStorage.getItem('gh_token')||''; }
-
-function showTokenModal(){
-  document.getElementById('tokenModal').style.display='flex';
-}
-function closeTokenModal(){
-  document.getElementById('tokenModal').style.display='none';
-}
-function saveToken(){
-  const t = document.getElementById('tokenInput').value.trim();
-  if(!t){ alert('أدخل الـ Token أولاً'); return; }
-  localStorage.setItem('gh_token', t);
-  closeTokenModal();
-  showToast('✅ تم حفظ الـ Token!');
-}
-
-// ── BUILD PAGE HTML ──
-function buildPageHTML(){
-  const d = data;
-  const primary = document.getElementById('c_primary')?.value || '#2E4036';
-  const gold    = document.getElementById('c_gold')?.value    || '#C9A84C';
-  const bg      = document.getElementById('c_bg')?.value      || '#F5F0E8';
-
-  const starsStr = '★'.repeat(+document.getElementById('h_stars_count')?.value||5);
-
-  const featuresHTML = d.features.map(f=>`
-      <div class="hf-item"><span class="hf-check">✓</span>${f}</div>`).join('');
-
-  const cardsHTML = d.contentCards.map(c=>`
-    <div class="inside-card">
-      <div class="ic-icon">${c.icon}</div>
-      <div class="ic-title">${c.title}</div>
-      <p class="ic-desc">${c.desc}</p>
-    </div>`).join('');
-
-  const testiHTML = d.testimonials.map(t=>`
-    <div class="testi-card">
-      <div class="testi-stars">${'★'.repeat(t.stars)}</div>
-      <p class="testi-text">${t.text}</p>
-      <div class="testi-author">
-        <div class="testi-avatar">${t.name.split(' ').map(w=>w[0]).join('').slice(0,2)}</div>
-        <div><div class="testi-name">${t.name}</div><div class="testi-role">${t.role}</div></div>
-      </div>
-    </div>`).join('');
-
-  const faqHTML = d.faqs.map((f,i)=>`
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
-        ${f.q}<span class="faq-arrow">▼</span>
-      </button>
-      <div class="faq-a">${f.a}</div>
-    </div>`).join('');
-
-  const videosHTML = d.videos.map(v=>`
-    <div class="preview-card">
-      <div class="pc-thumb">
-        <img src="${document.getElementById('h_image')?.value||''}" alt="">
-        <div class="pc-play"></div>
-        <div class="pc-duration">${v.duration}</div>
-        <div class="pc-tag">مجاني</div>
-      </div>
-      <div class="pc-body">
-        <div class="pc-title">${v.title}</div>
-        <div class="pc-meta">${v.meta}</div>
-      </div>
-    </div>`).join('');
-
-  const statsHTML = [1,2,3,4].map(n=>`
-    <div class="stat-item">
-      <div class="stat-num">${document.getElementById('s'+n+'_num')?.value||''}</div>
-      <div class="stat-label">${document.getElementById('s'+n+'_label')?.value||''}</div>
-    </div>`).join('');
-
-  const g = (id)=>document.getElementById(id)?.value||'';
-
-  return `<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="${g('set_desc')}">
-<title>${g('set_title')}</title>
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-:root{
-  --cream:${bg};--cream2:#EDE8DC;--cream3:#E4DDD0;
-  --green:${primary};--green2:#3A5246;--green3:#243328;
-  --gold:${gold};--text:#1A1A1A;--text2:#4A4A4A;--text3:#7A7A7A;
-  --white:#FFFFFF;--border:rgba(46,64,54,0.12);
-}
-html{scroll-behavior:smooth}
-body{font-family:'Tajawal',sans-serif;background:var(--cream);color:var(--text);overflow-x:hidden;direction:rtl}
-nav{position:sticky;top:0;z-index:200;background:rgba(245,240,232,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 60px;display:flex;align-items:center;justify-content:space-between;height:60px;}
-.nav-logo{font-size:20px;font-weight:800;color:var(--green);display:flex;align-items:center;gap:8px}
-.nav-logo span{width:34px;height:34px;background:var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--cream);font-size:14px;font-weight:800}
-.nav-links{display:flex;align-items:center;gap:28px}
-.nav-links a{font-size:14px;font-weight:500;color:var(--text2);text-decoration:none;transition:color 0.2s}
-.nav-links a:hover{color:var(--green)}
-.nav-cta{background:var(--green);color:var(--white);padding:9px 22px;border-radius:8px;font-size:14px;font-weight:700;text-decoration:none;transition:all 0.2s;border:none;cursor:pointer;font-family:'Tajawal',sans-serif;}
-.nav-cta:hover{background:var(--green2)}
-.hero{display:grid;grid-template-columns:1fr 1fr;min-height:calc(100vh - 60px);background:var(--cream);}
-.hero-right{padding:60px 60px 60px 40px;display:flex;flex-direction:column;justify-content:center;}
-.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(46,64,54,0.08);color:var(--green);padding:5px 14px;border-radius:100px;font-size:12px;font-weight:700;margin-bottom:22px;width:fit-content;}
-.hero-badge::before{content:'★';font-size:11px}
-.hero h1{font-size:clamp(32px,3.5vw,52px);font-weight:900;line-height:1.2;color:var(--text);margin-bottom:18px;}
-.hero h1 em{font-style:normal;color:var(--green)}
-.hero-desc{font-size:15px;color:var(--text2);line-height:1.8;margin-bottom:28px;max-width:440px}
-.stars-row{display:flex;align-items:center;gap:10px;margin-bottom:28px}
-.stars{color:var(--gold);font-size:16px;letter-spacing:2px}
-.stars-text{font-size:13px;color:var(--text3);font-weight:500}
-.price-block{background:var(--white);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:24px;}
-.price-row{display:flex;align-items:flex-end;gap:16px;margin-bottom:14px;flex-wrap:wrap}
-.price-old{font-size:20px;color:var(--text3);text-decoration:line-through;font-weight:500}
-.price-new{font-size:44px;font-weight:900;color:var(--green);line-height:1}
-.price-badge{background:var(--green);color:var(--white);font-size:12px;font-weight:800;padding:4px 12px;border-radius:100px;margin-bottom:6px;}
-.price-iraq{background:rgba(46,64,54,0.06);border-radius:8px;padding:10px 14px;font-size:13px;color:var(--green);font-weight:700;margin-bottom:20px;}
-.btn-buy{display:block;width:100%;background:var(--green);color:var(--white);border:none;padding:16px;border-radius:10px;font-family:'Tajawal',sans-serif;font-size:17px;font-weight:800;cursor:pointer;transition:all 0.2s;margin-bottom:10px;text-decoration:none;text-align:center;}
-.btn-buy:hover{background:var(--green2);transform:translateY(-2px)}
-.btn-trial{display:block;width:100%;background:transparent;color:var(--green);border:1.5px solid var(--green);padding:13px;border-radius:10px;font-family:'Tajawal',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:all 0.2s;text-decoration:none;text-align:center;}
-.btn-trial:hover{background:rgba(46,64,54,0.05)}
-.guarantee{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text3);margin-top:12px;justify-content:center;}
-.guarantee::before{content:'🔒';font-size:14px}
-.hero-features{display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
-.hf-item{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text2)}
-.hf-check{width:22px;height:22px;background:rgba(46,64,54,0.08);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--green);font-size:13px;font-weight:900;flex-shrink:0;}
-.hero-left{position:relative;overflow:hidden;background:var(--green3);}
-.hero-video-wrap{width:100%;height:100%;position:relative;}
-.hero-video-wrap img{width:100%;height:100%;object-fit:cover;opacity:0.75;}
-.hero-video-overlay{position:absolute;inset:0;background:linear-gradient(to right,var(--green3) 0%,transparent 50%);}
-.play-btn{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:64px;height:64px;background:rgba(255,255,255,0.95);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform 0.2s;box-shadow:0 4px 20px rgba(0,0,0,0.3);}
-.play-btn:hover{transform:translate(-50%,-50%) scale(1.1)}
-.play-btn::after{content:'';border-style:solid;border-width:10px 0 10px 18px;border-color:transparent transparent transparent var(--green);margin-right:-4px;}
-.hero-caption{position:absolute;bottom:30px;right:30px;left:30px;background:rgba(46,64,54,0.9);backdrop-filter:blur(8px);border-radius:12px;padding:14px 18px;color:var(--white);font-size:13px;font-weight:700;}
-.hero-caption span{color:var(--gold);font-size:18px;font-weight:900;display:block;margin-top:4px}
-.stats-bar{background:var(--green);display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid rgba(255,255,255,0.1);}
-.stat-item{padding:28px 20px;text-align:center;border-left:1px solid rgba(255,255,255,0.1);}
-.stat-item:last-child{border-left:none}
-.stat-num{font-size:32px;font-weight:900;color:var(--white);line-height:1}
-.stat-label{font-size:13px;color:rgba(255,255,255,0.65);margin-top:5px;font-weight:500}
-.section{padding:80px 80px}
-.section-alt{background:var(--white)}
-.s-eyebrow{font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--green);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
-.s-eyebrow::before{content:'';width:24px;height:2px;background:currentColor;flex-shrink:0}
-.s-title{font-size:clamp(26px,3vw,38px);font-weight:900;line-height:1.2;margin-bottom:12px}
-.s-sub{font-size:16px;color:var(--text2);max-width:500px;line-height:1.75}
-.inside-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:48px;}
-.inside-card{background:var(--cream);border:1px solid var(--border);border-radius:14px;padding:24px;transition:all 0.25s;}
-.inside-card:hover{border-color:var(--green);transform:translateY(-3px);box-shadow:0 8px 28px rgba(46,64,54,0.1)}
-.ic-icon{width:44px;height:44px;background:rgba(46,64,54,0.08);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:14px;}
-.ic-title{font-size:15px;font-weight:800;color:var(--text);margin-bottom:8px}
-.ic-desc{font-size:13px;color:var(--text2);line-height:1.7}
-.instructor-section{display:grid;grid-template-columns:1fr 1fr;gap:0;background:var(--cream2);}
-.ins-content{padding:80px 60px 80px 80px;display:flex;flex-direction:column;justify-content:center}
-.ins-img{position:relative;overflow:hidden;min-height:500px}
-.ins-img img{width:100%;height:100%;object-fit:cover;object-position:center top}
-.ins-stats{display:flex;gap:40px;margin-top:36px}
-.ins-stat-num{font-size:36px;font-weight:900;color:var(--green)}
-.ins-stat-label{font-size:13px;color:var(--text3);margin-top:3px}
-.preview-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:48px;}
-.preview-card{background:var(--cream);border:1px solid var(--border);border-radius:14px;overflow:hidden;cursor:pointer;transition:all 0.25s;}
-.preview-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,0.1)}
-.pc-thumb{position:relative;height:160px;overflow:hidden;background:var(--green3);}
-.pc-thumb img{width:100%;height:100%;object-fit:cover;opacity:0.7;}
-.pc-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:46px;height:46px;background:rgba(255,255,255,0.9);border-radius:50%;display:flex;align-items:center;justify-content:center;}
-.pc-play::after{content:'';border-style:solid;border-width:7px 0 7px 13px;border-color:transparent transparent transparent var(--green);margin-right:-3px;}
-.pc-duration{position:absolute;bottom:10px;left:10px;background:rgba(0,0,0,0.7);color:var(--white);font-size:11px;padding:2px 8px;border-radius:4px;font-weight:600;}
-.pc-tag{position:absolute;top:10px;right:10px;background:var(--gold);color:var(--green3);font-size:11px;font-weight:800;padding:3px 10px;border-radius:4px;}
-.pc-body{padding:16px}
-.pc-title{font-size:14px;font-weight:700;color:var(--text);margin-bottom:6px;line-height:1.4}
-.pc-meta{font-size:12px;color:var(--text3);font-weight:500}
-.testimonials-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:48px;}
-.testi-card{background:var(--cream);border:1px solid var(--border);border-radius:14px;padding:24px;}
-.testi-stars{color:var(--gold);font-size:14px;letter-spacing:2px;margin-bottom:12px}
-.testi-text{font-size:14px;color:var(--text2);line-height:1.75;margin-bottom:16px}
-.testi-author{display:flex;align-items:center;gap:10px}
-.testi-avatar{width:36px;height:36px;border-radius:50%;background:var(--green);color:var(--white);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;}
-.testi-name{font-size:14px;font-weight:700;color:var(--text)}
-.testi-role{font-size:12px;color:var(--text3)}
-.faq-list{margin-top:48px;display:flex;flex-direction:column;gap:0}
-.faq-item{border-bottom:1px solid var(--border);overflow:hidden;}
-.faq-q{width:100%;background:none;border:none;padding:20px 0;text-align:right;font-family:'Tajawal',sans-serif;font-size:16px;font-weight:700;color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:16px;transition:color 0.2s;}
-.faq-q:hover{color:var(--green)}
-.faq-arrow{width:24px;height:24px;border-radius:50%;background:rgba(46,64,54,0.08);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px;transition:all 0.3s;}
-.faq-item.open .faq-arrow{background:var(--green);color:var(--white);transform:rotate(180deg)}
-.faq-a{max-height:0;overflow:hidden;font-size:14px;color:var(--text2);line-height:1.8;transition:max-height 0.35s ease,padding 0.2s;padding-bottom:0;}
-.faq-item.open .faq-a{max-height:200px;padding-bottom:20px}
-.wa-float{position:fixed;bottom:28px;left:28px;width:54px;height:54px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:0 4px 16px rgba(37,211,102,0.5);text-decoration:none;z-index:300;}
-footer{background:#243328;color:var(--white);padding:60px 80px 30px;}
-.footer-bottom{border-top:1px solid rgba(255,255,255,0.1);padding-top:24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-top:40px;}
-.footer-bottom p{font-size:12px;color:rgba(255,255,255,0.35)}
-@media(max-width:1024px){
-  .hero{grid-template-columns:1fr}.hero-left{display:none}.hero-right{padding:50px 30px}
-  nav{padding:0 24px}.nav-links{display:none}.section{padding:60px 30px}
-  .inside-grid{grid-template-columns:1fr}.preview-grid{grid-template-columns:1fr}
-  .instructor-section{grid-template-columns:1fr}.ins-content{padding:50px 30px}
-  .testimonials-grid{grid-template-columns:1fr}.stats-bar{grid-template-columns:repeat(2,1fr)}
-  footer{padding:50px 30px 24px}
-}
-</style>
-</head>
-<body>
-<nav>
-  <div class="nav-logo"><span>د</span>ديـنـتـيـكو</div>
-  <div class="nav-links">
-    <a href="#inside">الكورس</a>
-    <a href="#preview">محاضرات تجريبية</a>
-    <a href="#instructor">المدرب</a>
-    <a href="#testimonials">آراء الأطباء</a>
-    <a href="#faq">الأسئلة الشائعة</a>
-  </div>
-  <a href="${g('h_buy_link')}" target="_blank" class="nav-cta">${g('h_buy_text')}</a>
-</nav>
-
-<section class="hero">
-  <div class="hero-left">
-    <div class="hero-video-wrap">
-      <img src="${g('h_image')}" alt="الكورس">
-      <div class="hero-video-overlay"></div>
-      <div class="play-btn"></div>
-      <div class="hero-caption">${g('h_caption')}<span>▶ ابدأ المشاهدة الآن</span></div>
-    </div>
-  </div>
-  <div class="hero-right">
-    <div class="hero-badge">${g('h_badge')}</div>
-    <h1>${g('h_title1')}<br><em>${g('h_title2')}</em></h1>
-    <div class="stars-row">
-      <span class="stars">${starsStr}</span>
-      <span class="stars-text">${g('h_stars_text')}</span>
-    </div>
-    <p class="hero-desc">${g('h_desc')}</p>
-    <div class="hero-features">${featuresHTML}</div>
-    <div class="price-block">
-      <div class="price-row">
-        <div>
-          <div class="price-badge">${g('p_badge')}</div>
-          <div style="display:flex;align-items:baseline;gap:12px">
-            <span class="price-old">${g('p_old')}</span>
-            <span class="price-new">${g('p_new')}</span>
-          </div>
+  document.getElementById('videosList').innerHTML=S.videos.map((v,i)=>`
+    <div class="list-item">
+      <div class="list-item-body">
+        <input value="${esc(v.title)}" oninput="S.videos[${i}].title=this.value;save()" placeholder="عنوان المحاضرة">
+        <div class="row">
+          <input value="${esc(v.duration)}" oninput="S.videos[${i}].duration=this.value;save()" placeholder="المدة">
+          <input value="${esc(v.meta)}" oninput="S.videos[${i}].meta=this.value;save()" placeholder="المدرب · الوحدة">
         </div>
       </div>
-      <div class="price-iraq">${g('p_iraq_full')}</div>
-      <a href="${g('h_buy_link')}" target="_blank" class="btn-buy">${g('h_buy_text')}</a>
-      <a href="#preview" class="btn-trial">${g('h_trial_text')}</a>
-      <div class="guarantee">${g('h_guarantee')}</div>
-    </div>
-  </div>
-</section>
-
-<div class="stats-bar">${statsHTML}</div>
-
-<section class="section" id="inside">
-  <div class="s-eyebrow">المحتوى</div>
-  <h2 class="s-title">${g('c_title')}</h2>
-  <p class="s-sub">${g('c_sub')}</p>
-  <div class="inside-grid">${cardsHTML}</div>
-</section>
-
-<section class="section section-alt" id="preview">
-  <div class="s-eyebrow">تجربة مجانية</div>
-  <h2 class="s-title">شاهدي قبل أن تشتري</h2>
-  <div class="preview-grid">${videosHTML}</div>
-</section>
-
-<div class="instructor-section" id="instructor">
-  <div class="ins-content">
-    <div class="s-eyebrow">المدرب</div>
-    <h2 class="s-title" style="max-width:100%">${g('i_name')}</h2>
-    <p style="color:var(--gold);font-weight:700;margin-bottom:16px">${g('i_title')}</p>
-    <p style="color:var(--text2);line-height:1.8;margin-bottom:28px">${g('i_bio')}</p>
-    <div class="ins-stats">
-      <div><div class="ins-stat-num">${g('i_stat1_num')}</div><div class="ins-stat-label">${g('i_stat1_label')}</div></div>
-      <div><div class="ins-stat-num">${g('i_stat2_num')}</div><div class="ins-stat-label">${g('i_stat2_label')}</div></div>
-      <div><div class="ins-stat-num">${g('i_stat3_num')}</div><div class="ins-stat-label">${g('i_stat3_label')}</div></div>
-    </div>
-  </div>
-  <div class="ins-img"><img src="${g('i_image')}" alt="${g('i_name')}"></div>
-</div>
-
-<section class="section section-alt" id="testimonials">
-  <div class="s-eyebrow">آراء الأطباء</div>
-  <h2 class="s-title">أكثر من 2000 طبيب وأخصائية</h2>
-  <div class="testimonials-grid">${testiHTML}</div>
-</section>
-
-<section class="section" id="faq">
-  <div class="s-eyebrow">الأسئلة الشائعة</div>
-  <h2 class="s-title">كل ما توّد معرفته</h2>
-  <div class="faq-list">${faqHTML}</div>
-</section>
-
-<footer>
-  <div style="font-size:22px;font-weight:900">ديـنـتـيـكو</div>
-  <div class="footer-bottom">
-    <p>© 2026 ديـنـتـيـكو لكورسات طب الأسنان — جميع الحقوق محفوظة</p>
-  </div>
-</footer>
-
-<a href="https://wa.me/${g('set_wa')}" class="wa-float" target="_blank">💬</a>
-
-<script>
-function toggleFaq(btn){
-  const item=btn.closest('.faq-item');
-  const isOpen=item.classList.contains('open');
-  document.querySelectorAll('.faq-item.open').forEach(i=>i.classList.remove('open'));
-  if(!isOpen)item.classList.add('open');
-}
-</script>
-</body>
-</html>`;
+      <button class="del-btn" onclick="S.videos.splice(${i},1);save();renderVideos()">✕</button>
+    </div>`).join('');
 }
 
-// ── SAVE TO GITHUB ──
-async function saveAll(){
-  const token = getToken();
-  if(!token){ showTokenModal(); return; }
+// ══ NAV ══
+const TITLES={hero:'🏠 الهيرو والسعر',content:'📦 محتوى الكورس',videos:'▶️ المحاضرات التجريبية',instructor:'👨‍⚕️ المدرب',testimonials:'⭐ آراء الأطباء',faq:'❓ الأسئلة الشائعة',design:'🎨 الألوان والإحصائيات',settings:'⚙️ الإعدادات'};
+function show(btn,id){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('p-'+id).classList.add('active');
+  btn.classList.add('active');
+  document.getElementById('panelTitle').textContent=TITLES[id]||'';
+}
+function togCard(head){
+  const body=head.nextElementSibling;
+  const arrow=head.querySelector('.card-arrow');
+  body.classList.toggle('open');
+  arrow.style.transform=body.classList.contains('open')?'':'rotate(-90deg)';
+}
 
-  const btn = document.getElementById('saveBtn');
-  btn.textContent = '⏳ جاري الحفظ...';
-  btn.disabled = true;
+// ══ TOKEN ══
+function getToken(){return localStorage.getItem('gh_token')||''}
+function showModal(){document.getElementById('modal').style.display='flex';document.getElementById('tokenInput').value=getToken()}
+function closeModal(){document.getElementById('modal').style.display='none'}
+function saveToken(){
+  const t=document.getElementById('tokenInput').value.trim();
+  if(!t){alert('أدخل الـ Token');return}
+  localStorage.setItem('gh_token',t);
+  closeModal();
+  toast('✅ تم حفظ الـ Token!');
+}
 
-  try {
-    // 1. Get current file SHA
-    const headers = {
-      'Authorization': `token ${token}`,
-      'Accept': 'application/vnd.github.v3+json'
-    };
+// ══ BUILD PAGE ══
+function buildPage(){
+  const g=k=>S[k]||'';
+  const stars='★'.repeat(+g('h_stars_count')||5);
+  const featHTML=S.features.map(f=>`<div class="hf-item"><span class="hf-check">✓</span>${f}</div>`).join('');
+  const cardsHTML=S.contentCards.map(c=>`<div class="inside-card"><div class="ic-icon">${c.icon}</div><div class="ic-title">${c.title}</div><p class="ic-desc">${c.desc}</p></div>`).join('');
+  const testiHTML=S.testimonials.map(t=>`<div class="testi-card"><div class="testi-stars">${'★'.repeat(t.stars)}</div><p class="testi-text">${t.text}</p><div class="testi-author"><div class="testi-avatar">${t.name.split(' ').map(w=>w[0]).join('').slice(0,2)}</div><div><div class="testi-name">${t.name}</div><div class="testi-role">${t.role}</div></div></div></div>`).join('');
+  const faqHTML=S.faqs.map(f=>`<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">${f.q}<span class="faq-arrow">▼</span></button><div class="faq-a">${f.a}</div></div>`).join('');
+  const vidHTML=S.videos.map(v=>`<div class="preview-card"><div class="pc-thumb"><img src="${g('h_image')}" alt=""><div class="pc-play"></div><div class="pc-duration">${v.duration}</div><div class="pc-tag">مجاني</div></div><div class="pc-body"><div class="pc-title">${v.title}</div><div class="pc-meta">${v.meta}</div></div></div>`).join('');
+  const statsHTML=[[g('st1n'),g('st1l')],[g('st2n'),g('st2l')],[g('st3n'),g('st3l')],[g('st4n'),g('st4l')]].map(([n,l])=>`<div class="stat-item"><div class="stat-num">${n}</div><div class="stat-label">${l}</div></div>`).join('');
+  const p=S.colors.primary,gld=S.colors.gold,bg=S.colors.bg;
+  return `<!DOCTYPE html>\n<html lang="ar" dir="rtl">\n<head>\n<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${g('seo_title')}</title>\n<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">\n<style>\n*{margin:0;padding:0;box-sizing:border-box}\n:root{--cream:${bg};--green:${p};--green2:#3A5246;--green3:#243328;--gold:${gld};--text:#1A1A1A;--text2:#4A4A4A;--text3:#7A7A7A;--white:#fff;--border:rgba(46,64,54,0.12)}\nhtml{scroll-behavior:smooth}body{font-family:'Tajawal',sans-serif;background:var(--cream);color:var(--text);overflow-x:hidden;direction:rtl}\nnav{position:sticky;top:0;z-index:200;background:rgba(245,240,232,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 60px;display:flex;align-items:center;justify-content:space-between;height:60px}\n.nav-logo{font-size:20px;font-weight:800;color:var(--green);display:flex;align-items:center;gap:8px}\n.nav-logo span{width:34px;height:34px;background:var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--cream);font-size:14px;font-weight:800}\n.nav-links{display:flex;align-items:center;gap:28px}\n.nav-links a{font-size:14px;font-weight:500;color:var(--text2);text-decoration:none;transition:color 0.2s}\n.nav-links a:hover{color:var(--green)}\n.nav-cta{background:var(--green);color:var(--white);padding:9px 22px;border-radius:8px;font-size:14px;font-weight:700;text-decoration:none;transition:all 0.2s}\n.nav-cta:hover{background:var(--green2)}\n.hero{display:grid;grid-template-columns:1fr 1fr;min-height:calc(100vh - 60px);background:var(--cream)}\n.hero-right{padding:60px 60px 60px 40px;display:flex;flex-direction:column;justify-content:center}\n.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(46,64,54,0.08);color:var(--green);padding:5px 14px;border-radius:100px;font-size:12px;font-weight:700;margin-bottom:22px;width:fit-content}\n.hero-badge::before{content:'★';font-size:11px}\n.hero h1{font-size:clamp(32px,3.5vw,52px);font-weight:900;line-height:1.2;color:var(--text);margin-bottom:18px}\n.hero h1 em{font-style:normal;color:var(--green)}\n.hero-desc{font-size:15px;color:var(--text2);line-height:1.8;margin-bottom:28px;max-width:440px}\n.stars-row{display:flex;align-items:center;gap:10px;margin-bottom:28px}\n.stars{color:var(--gold);font-size:16px;letter-spacing:2px}\n.stars-text{font-size:13px;color:var(--text3);font-weight:500}\n.price-block{background:var(--white);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:24px}\n.price-old{font-size:20px;color:var(--text3);text-decoration:line-through;font-weight:500}\n.price-new{font-size:44px;font-weight:900;color:var(--green);line-height:1}\n.price-badge{background:var(--green);color:var(--white);font-size:12px;font-weight:800;padding:4px 12px;border-radius:100px;margin-bottom:6px;display:inline-block}\n.price-iraq{background:rgba(46,64,54,0.06);border-radius:8px;padding:10px 14px;font-size:13px;color:var(--green);font-weight:700;margin-bottom:20px}\n.btn-buy{display:block;width:100%;background:var(--green);color:var(--white);border:none;padding:16px;border-radius:10px;font-family:'Tajawal',sans-serif;font-size:17px;font-weight:800;cursor:pointer;transition:all 0.2s;margin-bottom:10px;text-decoration:none;text-align:center}\n.btn-buy:hover{background:var(--green2);transform:translateY(-2px)}\n.btn-trial{display:block;width:100%;background:transparent;color:var(--green);border:1.5px solid var(--green);padding:13px;border-radius:10px;font-family:'Tajawal',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:all 0.2s;text-decoration:none;text-align:center}\n.btn-trial:hover{background:rgba(46,64,54,0.05)}\n.guarantee{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text3);margin-top:12px;justify-content:center}\n.guarantee::before{content:'🔒';font-size:14px}\n.hero-features{display:flex;flex-direction:column;gap:10px;margin-bottom:24px}\n.hf-item{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text2)}\n.hf-check{width:22px;height:22px;background:rgba(46,64,54,0.08);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--green);font-size:13px;font-weight:900;flex-shrink:0}\n.hero-left{position:relative;overflow:hidden;background:var(--green3)}\n.hero-video-wrap{width:100%;height:100%;position:relative}\n.hero-video-wrap img{width:100%;height:100%;object-fit:cover;opacity:0.75}\n.hero-video-overlay{position:absolute;inset:0;background:linear-gradient(to right,var(--green3) 0%,transparent 50%)}\n.play-btn{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:64px;height:64px;background:rgba(255,255,255,0.95);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform 0.2s;box-shadow:0 4px 20px rgba(0,0,0,0.3)}\n.play-btn:hover{transform:translate(-50%,-50%) scale(1.1)}\n.play-btn::after{content:'';border-style:solid;border-width:10px 0 10px 18px;border-color:transparent transparent transparent var(--green);margin-right:-4px}\n.hero-caption{position:absolute;bottom:30px;right:30px;left:30px;background:rgba(46,64,54,0.9);backdrop-filter:blur(8px);border-radius:12px;padding:14px 18px;color:var(--white);font-size:13px;font-weight:700}\n.hero-caption span{color:var(--gold);font-size:18px;font-weight:900;display:block;margin-top:4px}\n.stats-bar{background:var(--green);display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid rgba(255,255,255,0.1)}\n.stat-item{padding:28px 20px;text-align:center;border-left:1px solid rgba(255,255,255,0.1)}\n.stat-item:last-child{border-left:none}\n.stat-num{font-size:32px;font-weight:900;color:var(--white);line-height:1}\n.stat-label{font-size:13px;color:rgba(255,255,255,0.65);margin-top:5px;font-weight:500}\n.section{padding:80px}\n.section-alt{background:var(--white)}\n.s-eyebrow{font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--green);margin-bottom:12px;display:flex;align-items:center;gap:8px}\n.s-eyebrow::before{content:'';width:24px;height:2px;background:currentColor;flex-shrink:0}\n.s-title{font-size:clamp(26px,3vw,38px);font-weight:900;line-height:1.2;margin-bottom:12px}\n.s-sub{font-size:16px;color:var(--text2);max-width:500px;line-height:1.75}\n.inside-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:48px}\n.inside-card{background:var(--cream);border:1px solid var(--border);border-radius:14px;padding:24px;transition:all 0.25s}\n.inside-card:hover{border-color:var(--green);transform:translateY(-3px);box-shadow:0 8px 28px rgba(46,64,54,0.1)}\n.ic-icon{width:44px;height:44px;background:rgba(46,64,54,0.08);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:14px}\n.ic-title{font-size:15px;font-weight:800;color:var(--text);margin-bottom:8px}\n.ic-desc{font-size:13px;color:var(--text2);line-height:1.7}\n.preview-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:48px}\n.preview-card{background:var(--cream);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:all 0.25s}\n.preview-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,0.1)}\n.pc-thumb{position:relative;height:160px;overflow:hidden;background:var(--green3)}\n.pc-thumb img{width:100%;height:100%;object-fit:cover;opacity:0.7}\n.pc-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:46px;height:46px;background:rgba(255,255,255,0.9);border-radius:50%;display:flex;align-items:center;justify-content:center}\n.pc-play::after{content:'';border-style:solid;border-width:7px 0 7px 13px;border-color:transparent transparent transparent var(--green);margin-right:-3px}\n.pc-duration{position:absolute;bottom:10px;left:10px;background:rgba(0,0,0,0.7);color:var(--white);font-size:11px;padding:2px 8px;border-radius:4px;font-weight:600}\n.pc-tag{position:absolute;top:10px;right:10px;background:var(--gold);color:var(--green3);font-size:11px;font-weight:800;padding:3px 10px;border-radius:4px}\n.pc-body{padding:16px}\n.pc-title{font-size:14px;font-weight:700;color:var(--text);margin-bottom:6px;line-height:1.4}\n.pc-meta{font-size:12px;color:var(--text3);font-weight:500}\n.instructor-section{display:grid;grid-template-columns:1fr 1fr;gap:0;background:#EDE8DC}\n.ins-content{padding:80px 60px 80px 80px;display:flex;flex-direction:column;justify-content:center}\n.ins-img{overflow:hidden;min-height:500px}\n.ins-img img{width:100%;height:100%;object-fit:cover;object-position:center top}\n.ins-stats{display:flex;gap:40px;margin-top:36px}\n.ins-stat-num{font-size:36px;font-weight:900;color:var(--green)}\n.ins-stat-label{font-size:13px;color:var(--text3);margin-top:3px}\n.testimonials-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:48px}\n.testi-card{background:var(--cream);border:1px solid var(--border);border-radius:14px;padding:24px}\n.testi-stars{color:var(--gold);font-size:14px;letter-spacing:2px;margin-bottom:12px}\n.testi-text{font-size:14px;color:var(--text2);line-height:1.75;margin-bottom:16px}\n.testi-author{display:flex;align-items:center;gap:10px}\n.testi-avatar{width:36px;height:36px;border-radius:50%;background:var(--green);color:var(--white);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700}\n.testi-name{font-size:14px;font-weight:700;color:var(--text)}\n.testi-role{font-size:12px;color:var(--text3)}\n.faq-list{margin-top:48px}\n.faq-item{border-bottom:1px solid var(--border)}\n.faq-q{width:100%;background:none;border:none;padding:20px 0;text-align:right;font-family:'Tajawal',sans-serif;font-size:16px;font-weight:700;color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:16px;transition:color 0.2s}\n.faq-q:hover{color:var(--green)}\n.faq-arrow{width:24px;height:24px;border-radius:50%;background:rgba(46,64,54,0.08);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px;transition:all 0.3s}\n.faq-item.open .faq-arrow{background:var(--green);color:var(--white);transform:rotate(180deg)}\n.faq-a{max-height:0;overflow:hidden;font-size:14px;color:var(--text2);line-height:1.8;transition:max-height 0.35s ease,padding 0.2s}\n.faq-item.open .faq-a{max-height:200px;padding-bottom:20px}\n.wa-float{position:fixed;bottom:28px;left:28px;width:54px;height:54px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:0 4px 16px rgba(37,211,102,0.5);text-decoration:none;z-index:300}\nfooter{background:#243328;color:var(--white);padding:40px 80px}\n.footer-copy{border-top:1px solid rgba(255,255,255,0.1);padding-top:20px;margin-top:30px;font-size:12px;color:rgba(255,255,255,0.35)}\n@media(max-width:1024px){.hero{grid-template-columns:1fr}.hero-left{display:none}.hero-right{padding:50px 30px}nav{padding:0 24px}.nav-links{display:none}.section{padding:60px 30px}.inside-grid,.preview-grid,.testimonials-grid{grid-template-columns:1fr}.instructor-section{grid-template-columns:1fr}.ins-content{padding:50px 30px}.stats-bar{grid-template-columns:repeat(2,1fr)}footer{padding:40px 30px}}\n</style>\n</head>\n<body>\n<nav><div class="nav-logo"><span>د</span>ديـنـتـيـكو</div><div class="nav-links"><a href="#inside">الكورس</a><a href="#preview">محاضرات تجريبية</a><a href="#instructor">المدرب</a><a href="#testimonials">آراء الأطباء</a><a href="#faq">الأسئلة الشائعة</a></div><a href="${g('h_buy_link')}" target="_blank" class="nav-cta">${g('h_buy_text')}</a></nav>\n<section class="hero"><div class="hero-left"><div class="hero-video-wrap"><img src="${g('h_image')}" alt=""><div class="hero-video-overlay"></div><div class="play-btn"></div><div class="hero-caption">${g('h_caption')}<span>▶ ابدأ المشاهدة الآن</span></div></div></div><div class="hero-right"><div class="hero-badge">${g('h_badge')}</div><h1>${g('h_title1')}<br><em>${g('h_title2')}</em></h1><div class="stars-row"><span class="stars">${stars}</span><span class="stars-text">${g('h_stars_text')}</span></div><p class="hero-desc">${g('h_desc')}</p><div class="hero-features">${featHTML}</div><div class="price-block"><div style="margin-bottom:14px"><div class="price-badge">${g('p_badge')}</div><div style="display:flex;align-items:baseline;gap:12px"><span class="price-old">${g('p_old')}</span><span class="price-new">${g('p_new')}</span></div></div><div class="price-iraq">${g('p_iraq_full')}</div><a href="${g('h_buy_link')}" target="_blank" class="btn-buy">${g('h_buy_text')}</a><a href="#preview" class="btn-trial">${g('h_trial_text')}</a><div class="guarantee">${g('h_guarantee')}</div></div></div></section>\n<div class="stats-bar">${statsHTML}</div>\n<section class="section" id="inside"><div class="s-eyebrow">المحتوى</div><h2 class="s-title">${g('c_title')}</h2><p class="s-sub">${g('c_sub')}</p><div class="inside-grid">${cardsHTML}</div></section>\n<section class="section section-alt" id="preview"><div class="s-eyebrow">تجربة مجانية</div><h2 class="s-title">شاهدي قبل أن تشتري</h2><div class="preview-grid">${vidHTML}</div></section>\n<div class="instructor-section" id="instructor"><div class="ins-content"><div class="s-eyebrow">المدرب</div><h2 class="s-title" style="max-width:100%">${g('i_name')}</h2><p style="color:var(--gold);font-weight:700;margin-bottom:16px">${g('i_title')}</p><p style="color:var(--text2);line-height:1.8;margin-bottom:28px">${g('i_bio')}</p><div class="ins-stats"><div><div class="ins-stat-num">${g('i_s1n')}</div><div class="ins-stat-label">${g('i_s1l')}</div></div><div><div class="ins-stat-num">${g('i_s2n')}</div><div class="ins-stat-label">${g('i_s2l')}</div></div><div><div class="ins-stat-num">${g('i_s3n')}</div><div class="ins-stat-label">${g('i_s3l')}</div></div></div></div><div class="ins-img"><img src="${g('i_image')}" alt="${g('i_name')}"></div></div>\n<section class="section section-alt" id="testimonials"><div class="s-eyebrow">آراء الأطباء</div><h2 class="s-title">أكثر من 2000 طبيب وأخصائية</h2><div class="testimonials-grid">${testiHTML}</div></section>\n<section class="section" id="faq"><div class="s-eyebrow">الأسئلة الشائعة</div><h2 class="s-title">كل ما توّد معرفته</h2><div class="faq-list">${faqHTML}</div></section>\n<footer><div style="font-size:22px;font-weight:900">ديـنـتـيـكو</div><div class="footer-copy">© 2026 ديـنـتـيـكو لكورسات طب الأسنان — جميع الحقوق محفوظة</div></footer>\n<a href="https://wa.me/${g('wa')}" class="wa-float" target="_blank">💬</a>\n<script>function toggleFaq(btn){const item=btn.closest('.faq-item');const isOpen=item.classList.contains('open');document.querySelectorAll('.faq-item.open').forEach(i=>i.classList.remove('open'));if(!isOpen)item.classList.add('open');}<\/script>\n</body></html>`;
+}
 
-    const fileRes = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${GITHUB_FILE}`, {headers});
-    let sha = '';
-    if(fileRes.ok){
-      const fileData = await fileRes.json();
-      sha = fileData.sha;
-    }
-
-    // 2. Build new HTML
-    const html = buildPageHTML();
-    const encoded = btoa(unescape(encodeURIComponent(html)));
-
-    // 3. Push to GitHub
-    const pushRes = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${GITHUB_FILE}`, {
-      method: 'PUT',
-      headers: {...headers, 'Content-Type':'application/json'},
-      body: JSON.stringify({
-        message: 'تحديث صفحة الكورس من لوحة التحكم',
-        content: encoded,
-        sha: sha
-      })
+// ══ PUBLISH ══
+async function publish(){
+  const token=getToken();
+  if(!token){showModal();return}
+  const btn=document.getElementById('pubBtn');
+  btn.textContent='⏳ جاري النشر...';btn.disabled=true;
+  try{
+    const h={'Authorization':'token '+token,'Accept':'application/vnd.github.v3+json'};
+    const r=await fetch('https://api.github.com/repos/rjgbnerojubvnh/dentico-pages/contents/pages/botox-filler.html',{headers:h});
+    let sha='';
+    if(r.ok)sha=(await r.json()).sha;
+    const res=await fetch('https://api.github.com/repos/rjgbnerojubvnh/dentico-pages/contents/pages/botox-filler.html',{
+      method:'PUT',headers:{...h,'Content-Type':'application/json'},
+      body:JSON.stringify({message:'تحديث صفحة الكورس',content:btoa(unescape(encodeURIComponent(buildPage()))),sha})
     });
-
-    if(!pushRes.ok){
-      const err = await pushRes.json();
-      throw new Error(err.message||'فشل الحفظ');
-    }
-
-    // 4. Save data and fields locally
-    localStorage.setItem('dentico_data', JSON.stringify(data));
-    saveFields();
-
-    btn.textContent = '✅ تم النشر!';
-    btn.classList.add('saved');
-    showToast('✅ تم النشر على الموقع! سيتحدث خلال 30 ثانية');
-    setTimeout(()=>{ btn.textContent='💾 حفظ ونشر'; btn.classList.remove('saved'); btn.disabled=false; }, 3000);
-
-  } catch(e) {
-    btn.textContent = '❌ خطأ في الحفظ';
-    btn.disabled = false;
-    showToast('❌ خطأ: ' + e.message);
-    setTimeout(()=>{ btn.textContent='💾 حفظ ونشر'; }, 3000);
-    console.error(e);
+    if(!res.ok)throw new Error((await res.json()).message);
+    toast('🚀 تم النشر! سيتحدث الموقع خلال 30 ثانية');
+    btn.textContent='✅ تم النشر!';
+    setTimeout(()=>{btn.textContent='🚀 حفظ ونشر على الموقع';btn.disabled=false},3000);
+  }catch(e){
+    toast('❌ خطأ: '+e.message);
+    btn.textContent='🚀 حفظ ونشر على الموقع';btn.disabled=false;
   }
 }
 
-function showToast(msg){
-  const toast = document.getElementById('toast');
-  toast.textContent = msg;
-  toast.classList.add('show');
-  setTimeout(()=>toast.classList.remove('show'), 3500);
-}
-
-// ── EXPORT ──
+// ══ EXPORT ══
 function exportPage(){
-  const html = buildPageHTML();
-  const blob = new Blob([html], {type:'text/html'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url; a.download = 'botox-filler.html';
-  a.click();
+  const blob=new Blob([buildPage()],{type:'text/html'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);a.download='botox-filler.html';a.click();
 }
 
-// ── DEVICE PREVIEW ──
-function setDevice(w, btn){
-  document.getElementById('previewFrame').style.width = w;
-  document.querySelectorAll('.device-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
+function toast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3500);
 }
 
-// ── SAVE / LOAD FIELDS ──
-const FIELD_IDS = [
-  'h_title1','h_title2','h_desc','h_badge','h_stars_text','h_stars_count',
-  'h_image','h_caption','h_buy_link','h_buy_text','h_trial_text','h_guarantee',
-  'p_old','p_new','p_badge','p_iraq','p_iraq_full',
-  'pc1_title','pc1_price','pc1_old','pc1_btn',
-  'pc2_title','pc2_price','pc2_unit','pc2_btn',
-  'pc3_title','pc3_price','pc3_sub','pc3_btn',
-  'c_title','c_sub',
-  'i_name','i_title','i_bio','i_image',
-  'i_stat1_num','i_stat1_label','i_stat2_num','i_stat2_label','i_stat3_num','i_stat3_label',
-  's1_num','s1_label','s2_num','s2_label','s3_num','s3_label','s4_num','s4_label',
-  'c_primary','c_primary_text','c_gold','c_gold_text','c_bg','c_bg_text',
-  'set_wa','set_email','set_tg','set_title','set_desc'
-];
-
-function saveFields(){
-  const fields = {};
-  FIELD_IDS.forEach(id=>{
-    const el = document.getElementById(id);
-    if(el) fields[id] = el.value;
-  });
-  localStorage.setItem('dentico_fields', JSON.stringify(fields));
-}
-
-function loadFields(){
-  const saved = localStorage.getItem('dentico_fields');
-  if(!saved) return;
-  const fields = JSON.parse(saved);
-  FIELD_IDS.forEach(id=>{
-    const el = document.getElementById(id);
-    if(el && fields[id] !== undefined) el.value = fields[id];
-  });
-}
-
-// ── AUTO-SAVE FIELDS ON CHANGE ──
-document.addEventListener('input', e=>{
-  if(e.target.matches('input,textarea,select')) saveFields();
-});
-
-// ── INIT ──
-renderAll();
-loadFields();
-if(!getToken()){
-  setTimeout(showTokenModal, 800);
-}
+// ══ INIT ══
+renderFeatures();renderCards();renderTestis();renderFaqs();renderVideos();
+bindAll();
+if(!getToken())setTimeout(showModal,800);
 </script>
 </body>
 </html>
