@@ -1,948 +1,121 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>أكاديمية ديـنـتـيـكو | كورس البوتوكس والفيلر الاحترافي</title>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>أكاديمية ديـنـتـيـكو | كورس البوتوكس والفيلر الاحترافي</title>
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{
-  --cream:#F5F0E8;
-  --cream2:#EDE8DC;
-  --cream3:#E4DDD0;
-  --green:#2E4036;
-  --green2:#3A5246;
-  --green3:#243328;
-  --gold:#C9A84C;
-  --gold2:#B8963E;
-  --text:#1A1A1A;
-  --text2:#4A4A4A;
-  --text3:#7A7A7A;
-  --white:#FFFFFF;
-  --border:rgba(46,64,54,0.12);
-}
-html{scroll-behavior:smooth}
-body{font-family:'Tajawal',sans-serif;background:var(--cream);color:var(--text);overflow-x:hidden;direction:rtl}
-
-/* ── NAV ── */
-nav{
-  position:sticky;top:0;z-index:200;
-  background:rgba(245,240,232,0.95);
-  backdrop-filter:blur(12px);
-  border-bottom:1px solid var(--border);
-  padding:0 60px;
-  display:flex;align-items:center;justify-content:space-between;
-  height:60px;
-}
+:root{--cream:#F5F0E8;--green:#2E4036;--green2:#3A5246;--green3:#243328;--gold:#C9A84C;--text:#1A1A1A;--text2:#4A4A4A;--text3:#7A7A7A;--white:#fff;--border:rgba(46,64,54,0.12)}
+html{scroll-behavior:smooth}body{font-family:'Tajawal',sans-serif;background:var(--cream);color:var(--text);overflow-x:hidden;direction:rtl}
+nav{position:sticky;top:0;z-index:200;background:rgba(245,240,232,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 60px;display:flex;align-items:center;justify-content:space-between;height:60px}
 .nav-logo{font-size:20px;font-weight:800;color:var(--green);display:flex;align-items:center;gap:8px}
 .nav-logo span{width:34px;height:34px;background:var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--cream);font-size:14px;font-weight:800}
 .nav-links{display:flex;align-items:center;gap:28px}
 .nav-links a{font-size:14px;font-weight:500;color:var(--text2);text-decoration:none;transition:color 0.2s}
 .nav-links a:hover{color:var(--green)}
-.nav-cta{
-  background:var(--green);color:var(--white);
-  padding:9px 22px;border-radius:8px;
-  font-size:14px;font-weight:700;
-  text-decoration:none;transition:all 0.2s;
-  border:none;cursor:pointer;font-family:'Tajawal',sans-serif;
-}
+.nav-cta{background:var(--green);color:var(--white);padding:9px 22px;border-radius:8px;font-size:14px;font-weight:700;text-decoration:none;transition:all 0.2s}
 .nav-cta:hover{background:var(--green2)}
-
-/* ── HERO ── */
-.hero{
-  display:grid;grid-template-columns:1fr 1fr;
-  min-height:calc(100vh - 60px);
-  background:var(--cream);
-}
-.hero-right{
-  padding:60px 60px 60px 40px;
-  display:flex;flex-direction:column;justify-content:center;
-}
-.hero-badge{
-  display:inline-flex;align-items:center;gap:6px;
-  background:rgba(46,64,54,0.08);
-  color:var(--green);
-  padding:5px 14px;border-radius:100px;
-  font-size:12px;font-weight:700;
-  margin-bottom:22px;width:fit-content;
-}
+.hero{display:grid;grid-template-columns:1fr 1fr;min-height:calc(100vh - 60px);background:var(--cream)}
+.hero-right{padding:60px 60px 60px 40px;display:flex;flex-direction:column;justify-content:center}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(46,64,54,0.08);color:var(--green);padding:5px 14px;border-radius:100px;font-size:12px;font-weight:700;margin-bottom:22px;width:fit-content}
 .hero-badge::before{content:'★';font-size:11px}
-.hero h1{
-  font-size:clamp(32px,3.5vw,52px);
-  font-weight:900;line-height:1.2;
-  color:var(--text);margin-bottom:18px;
-}
+.hero h1{font-size:clamp(32px,3.5vw,52px);font-weight:900;line-height:1.2;color:var(--text);margin-bottom:18px}
 .hero h1 em{font-style:normal;color:var(--green)}
 .hero-desc{font-size:15px;color:var(--text2);line-height:1.8;margin-bottom:28px;max-width:440px}
-
 .stars-row{display:flex;align-items:center;gap:10px;margin-bottom:28px}
 .stars{color:var(--gold);font-size:16px;letter-spacing:2px}
 .stars-text{font-size:13px;color:var(--text3);font-weight:500}
-
-.price-block{
-  background:var(--white);border:1px solid var(--border);
-  border-radius:16px;padding:24px;margin-bottom:24px;
-}
-.price-row{display:flex;align-items:flex-end;gap:16px;margin-bottom:14px;flex-wrap:wrap}
+.price-block{background:var(--white);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:24px}
 .price-old{font-size:20px;color:var(--text3);text-decoration:line-through;font-weight:500}
 .price-new{font-size:44px;font-weight:900;color:var(--green);line-height:1}
-.price-badge{
-  background:var(--green);color:var(--white);
-  font-size:12px;font-weight:800;
-  padding:4px 12px;border-radius:100px;
-  margin-bottom:6px;
-}
-.price-iraq{
-  background:rgba(46,64,54,0.06);
-  border-radius:8px;padding:10px 14px;
-  font-size:13px;color:var(--green);font-weight:700;
-  margin-bottom:20px;
-}
-.btn-buy{
-  display:block;width:100%;
-  background:var(--green);color:var(--white);
-  border:none;padding:16px;border-radius:10px;
-  font-family:'Tajawal',sans-serif;font-size:17px;font-weight:800;
-  cursor:pointer;transition:all 0.2s;margin-bottom:10px;
-  text-decoration:none;text-align:center;
-}
-.btn-buy:hover{background:var(--green2);transform:translateY(-2px);box-shadow:0 6px 20px rgba(46,64,54,0.25)}
-.btn-trial{
-  display:block;width:100%;
-  background:transparent;color:var(--green);
-  border:1.5px solid var(--green);padding:13px;border-radius:10px;
-  font-family:'Tajawal',sans-serif;font-size:15px;font-weight:700;
-  cursor:pointer;transition:all 0.2s;text-decoration:none;text-align:center;
-}
+.price-badge{background:var(--green);color:var(--white);font-size:12px;font-weight:800;padding:4px 12px;border-radius:100px;margin-bottom:6px;display:inline-block}
+.price-iraq{background:rgba(46,64,54,0.06);border-radius:8px;padding:10px 14px;font-size:13px;color:var(--green);font-weight:700;margin-bottom:20px}
+.btn-buy{display:block;width:100%;background:var(--green);color:var(--white);border:none;padding:16px;border-radius:10px;font-family:'Tajawal',sans-serif;font-size:17px;font-weight:800;cursor:pointer;transition:all 0.2s;margin-bottom:10px;text-decoration:none;text-align:center}
+.btn-buy:hover{background:var(--green2);transform:translateY(-2px)}
+.btn-trial{display:block;width:100%;background:transparent;color:var(--green);border:1.5px solid var(--green);padding:13px;border-radius:10px;font-family:'Tajawal',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:all 0.2s;text-decoration:none;text-align:center}
 .btn-trial:hover{background:rgba(46,64,54,0.05)}
-.guarantee{
-  display:flex;align-items:center;gap:8px;
-  font-size:12px;color:var(--text3);margin-top:12px;
-  justify-content:center;
-}
+.guarantee{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text3);margin-top:12px;justify-content:center}
 .guarantee::before{content:'🔒';font-size:14px}
 .hero-features{display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
 .hf-item{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text2)}
-.hf-check{
-  width:22px;height:22px;background:rgba(46,64,54,0.08);
-  border-radius:50%;display:flex;align-items:center;
-  justify-content:center;color:var(--green);font-size:13px;
-  font-weight:900;flex-shrink:0;
-}
-
-/* HERO LEFT - VIDEO */
-.hero-left{
-  position:relative;overflow:hidden;
-  background:var(--green3);
-}
-.hero-video-wrap{
-  width:100%;height:100%;position:relative;
-}
-.hero-video-wrap img{
-  width:100%;height:100%;object-fit:cover;
-  opacity:0.75;
-}
-.hero-video-overlay{
-  position:absolute;inset:0;
-  background:linear-gradient(to right,var(--green3) 0%,transparent 50%);
-}
-.play-btn{
-  position:absolute;top:50%;left:50%;
-  transform:translate(-50%,-50%);
-  width:64px;height:64px;
-  background:rgba(255,255,255,0.95);
-  border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  cursor:pointer;transition:transform 0.2s;
-  box-shadow:0 4px 20px rgba(0,0,0,0.3);
-}
+.hf-check{width:22px;height:22px;background:rgba(46,64,54,0.08);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--green);font-size:13px;font-weight:900;flex-shrink:0}
+.hero-left{position:relative;overflow:hidden;background:var(--green3)}
+.hero-video-wrap{width:100%;height:100%;position:relative}
+.hero-video-wrap img{width:100%;height:100%;object-fit:cover;opacity:0.75}
+.hero-video-overlay{position:absolute;inset:0;background:linear-gradient(to right,var(--green3) 0%,transparent 50%)}
+.play-btn{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:64px;height:64px;background:rgba(255,255,255,0.95);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform 0.2s;box-shadow:0 4px 20px rgba(0,0,0,0.3)}
 .play-btn:hover{transform:translate(-50%,-50%) scale(1.1)}
-.play-btn::after{
-  content:'';
-  border-style:solid;
-  border-width:10px 0 10px 18px;
-  border-color:transparent transparent transparent var(--green);
-  margin-right:-4px;
-}
-.hero-caption{
-  position:absolute;bottom:30px;right:30px;left:30px;
-  background:rgba(46,64,54,0.9);
-  backdrop-filter:blur(8px);
-  border-radius:12px;padding:14px 18px;
-  color:var(--white);font-size:13px;font-weight:700;
-}
+.play-btn::after{content:'';border-style:solid;border-width:10px 0 10px 18px;border-color:transparent transparent transparent var(--green);margin-right:-4px}
+.hero-caption{position:absolute;bottom:30px;right:30px;left:30px;background:rgba(46,64,54,0.9);backdrop-filter:blur(8px);border-radius:12px;padding:14px 18px;color:var(--white);font-size:13px;font-weight:700}
 .hero-caption span{color:var(--gold);font-size:18px;font-weight:900;display:block;margin-top:4px}
-
-/* ── STATS BAR ── */
-.stats-bar{
-  background:var(--green);
-  display:grid;grid-template-columns:repeat(4,1fr);
-  border-top:1px solid rgba(255,255,255,0.1);
-}
-.stat-item{
-  padding:28px 20px;text-align:center;
-  border-left:1px solid rgba(255,255,255,0.1);
-}
+.stats-bar{background:var(--green);display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid rgba(255,255,255,0.1)}
+.stat-item{padding:28px 20px;text-align:center;border-left:1px solid rgba(255,255,255,0.1)}
 .stat-item:last-child{border-left:none}
 .stat-num{font-size:32px;font-weight:900;color:var(--white);line-height:1}
 .stat-label{font-size:13px;color:rgba(255,255,255,0.65);margin-top:5px;font-weight:500}
-
-/* ── SECTION COMMONS ── */
-.section{padding:80px 80px}
+.section{padding:80px}
 .section-alt{background:var(--white)}
-.section-green{background:var(--green);color:var(--white)}
-.s-eyebrow{
-  font-size:12px;font-weight:700;letter-spacing:3px;
-  text-transform:uppercase;color:var(--green);
-  margin-bottom:12px;display:flex;align-items:center;gap:8px;
-}
-.section-green .s-eyebrow{color:rgba(255,255,255,0.6)}
+.s-eyebrow{font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--green);margin-bottom:12px;display:flex;align-items:center;gap:8px}
 .s-eyebrow::before{content:'';width:24px;height:2px;background:currentColor;flex-shrink:0}
 .s-title{font-size:clamp(26px,3vw,38px);font-weight:900;line-height:1.2;margin-bottom:12px}
 .s-sub{font-size:16px;color:var(--text2);max-width:500px;line-height:1.75}
-.section-green .s-sub{color:rgba(255,255,255,0.7)}
-
-/* ── WHAT'S INSIDE ── */
-.inside-grid{
-  display:grid;grid-template-columns:repeat(3,1fr);
-  gap:16px;margin-top:48px;
-}
-.inside-card{
-  background:var(--cream);border:1px solid var(--border);
-  border-radius:14px;padding:24px;
-  transition:all 0.25s;cursor:default;
-}
+.inside-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:48px}
+.inside-card{background:var(--cream);border:1px solid var(--border);border-radius:14px;padding:24px;transition:all 0.25s}
 .inside-card:hover{border-color:var(--green);transform:translateY(-3px);box-shadow:0 8px 28px rgba(46,64,54,0.1)}
-.ic-icon{
-  width:44px;height:44px;background:rgba(46,64,54,0.08);
-  border-radius:10px;display:flex;align-items:center;
-  justify-content:center;font-size:22px;margin-bottom:14px;
-}
+.ic-icon{width:44px;height:44px;background:rgba(46,64,54,0.08);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:14px}
 .ic-title{font-size:15px;font-weight:800;color:var(--text);margin-bottom:8px}
 .ic-desc{font-size:13px;color:var(--text2);line-height:1.7}
-
-/* ── GREEN FEATURES BOX ── */
-.green-box{
-  background:var(--green);border-radius:16px;
-  padding:40px 48px;margin-top:40px;
-  display:grid;grid-template-columns:1fr 1fr;gap:0;
-}
-.gb-right{border-right:1px solid rgba(255,255,255,0.15);padding-left:48px}
-.gb-left{padding-right:48px}
-.gb-title{font-size:22px;font-weight:900;color:var(--white);margin-bottom:20px}
-.gb-list{list-style:none;display:flex;flex-direction:column;gap:10px}
-.gb-list li{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:rgba(255,255,255,0.8);line-height:1.6}
-.gb-list li::before{content:'✓';color:var(--gold);font-weight:900;flex-shrink:0;margin-top:2px}
-.gb-cta-area{display:flex;flex-direction:column;gap:12px;margin-top:24px}
-.gb-price-line{font-size:13px;color:rgba(255,255,255,0.6)}
-.gb-price-line strong{color:var(--white);font-size:20px}
-.gb-btn{
-  background:var(--gold);color:var(--green3);
-  border:none;padding:13px 28px;border-radius:8px;
-  font-family:'Tajawal',sans-serif;font-size:15px;font-weight:800;
-  cursor:pointer;transition:all 0.2s;text-decoration:none;
-  display:inline-block;text-align:center;
-}
-.gb-btn:hover{background:#d4b558;transform:translateY(-1px)}
-
-/* ── FREE PREVIEW ── */
-.preview-grid{
-  display:grid;grid-template-columns:repeat(3,1fr);
-  gap:16px;margin-top:48px;
-}
-.preview-card{
-  background:var(--cream);border:1px solid var(--border);
-  border-radius:14px;overflow:hidden;cursor:pointer;
-  transition:all 0.25s;
-}
+.preview-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:48px}
+.preview-card{background:var(--cream);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:all 0.25s}
 .preview-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,0.1)}
-.pc-thumb{
-  position:relative;height:160px;overflow:hidden;
-  background:var(--green3);
-}
-.pc-thumb img{width:100%;height:100%;object-fit:cover;opacity:0.7;transition:opacity 0.3s}
-.preview-card:hover .pc-thumb img{opacity:0.85}
-.pc-play{
-  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-  width:46px;height:46px;background:rgba(255,255,255,0.9);
-  border-radius:50%;display:flex;align-items:center;justify-content:center;
-}
-.pc-play::after{
-  content:'';border-style:solid;
-  border-width:7px 0 7px 13px;
-  border-color:transparent transparent transparent var(--green);
-  margin-right:-3px;
-}
-.pc-duration{
-  position:absolute;bottom:10px;left:10px;
-  background:rgba(0,0,0,0.7);color:var(--white);
-  font-size:11px;padding:2px 8px;border-radius:4px;font-weight:600;
-}
-.pc-tag{
-  position:absolute;top:10px;right:10px;
-  background:var(--gold);color:var(--green3);
-  font-size:11px;font-weight:800;padding:3px 10px;border-radius:4px;
-}
+.pc-thumb{position:relative;height:160px;overflow:hidden;background:var(--green3)}
+.pc-thumb img{width:100%;height:100%;object-fit:cover;opacity:0.7}
+.pc-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:46px;height:46px;background:rgba(255,255,255,0.9);border-radius:50%;display:flex;align-items:center;justify-content:center}
+.pc-play::after{content:'';border-style:solid;border-width:7px 0 7px 13px;border-color:transparent transparent transparent var(--green);margin-right:-3px}
+.pc-duration{position:absolute;bottom:10px;left:10px;background:rgba(0,0,0,0.7);color:var(--white);font-size:11px;padding:2px 8px;border-radius:4px;font-weight:600}
+.pc-tag{position:absolute;top:10px;right:10px;background:var(--gold);color:var(--green3);font-size:11px;font-weight:800;padding:3px 10px;border-radius:4px}
 .pc-body{padding:16px}
 .pc-title{font-size:14px;font-weight:700;color:var(--text);margin-bottom:6px;line-height:1.4}
 .pc-meta{font-size:12px;color:var(--text3);font-weight:500}
-
-/* ── INSTRUCTOR ── */
-.instructor-section{
-  display:grid;grid-template-columns:1fr 1fr;
-  gap:0;background:var(--cream2);
-}
+.instructor-section{display:grid;grid-template-columns:1fr 1fr;gap:0;background:#EDE8DC}
 .ins-content{padding:80px 60px 80px 80px;display:flex;flex-direction:column;justify-content:center}
-.ins-img{position:relative;overflow:hidden;min-height:500px}
+.ins-img{overflow:hidden;min-height:500px}
 .ins-img img{width:100%;height:100%;object-fit:cover;object-position:center top}
 .ins-stats{display:flex;gap:40px;margin-top:36px}
 .ins-stat-num{font-size:36px;font-weight:900;color:var(--green)}
 .ins-stat-label{font-size:13px;color:var(--text3);margin-top:3px}
-.ins-checkmarks{display:flex;flex-direction:column;gap:8px;margin-top:24px}
-.ins-check{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text2)}
-.ins-check::before{content:'✓';color:var(--green);font-weight:900;font-size:16px}
-
-/* ── TESTIMONIALS ── */
-.testimonials-grid{
-  display:grid;grid-template-columns:repeat(2,1fr);
-  gap:16px;margin-top:48px;
-}
-.testi-card{
-  background:var(--cream);border:1px solid var(--border);
-  border-radius:14px;padding:24px;
-}
+.testimonials-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:48px}
+.testi-card{background:var(--cream);border:1px solid var(--border);border-radius:14px;padding:24px}
 .testi-stars{color:var(--gold);font-size:14px;letter-spacing:2px;margin-bottom:12px}
 .testi-text{font-size:14px;color:var(--text2);line-height:1.75;margin-bottom:16px}
 .testi-author{display:flex;align-items:center;gap:10px}
-.testi-avatar{
-  width:36px;height:36px;border-radius:50%;
-  background:var(--green);color:var(--white);
-  display:flex;align-items:center;justify-content:center;
-  font-size:14px;font-weight:700;
-}
+.testi-avatar{width:36px;height:36px;border-radius:50%;background:var(--green);color:var(--white);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700}
 .testi-name{font-size:14px;font-weight:700;color:var(--text)}
 .testi-role{font-size:12px;color:var(--text3)}
-
-/* ── FAQ ── */
-.faq-list{margin-top:48px;display:flex;flex-direction:column;gap:0}
-.faq-item{
-  border-bottom:1px solid var(--border);
-  overflow:hidden;
-}
-.faq-q{
-  width:100%;background:none;border:none;
-  padding:20px 0;text-align:right;
-  font-family:'Tajawal',sans-serif;font-size:16px;font-weight:700;
-  color:var(--text);cursor:pointer;
-  display:flex;align-items:center;justify-content:space-between;gap:16px;
-  transition:color 0.2s;
-}
+.faq-list{margin-top:48px}
+.faq-item{border-bottom:1px solid var(--border)}
+.faq-q{width:100%;background:none;border:none;padding:20px 0;text-align:right;font-family:'Tajawal',sans-serif;font-size:16px;font-weight:700;color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:16px;transition:color 0.2s}
 .faq-q:hover{color:var(--green)}
-.faq-arrow{
-  width:24px;height:24px;border-radius:50%;
-  background:rgba(46,64,54,0.08);
-  display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;font-size:14px;transition:all 0.3s;
-}
+.faq-arrow{width:24px;height:24px;border-radius:50%;background:rgba(46,64,54,0.08);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px;transition:all 0.3s}
 .faq-item.open .faq-arrow{background:var(--green);color:var(--white);transform:rotate(180deg)}
-.faq-a{
-  max-height:0;overflow:hidden;
-  font-size:14px;color:var(--text2);line-height:1.8;
-  transition:max-height 0.35s ease, padding 0.2s;
-  padding-bottom:0;
-}
+.faq-a{max-height:0;overflow:hidden;font-size:14px;color:var(--text2);line-height:1.8;transition:max-height 0.35s ease,padding 0.2s}
 .faq-item.open .faq-a{max-height:200px;padding-bottom:20px}
-
-/* ── MORE COURSES ── */
-.more-grid{
-  display:grid;grid-template-columns:repeat(3,1fr);
-  gap:16px;margin-top:48px;
-}
-.course-card{
-  background:var(--white);border:1px solid var(--border);
-  border-radius:14px;overflow:hidden;
-  transition:all 0.25s;cursor:pointer;text-decoration:none;
-  display:block;
-}
-.course-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,0.08)}
-.cc-thumb{height:180px;overflow:hidden;background:var(--cream3);position:relative}
-.cc-thumb img{width:100%;height:100%;object-fit:cover;transition:transform 0.3s}
-.course-card:hover .cc-thumb img{transform:scale(1.04)}
-.cc-body{padding:16px}
-.cc-title{font-size:14px;font-weight:700;color:var(--text);margin-bottom:8px;line-height:1.45}
-.cc-price{font-size:18px;font-weight:900;color:var(--green)}
-.cc-price-old{font-size:13px;color:var(--text3);text-decoration:line-through;font-weight:400;margin-right:6px}
-
-/* ── FOOTER ── */
-footer{
-  background:var(--green3);color:var(--white);
-  padding:60px 80px 30px;
-}
-.footer-top{
-  display:grid;grid-template-columns:1fr 1fr 1fr 1fr;
-  gap:40px;margin-bottom:48px;
-}
-.footer-brand p{font-size:13px;color:rgba(255,255,255,0.55);line-height:1.8;margin-top:12px;max-width:220px}
-.footer-social{display:flex;gap:12px;margin-top:16px}
-.social-icon{
-  width:34px;height:34px;border-radius:50%;
-  border:1px solid rgba(255,255,255,0.2);
-  display:flex;align-items:center;justify-content:center;
-  font-size:14px;color:rgba(255,255,255,0.7);
-  text-decoration:none;transition:all 0.2s;
-}
-.social-icon:hover{background:rgba(255,255,255,0.1);color:var(--white)}
-.footer-col h4{font-size:14px;font-weight:800;margin-bottom:16px;color:rgba(255,255,255,0.9)}
-.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
-.footer-col ul li a{font-size:13px;color:rgba(255,255,255,0.5);text-decoration:none;transition:color 0.2s}
-.footer-col ul li a:hover{color:var(--white)}
-.footer-bottom{
-  border-top:1px solid rgba(255,255,255,0.1);
-  padding-top:24px;display:flex;
-  align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;
-}
-.footer-bottom p{font-size:12px;color:rgba(255,255,255,0.35)}
-.pay-badges{display:flex;gap:10px;flex-wrap:wrap}
-.pay-badge{
-  background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);
-  border-radius:6px;padding:5px 12px;
-  font-size:11px;font-weight:700;color:rgba(255,255,255,0.55);
-}
-
-/* ── WA FLOAT ── */
-.wa-float{
-  position:fixed;bottom:28px;left:28px;
-  width:54px;height:54px;background:#25D366;
-  border-radius:50%;display:flex;align-items:center;
-  justify-content:center;font-size:24px;
-  box-shadow:0 4px 16px rgba(37,211,102,0.5);
-  text-decoration:none;z-index:300;
-  animation:wa-pulse 2.5s ease-in-out infinite;
-}
-@keyframes wa-pulse{
-  0%,100%{box-shadow:0 4px 16px rgba(37,211,102,0.5)}
-  50%{box-shadow:0 4px 28px rgba(37,211,102,0.8)}
-}
-
-/* ── RESPONSIVE ── */
-@media(max-width:1024px){
-  .hero{grid-template-columns:1fr}
-  .hero-left{display:none}
-  .hero-right{padding:50px 30px}
-  nav{padding:0 24px}
-  .nav-links{display:none}
-  .section{padding:60px 30px}
-  .inside-grid{grid-template-columns:1fr}
-  .preview-grid{grid-template-columns:1fr}
-  .instructor-section{grid-template-columns:1fr}
-  .ins-img{min-height:300px}
-  .ins-content{padding:50px 30px}
-  .testimonials-grid{grid-template-columns:1fr}
-  .more-grid{grid-template-columns:1fr}
-  .green-box{grid-template-columns:1fr}
-  .gb-right{border-right:none;border-bottom:1px solid rgba(255,255,255,0.15);padding-left:0;padding-bottom:32px;margin-bottom:32px}
-  .gb-left{padding-right:0}
-  .stats-bar{grid-template-columns:repeat(2,1fr)}
-  .footer-top{grid-template-columns:1fr 1fr}
-  footer{padding:50px 30px 24px}
-}
+.wa-float{position:fixed;bottom:28px;left:28px;width:54px;height:54px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:0 4px 16px rgba(37,211,102,0.5);text-decoration:none;z-index:300}
+footer{background:#243328;color:var(--white);padding:40px 80px}
+.footer-copy{border-top:1px solid rgba(255,255,255,0.1);padding-top:20px;margin-top:30px;font-size:12px;color:rgba(255,255,255,0.35)}
+@media(max-width:1024px){.hero{grid-template-columns:1fr}.hero-left{display:none}.hero-right{padding:50px 30px}nav{padding:0 24px}.nav-links{display:none}.section{padding:60px 30px}.inside-grid,.preview-grid,.testimonials-grid{grid-template-columns:1fr}.instructor-section{grid-template-columns:1fr}.ins-content{padding:50px 30px}.stats-bar{grid-template-columns:repeat(2,1fr)}footer{padding:40px 30px}}
 </style>
 </head>
 <body>
-
-<!-- NAV -->
-<nav>
-  <div class="nav-logo">
-    <span>د</span>
-    ديـنـتـيـكو
-  </div>
-  <div class="nav-links">
-    <a href="#inside" onclick="smoothTo('inside')">الكورس</a>
-    <a href="#preview" onclick="smoothTo('preview')">محاضرات تجريبية</a>
-    <a href="#instructor" onclick="smoothTo('instructor')">المدرب</a>
-    <a href="#testimonials" onclick="smoothTo('testimonials')">آراء الأطباء</a>
-    <a href="#faq" onclick="smoothTo('faq')">الأسئلة الشائعة</a>
-    <a href="#more" onclick="smoothTo('more')">كورسات أخرى</a>
-  </div>
-  <a href="https://dentalcourse.store/products/ra-summit-botox-and-filler-online-course-raj-acquilla-with-2024-updates" target="_blank" class="nav-cta">اشتري الآن</a>
-</nav>
-
-<!-- HERO -->
-<section class="hero" id="home">
-  <!-- VIDEO LEFT -->
-  <div class="hero-left">
-    <div class="hero-video-wrap">
-      <img src="https://dentalcourse.store/cdn/shop/files/ra-summit-botox-and-filler-online-course-raj-acquilla-with-2024-updates-1238124555.jpg?v=1778640251&width=1200" alt="الكورس">
-      <div class="hero-video-overlay"></div>
-      <div class="play-btn" onclick="smoothTo('preview')"></div>
-      <div class="hero-caption">
-        شاهدي 6 محاضرات تجريبية مجانًا
-        <span>▶ ابدأ المشاهدة الآن</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- CONTENT RIGHT -->
-  <div class="hero-right">
-    <div class="hero-badge">كورس إلكتروني احترافي</div>
-    <h1>
-      كورس البوتوكس والفيلر<br>
-      الاحترافي<br>
-      <em>من التشريح حتى الإتقان</em>
-    </h1>
-    <div class="stars-row">
-      <span class="stars">★★★★★</span>
-      <span class="stars-text">4.9 — أكثر من 2000 طبيب وأخصائية</span>
-    </div>
-    <p class="hero-desc">
-      كورس شامل يغطي تقنيات البوتوكس والفيلر من الأساسيات حتى المستوى المتقدم، مع تشريح وجهي وخرائط أوعية وحالات حقيقية — مع تحديثات 2024 كاملة.
-    </p>
-
-    <div class="hero-features">
-      <div class="hf-item"><span class="hf-check">✓</span>53+ ساعة محتوى HD مع أبرز المتخصصين العالميين</div>
-      <div class="hf-item"><span class="hf-check">✓</span>وصول مدى الحياة مع جميع التحديثات المستقبلية</div>
-      <div class="hf-item"><span class="hf-check">✓</span>شهادة إتمام رقمية معتمدة من RA Academy</div>
-      <div class="hf-item"><span class="hf-check">✓</span>تسليم فوري عبر تليغرام بعد الشراء</div>
-    </div>
-
-    <div class="price-block">
-      <div class="price-row">
-        <div>
-          <div class="price-badge">وفّر 94%</div>
-          <div style="display:flex;align-items:baseline;gap:12px">
-            <span class="price-old">$350</span>
-            <span class="price-new">$20</span>
-          </div>
-        </div>
-      </div>
-      <div class="price-iraq">🇮🇶 للأطباء داخل العراق: <strong>20,000 دينار</strong> فقط</div>
-      <a href="https://dentalcourse.store/products/ra-summit-botox-and-filler-online-course-raj-acquilla-with-2024-updates" target="_blank" class="btn-buy">اشتري الآن ⚡</a>
-      <a href="#preview" class="btn-trial" onclick="smoothTo('preview'); return false;">▶ شاهد محاضرة تجريبية مجانًا</a>
-      <div class="guarantee">ضمان استرداد كامل خلال 7 أيام · تسليم فوري</div>
-    </div>
-  </div>
-</section>
-
-<!-- STATS BAR -->
-<div class="stats-bar">
-  <div class="stat-item"><div class="stat-num">53+</div><div class="stat-label">ساعة محتوى HD</div></div>
-  <div class="stat-item"><div class="stat-num">+2000</div><div class="stat-label">طبيب وأخصائية</div></div>
-  <div class="stat-item"><div class="stat-num">+14</div><div class="stat-label">سنة خبرة المدرب</div></div>
-  <div class="stat-item"><div class="stat-num">2024</div><div class="stat-label">آخر تحديث</div></div>
-</div>
-
-<!-- WHAT'S INSIDE -->
-<section class="section" id="inside">
-  <div class="s-eyebrow">المحتوى</div>
-  <h2 class="s-title">كل ما ستحصلين عليه</h2>
-  <p class="s-sub">تغطي مكتبة مشمولة بالكورس كل جوانب حقن البوتوكس والفيلر بدقة علمية</p>
-
-  <div class="inside-grid">
-    <div class="inside-card">
-      <div class="ic-icon">🎥</div>
-      <div class="ic-title">53+ ساعة فيديو HD</div>
-      <p class="ic-desc">محاضرات، نقاشات، وعروض حية مع أبرز المتخصصين — كل المحتوى بجودة عالية</p>
-    </div>
-    <div class="inside-card">
-      <div class="ic-icon">🏅</div>
-      <div class="ic-title">قيراتي الدولي الإلكتروني</div>
-      <p class="ic-desc">شهادة إتمام معتمدة رقمياً تصلك فور إكمال الكورس لتضيفها لملفك المهني</p>
-    </div>
-    <div class="inside-card">
-      <div class="ic-icon">♾️</div>
-      <div class="ic-title">وصول مدى الحياة</div>
-      <p class="ic-desc">ادفع مرة واحدة واحتفظ بالمحتوى إلى الأبد — مع جميع التحديثات المستقبلية</p>
-    </div>
-    <div class="inside-card">
-      <div class="ic-icon">🧠</div>
-      <div class="ic-title">تشريح ووقاية</div>
-      <p class="ic-desc">مناطق الخطر وطائرات الحقن الآمنة — تجنب انسداد الأوعية وتلف الأعصاب</p>
-    </div>
-    <div class="inside-card">
-      <div class="ic-icon">💉</div>
-      <div class="ic-title">جلسات بوتوكس متقدمة</div>
-      <p class="ic-desc">الجبهة، الغضبة، حول العين، الماستر، الرقبة، الابتسامة اللثوية — ودروس off-label</p>
-    </div>
-    <div class="inside-card">
-      <div class="ic-icon">💋</div>
-      <div class="ic-title">فيلر بكل تقنياته</div>
-      <p class="ic-desc">Russian lip، tenting، microbolus — الخد، الذقن، الفك، تحت العين بأمان كامل</p>
-    </div>
-  </div>
-
-  <!-- GREEN BOX -->
-  <div class="green-box">
-    <div class="gb-right">
-      <div class="gb-title">8 مبارات أساسية ستغير ممارستك الطبية للأبد</div>
-      <ul class="gb-list">
-        <li>تقييم تشريح الوجه لوضع خطة حقن مثالية لكل مريض</li>
-        <li>تقنيات متقدمة في تجديد الوجه العلوي والسفلي</li>
-        <li>الجمع بين البوتوكس والفيلر لأفضل نتيجة</li>
-        <li>أبرز اتجاهات 2024 ودمجها في ممارستك</li>
-        <li>إدارة المضاعفات والوقاية من الآثار الجانبية</li>
-        <li>حقن مخصص بناءً على شكل وجه كل مريض</li>
-        <li>الحقن بمساعدة الموجات فوق الصوتية (Ultrasound)</li>
-        <li>إدارة توقعات المريض وخطط العلاج</li>
-      </ul>
-    </div>
-    <div class="gb-left" style="display:flex;flex-direction:column;justify-content:center;padding-right:0;padding-left:0">
-      <div class="gb-title">ابدأ رحلتك الاحترافية الآن</div>
-      <p style="font-size:14px;color:rgba(255,255,255,0.65);line-height:1.8;margin-bottom:24px">انضم لأكثر من 2000 طبيب وأخصائية عرب طوّروا مهاراتهم مع هذا الكورس الاستثنائي</p>
-      <div class="gb-cta-area">
-        <div class="gb-price-line">السعر: <strong>$20 فقط</strong> (بدلاً من $350)</div>
-        <a href="https://dentalcourse.store/products/ra-summit-botox-and-filler-online-course-raj-acquilla-with-2024-updates" target="_blank" class="gb-btn">اشتري الآن واحصل على وصول فوري</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FREE PREVIEW -->
-<section class="section section-alt" id="preview">
-  <div class="s-eyebrow">تجربة مجانية</div>
-  <h2 class="s-title">شاهدي قبل أن تشتري</h2>
-  <p class="s-sub">استمتعي بمعاينة 6 محاضرات مجانية من قلب الكورس قبل اتخاذ قرارك</p>
-
-  <div class="preview-grid">
-    <div class="preview-card">
-      <div class="pc-thumb">
-        <img src="https://dentalcourse.store/cdn/shop/files/ra-summit-botox-and-filler-online-course-raj-acquilla-with-2024-updates-1238124555.jpg?v=1778640251&width=600" alt="">
-        <div class="pc-play"></div>
-        <div class="pc-duration">32 دقيقة</div>
-        <div class="pc-tag">مجاني</div>
-      </div>
-      <div class="pc-body">
-        <div class="pc-title">رسم الوجه بدقة رقمية — خريطة العضلات والأوعية</div>
-        <div class="pc-meta">د. راج أكويلا · مقدمة الكورس</div>
-      </div>
-    </div>
-
-    <div class="preview-card">
-      <div class="pc-thumb">
-        <img src="https://dentalcourse.store/cdn/shop/files/ra-summit-botox-and-filler-online-course-raj-acquilla-with-2024-updates-1238124555.jpg?v=1778640251&width=600" alt="">
-        <div class="pc-play"></div>
-        <div class="pc-duration">28 دقيقة</div>
-        <div class="pc-tag">مجاني</div>
-      </div>
-      <div class="pc-body">
-        <div class="pc-title">حق البوتوكس في منطقة النظرة</div>
-        <div class="pc-meta">د. راج أكويلا · الوحدة الثانية</div>
-      </div>
-    </div>
-
-    <div class="preview-card">
-      <div class="pc-thumb">
-        <img src="https://dentalcourse.store/cdn/shop/files/ra-summit-botox-and-filler-online-course-raj-acquilla-with-2024-updates-1238124555.jpg?v=1778640251&width=600" alt="">
-        <div class="pc-play"></div>
-        <div class="pc-duration">41 دقيقة</div>
-        <div class="pc-tag">مجاني</div>
-      </div>
-      <div class="pc-body">
-        <div class="pc-title">قراءة وجه المريض وخطة العلاج الأولى</div>
-        <div class="pc-meta">د. راج أكويلا · التقييم والتخطيط</div>
-      </div>
-    </div>
-
-    <div class="preview-card">
-      <div class="pc-thumb">
-        <img src="https://dentalcourse.store/cdn/shop/files/ra-summit-botox-and-filler-online-course-raj-acquilla-with-2024-updates-1238124555.jpg?v=1778640251&width=600" alt="">
-        <div class="pc-play"></div>
-        <div class="pc-duration">22 دقيقة</div>
-        <div class="pc-tag">مجاني</div>
-      </div>
-      <div class="pc-body">
-        <div class="pc-title">الفيلر التحت عيني: أمان وعلاج</div>
-        <div class="pc-meta">د. راج أكويلا · منطقة الخطر</div>
-      </div>
-    </div>
-
-    <div class="preview-card">
-      <div class="pc-thumb">
-        <img src="https://dentalcourse.store/cdn/shop/files/ra-summit-botox-and-filler-online-course-raj-acquilla-with-2024-updates-1238124555.jpg?v=1778640251&width=600" alt="">
-        <div class="pc-play"></div>
-        <div class="pc-duration">35 دقيقة</div>
-        <div class="pc-tag">مجاني</div>
-      </div>
-      <div class="pc-body">
-        <div class="pc-title">إدارة المضاعفات والطوارئ</div>
-        <div class="pc-meta">د. راج أكويلا · السلامة أولاً</div>
-      </div>
-    </div>
-
-    <div class="preview-card">
-      <div class="pc-thumb">
-        <img src="https://dentalcourse.store/cdn/shop/files/ra-summit-botox-and-filler-online-course-raj-acquilla-with-2024-updates-1238124555.jpg?v=1778640251&width=600" alt="">
-        <div class="pc-play"></div>
-        <div class="pc-duration">19 دقيقة</div>
-        <div class="pc-tag">مجاني</div>
-      </div>
-      <div class="pc-body">
-        <div class="pc-title">نكات البوتوكس والفيلر والطموزون</div>
-        <div class="pc-meta">د. راج أكويلا · نقاش الخبراء</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- INSTRUCTOR -->
-<div class="instructor-section" id="instructor">
-  <div class="ins-content">
-    <div class="s-eyebrow">المدرب</div>
-    <h2 class="s-title">خبرة 14 عاماً في طب التجميل الحديث</h2>
-    <p class="s-sub" style="max-width:100%">
-      دكتور راج أكويلا من أبرز أطباء التجميل على مستوى العالم ومؤسس RA Academy. متخصص في حقن البوتوكس والفيلر لأكثر من 14 عاماً، يُعدّ من أكثر المدربين طلباً في أوروبا وآسيا. أسلوبه الفريد يجمع بين العلم والجماليات لتحقيق نتائج طبيعية ومستدامة.
-    </p>
-    <div class="ins-checkmarks">
-      <div class="ins-check">عضو في عدة جمعيات طبية تجميلية دولية</div>
-      <div class="ins-check">متحدث في مؤتمرات عالمية كبرى</div>
-      <div class="ins-check">مؤلف أبحاث في مجلات علمية محكّمة</div>
-      <div class="ins-check">مدرب معتمد لعشرات الأطباء حول العالم</div>
-    </div>
-    <div class="ins-stats">
-      <div>
-        <div class="ins-stat-num">+15K</div>
-        <div class="ins-stat-label">مريض حقيقي</div>
-      </div>
-      <div>
-        <div class="ins-stat-num">+2000</div>
-        <div class="ins-stat-label">طبيب درّبه</div>
-      </div>
-      <div>
-        <div class="ins-stat-num">+14</div>
-        <div class="ins-stat-label">سنة خبرة</div>
-      </div>
-    </div>
-  </div>
-  <div class="ins-img">
-    <img src="https://dentalcourse.store/cdn/shop/files/ra-summit-botox-and-filler-online-course-raj-acquilla-with-2024-updates-1238124555.jpg?v=1778640251&width=800" alt="Dr. Raj Acquilla">
-  </div>
-</div>
-
-<!-- TESTIMONIALS -->
-<section class="section section-alt" id="testimonials">
-  <div class="s-eyebrow">آراء الأطباء</div>
-  <h2 class="s-title">أكثر من 2000 طبية وأخصائية</h2>
-  <p class="s-sub">تجارب حقيقية من أطباء عرب يثقون بمحتوى ديـنـتـيـكو</p>
-
-  <div class="testimonials-grid">
-    <div class="testi-card">
-      <div class="testi-stars">★★★★★</div>
-      <p class="testi-text">الكورس غيّر طريقة تعاملي مع المريض كلياً — الآن أفهم التشريح بعمق وأقدر أتجنب المناطق الخطرة بثقة عالية. شكراً ديـنـتـيـكو على هذا المحتوى النادر.</p>
-      <div class="testi-author">
-        <div class="testi-avatar">د.س</div>
-        <div>
-          <div class="testi-name">د. سارة المنصور</div>
-          <div class="testi-role">طبيبة تجميل — الرياض</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="testi-card">
-      <div class="testi-stars">★★★★★</div>
-      <p class="testi-text">53 ساعة من المحتوى الاحترافي بـ 20 دولار فقط — لا يصدّق! أفضل استثمار في مسيرتي المهنية. التسليم كان فورياً عبر تليغرام والجودة استثنائية.</p>
-      <div class="testi-author">
-        <div class="testi-avatar">د.م</div>
-        <div>
-          <div class="testi-name">د. مريم الهاشمي</div>
-          <div class="testi-role">أخصائية جلدية — دبي</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="testi-card">
-      <div class="testi-stars">★★★★★</div>
-      <p class="testi-text">ما توقعت المستوى يكون هذا — المحتوى يستحق عشرة أضعاف سعره. راج أكويلا يشرح بطريقة عملية وواضحة جداً. أنصح فيه كل طبيب تجميل.</p>
-      <div class="testi-author">
-        <div class="testi-avatar">د.ا</div>
-        <div>
-          <div class="testi-name">د. أحمد العبدالله</div>
-          <div class="testi-role">طبيب تجميل — الكويت</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="testi-card">
-      <div class="testi-stars">★★★★★</div>
-      <p class="testi-text">أخذت الكورس قبل ما أبدأ عيادتي وكان القرار الصح. التشريح والحالات الحقيقية ساعدتني تجنب أخطاء كثيرة من أول يوم. ديـنـتـيـكو موثوق 100%.</p>
-      <div class="testi-author">
-        <div class="testi-avatar">د.ن</div>
-        <div>
-          <div class="testi-name">د. نورة الجابري</div>
-          <div class="testi-role">طبيبة عامة — عمان</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FAQ -->
-<section class="section" id="faq">
-  <div class="s-eyebrow">الأسئلة الشائعة</div>
-  <h2 class="s-title">كل ما توّد معرفته</h2>
-
-  <div class="faq-list">
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
-        كيف يتم تسليم الكورس؟
-        <span class="faq-arrow">▼</span>
-      </button>
-      <div class="faq-a">بعد إتمام الشراء، تتواصل معنا عبر التليغرام وتحصل على رابط الوصول الكامل للكورس فوراً. تأكد من إدخال معرّف التليغرام الخاص بك عند الشراء.</div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
-        هل الوصول للأبد أم محدود بوقت؟
-        <span class="faq-arrow">▼</span>
-      </button>
-      <div class="faq-a">وصولك مدى الحياة تماماً — ادفع مرة واحدة واحتفظ بالمحتوى إلى الأبد، بما في ذلك جميع التحديثات المستقبلية.</div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
-        ما هي الشهادة التي سأحصل عليها؟
-        <span class="faq-arrow">▼</span>
-      </button>
-      <div class="faq-a">تحصل على شهادة إتمام رقمية معتمدة من RA Academy بعد إكمال الكورس، يمكنك إضافتها لملفك في LinkedIn أو بروفايلك المهني.</div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
-        هل يناسبني الكورس كمبتدئ؟
-        <span class="faq-arrow">▼</span>
-      </button>
-      <div class="faq-a">نعم! الكورس مصمم ليناسب جميع المستويات — يبدأ من الأساسيات ويتدرج نحو التقنيات المتقدمة. الطبيب المبتدئ والخبير كلاهما سيستفيد.</div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
-        ما هي طرق الدفع المتاحة؟
-        <span class="faq-arrow">▼</span>
-      </button>
-      <div class="faq-a">نقبل Visa، Mastercard، Apple Pay، Google Pay، Klarna، Skrill، Amex، وDiscover. جميع المعاملات آمنة ومشفرة.</div>
-    </div>
-  </div>
-</section>
-
-<!-- MORE COURSES -->
-<section class="section section-alt" id="more">
-  <div class="s-eyebrow">كورسات أخرى</div>
-  <h2 class="s-title">الأطباء يبحثون عن هذه الكورسات أيضاً</h2>
-
-  <div class="more-grid">
-    <a class="course-card" href="https://dentalcourse.store/products/ra-academy-online-training-botox-and-filler-training-1" target="_blank">
-      <div class="cc-thumb">
-        <img src="https://dentalcourse.store/cdn/shop/files/ra-summit-botox-and-filler-online-course-raj-acquilla-with-2024-updates-1238124555.jpg?v=1778640251&width=400" alt="">
-      </div>
-      <div class="cc-body">
-        <div class="cc-title">RA Academy Online Training – Botox and Filler</div>
-        <div><span class="cc-price-old">$150</span><span class="cc-price">$15</span></div>
-      </div>
-    </a>
-    <a class="course-card" href="https://dentalcourse.store/products/filler-complications-with-dr-tim-pearce" target="_blank">
-      <div class="cc-thumb">
-        <img src="https://dentalcourse.store/cdn/shop/files/ra-summit-botox-and-filler-online-course-raj-acquilla-with-2024-updates-1238124555.jpg?v=1778640251&width=400" alt="">
-      </div>
-      <div class="cc-body">
-        <div class="cc-title">Filler Complications with Dr. Tim Pearce</div>
-        <div><span class="cc-price-old">$120</span><span class="cc-price">$20</span></div>
-      </div>
-    </a>
-    <a class="course-card" href="https://dentalcourse.store/products/dr-tim-pearce-dermal-fillers-foundation-course" target="_blank">
-      <div class="cc-thumb">
-        <img src="https://dentalcourse.store/cdn/shop/files/ra-summit-botox-and-filler-online-course-raj-acquilla-with-2024-updates-1238124555.jpg?v=1778640251&width=400" alt="">
-      </div>
-      <div class="cc-body">
-        <div class="cc-title">Dr Tim Pearce – Dermal Fillers Foundation Course</div>
-        <div><span class="cc-price-old">$180</span><span class="cc-price">$20</span></div>
-      </div>
-    </a>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <div class="footer-top">
-    <div class="footer-brand">
-      <div style="font-size:22px;font-weight:900;color:var(--white)">ديـنـتـيـكو</div>
-      <p>نوفّر كورسات طب الأسنان والتجميل بمختلف المواضيع لأطباء العالم العربي بأسعار حصرية.</p>
-      <div class="footer-social">
-        <a class="social-icon" href="https://www.instagram.com/dntl_co/" target="_blank">IG</a>
-        <a class="social-icon" href="https://t.me/dntl_coo" target="_blank">TG</a>
-        <a class="social-icon" href="https://www.facebook.com/profile.php?id=61551305000738" target="_blank">FB</a>
-        <a class="social-icon" href="https://www.tiktok.com/@dentlco" target="_blank">TK</a>
-      </div>
-    </div>
-    <div class="footer-col">
-      <h4>روابط مهمة</h4>
-      <ul>
-        <li><a href="https://dentalcourse.store/pages/about-us-1" target="_blank">من نحن</a></li>
-        <li><a href="https://dentalcourse.store/pages/faq" target="_blank">الأسئلة الشائعة</a></li>
-        <li><a href="https://dentalcourse.store/pages/payment-method" target="_blank">طرق الدفع</a></li>
-        <li><a href="https://dentalcourse.store/pages/terms-of-service" target="_blank">سياسة الاستخدام</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>الأقسام</h4>
-      <ul>
-        <li><a href="https://dentalcourse.store/collections/filler-botox" target="_blank">Filler & Botox</a></li>
-        <li><a href="https://dentalcourse.store/collections/aesthetic" target="_blank">Aesthetics</a></li>
-        <li><a href="https://dentalcourse.store/collections/implantology" target="_blank">Implantology</a></li>
-        <li><a href="https://dentalcourse.store/collections/orthodontics" target="_blank">Orthodontics</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>تواصل معنا</h4>
-      <ul>
-        <li><a href="https://wa.me/447400753956" target="_blank">واتساب: +447400753956</a></li>
-        <li><a href="mailto:support@dentalcourse.store">support@dentalcourse.store</a></li>
-        <li><a href="https://dentalcourse.store/pages/contact-us-1" target="_blank">نموذج الاتصال</a></li>
-      </ul>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <p>© 2026 ديـنـتـيـكو لكورسات طب الأسنان — جميع الحقوق محفوظة</p>
-    <div class="pay-badges">
-      <span class="pay-badge">Visa</span>
-      <span class="pay-badge">Mastercard</span>
-      <span class="pay-badge">Apple Pay</span>
-      <span class="pay-badge">Klarna</span>
-      <span class="pay-badge">Skrill</span>
-    </div>
-  </div>
-</footer>
-
-<!-- WHATSAPP -->
+<nav><div class="nav-logo"><span>د</span>ديـنـتـيـكو</div><div class="nav-links"><a href="#inside">الكورس</a><a href="#preview">محاضرات تجريبية</a><a href="#instructor">المدرب</a><a href="#testimonials">آراء الأطباء</a><a href="#faq">الأسئلة الشائعة</a></div><a href="https://dentalcourse.store/products/ra-summit-botox-and-filler-online-course-raj-acquilla-with-2024-updates" target="_blank" class="nav-cta">اشتري الآن ⚡</a></nav>
+<section class="hero"><div class="hero-left"><div class="hero-video-wrap"><img src="https://dentalcourse.store/cdn/shop/files/ra-summit-botox-and-filler-online-course-raj-acquilla-with-2024-updates-1238124555.jpg?v=1778640251&width=1200" alt=""><div class="hero-video-overlay"></div><div class="play-btn"></div><div class="hero-caption">شاهدي 6 محاضرات تجريبية مجانًا<span>▶ ابدأ المشاهدة الآن</span></div></div></div><div class="hero-right"><div class="hero-badge">كورس إلكتروني</div><h1>كورس البوتوكس والفيلر الاحترافي<br><em>من التشريح حتى الإتقان</em></h1><div class="stars-row"><span class="stars">★★★★★</span><span class="stars-text">4.9 — أكثر من 2000 طبيب وأخصائية</span></div><p class="hero-desc">كورس شامل يغطي تقنيات البوتوكس والفيلر من الأساسيات حتى المستوى المتقدم، مع تشريح وجهي وخرائط أوعية وحالات حقيقية.</p><div class="hero-features"><div class="hf-item"><span class="hf-check">✓</span>53+ ساعة محتوى HD مع أبرز المتخصصين العالميين</div><div class="hf-item"><span class="hf-check">✓</span>وصول مدى الحياة مع جميع التحديثات المستقبلية</div><div class="hf-item"><span class="hf-check">✓</span>شهادة إتمام رقمية معتمدة من RA Academy</div><div class="hf-item"><span class="hf-check">✓</span>تسليم فوري عبر تليغرام بعد الشراء</div></div><div class="price-block"><div style="margin-bottom:14px"><div class="price-badge">وفّر 94%</div><div style="display:flex;align-items:baseline;gap:12px"><span class="price-old">$350</span><span class="price-new">$20</span></div></div><div class="price-iraq">🇮🇶 للأطباء داخل العراق: 20,000 دينار فقط</div><a href="https://dentalcourse.store/products/ra-summit-botox-and-filler-online-course-raj-acquilla-with-2024-updates" target="_blank" class="btn-buy">اشتري الآن ⚡</a><a href="#preview" class="btn-trial">▶ شاهد محاضرة تجريبية مجانًا</a><div class="guarantee">ضمان استرداد كامل خلال 7 أيام · تسليم فوري</div></div></div></section>
+<div class="stats-bar"><div class="stat-item"><div class="stat-num">53+</div><div class="stat-label">ساعة محتوى HD</div></div><div class="stat-item"><div class="stat-num">+2000</div><div class="stat-label">طبيب وأخصائية</div></div><div class="stat-item"><div class="stat-num">+14</div><div class="stat-label">سنة خبرة المدرب</div></div><div class="stat-item"><div class="stat-num">2024</div><div class="stat-label">آخر تحديث</div></div></div>
+<section class="section" id="inside"><div class="s-eyebrow">المحتوى</div><h2 class="s-title">كل ما ستحصلين عليه</h2><p class="s-sub">تغطي مكتبة مشمولة بالكورس كل جوانب حقن البوتوكس والفيلر بدقة علمية</p><div class="inside-grid"><div class="inside-card"><div class="ic-icon">🎥</div><div class="ic-title">53+ ساعة فيديو HD</div><p class="ic-desc">محاضرات، نقاشات، وعروض حية مع أبرز المتخصصين</p></div><div class="inside-card"><div class="ic-icon">🏅</div><div class="ic-title">شهادة إلكترونية</div><p class="ic-desc">شهادة إتمام معتمدة رقمياً تصلك فور إكمال الكورس</p></div><div class="inside-card"><div class="ic-icon">♾️</div><div class="ic-title">وصول مدى الحياة</div><p class="ic-desc">ادفع مرة واحتفظ بالمحتوى إلى الأبد مع التحديثات</p></div><div class="inside-card"><div class="ic-icon">🧠</div><div class="ic-title">تشريح ووقاية</div><p class="ic-desc">مناطق الخطر وطائرات الحقن الآمنة</p></div><div class="inside-card"><div class="ic-icon">💉</div><div class="ic-title">جلسات بوتوكس متقدمة</div><p class="ic-desc">الجبهة، الغضبة، حول العين، الماستر وأكثر</p></div><div class="inside-card"><div class="ic-icon">💋</div><div class="ic-title">فيلر بكل تقنياته</div><p class="ic-desc">Russian lip، tenting، microbolus وغيرها</p></div></div></section>
+<section class="section section-alt" id="preview"><div class="s-eyebrow">تجربة مجانية</div><h2 class="s-title">شاهدي قبل أن تشتري</h2><div class="preview-grid"><div class="preview-card"><div class="pc-thumb"><img src="https://dentalcourse.store/cdn/shop/files/ra-summit-botox-and-filler-online-course-raj-acquilla-with-2024-updates-1238124555.jpg?v=1778640251&width=1200" alt=""><div class="pc-play"></div><div class="pc-duration">32 دقيقة</div><div class="pc-tag">مجاني</div></div><div class="pc-body"><div class="pc-title">رسم الوجه بدقة رقمية</div><div class="pc-meta">د. راج أكويلا · مقدمة</div></div></div><div class="preview-card"><div class="pc-thumb"><img src="https://dentalcourse.store/cdn/shop/files/ra-summit-botox-and-filler-online-course-raj-acquilla-with-2024-updates-1238124555.jpg?v=1778640251&width=1200" alt=""><div class="pc-play"></div><div class="pc-duration">28 دقيقة</div><div class="pc-tag">مجاني</div></div><div class="pc-body"><div class="pc-title">حق البوتوكس في منطقة النظرة</div><div class="pc-meta">د. راج أكويلا · الوحدة الثانية</div></div></div><div class="preview-card"><div class="pc-thumb"><img src="https://dentalcourse.store/cdn/shop/files/ra-summit-botox-and-filler-online-course-raj-acquilla-with-2024-updates-1238124555.jpg?v=1778640251&width=1200" alt=""><div class="pc-play"></div><div class="pc-duration">41 دقيقة</div><div class="pc-tag">مجاني</div></div><div class="pc-body"><div class="pc-title">قراءة وجه المريض وخطة العلاج</div><div class="pc-meta">د. راج أكويلا · التخطيط</div></div></div><div class="preview-card"><div class="pc-thumb"><img src="https://dentalcourse.store/cdn/shop/files/ra-summit-botox-and-filler-online-course-raj-acquilla-with-2024-updates-1238124555.jpg?v=1778640251&width=1200" alt=""><div class="pc-play"></div><div class="pc-duration">22 دقيقة</div><div class="pc-tag">مجاني</div></div><div class="pc-body"><div class="pc-title">الفيلر التحت عيني</div><div class="pc-meta">د. راج أكويلا · منطقة الخطر</div></div></div><div class="preview-card"><div class="pc-thumb"><img src="https://dentalcourse.store/cdn/shop/files/ra-summit-botox-and-filler-online-course-raj-acquilla-with-2024-updates-1238124555.jpg?v=1778640251&width=1200" alt=""><div class="pc-play"></div><div class="pc-duration">35 دقيقة</div><div class="pc-tag">مجاني</div></div><div class="pc-body"><div class="pc-title">إدارة المضاعفات</div><div class="pc-meta">د. راج أكويلا · السلامة</div></div></div><div class="preview-card"><div class="pc-thumb"><img src="https://dentalcourse.store/cdn/shop/files/ra-summit-botox-and-filler-online-course-raj-acquilla-with-2024-updates-1238124555.jpg?v=1778640251&width=1200" alt=""><div class="pc-play"></div><div class="pc-duration">19 دقيقة</div><div class="pc-tag">مجاني</div></div><div class="pc-body"><div class="pc-title">نقاش البوتوكس والفيلر</div><div class="pc-meta">د. راج أكويلا · نقاش</div></div></div></div></section>
+<div class="instructor-section" id="instructor"><div class="ins-content"><div class="s-eyebrow">المدرب</div><h2 class="s-title" style="max-width:100%">Dr. Raj Acquilla</h2><p style="color:var(--gold);font-weight:700;margin-bottom:16px">متخصص طب التجميل — مؤسس RA Academy</p><p style="color:var(--text2);line-height:1.8;margin-bottom:28px">دكتور راج أكويلا من أبرز أطباء التجميل على مستوى العالم ومؤسس RA Academy. متخصص في حقن البوتوكس والفيلر لأكثر من 14 عاماً.</p><div class="ins-stats"><div><div class="ins-stat-num">+15K</div><div class="ins-stat-label">مريض حقيقي</div></div><div><div class="ins-stat-num">+2000</div><div class="ins-stat-label">طبيب درّبه</div></div><div><div class="ins-stat-num">+14</div><div class="ins-stat-label">سنة خبرة</div></div></div></div><div class="ins-img"><img src="https://dentalcourse.store/cdn/shop/files/ra-summit-botox-and-filler-online-course-raj-acquilla-with-2024-updates-1238124555.jpg?v=1778640251&width=800" alt="Dr. Raj Acquilla"></div></div>
+<section class="section section-alt" id="testimonials"><div class="s-eyebrow">آراء الأطباء</div><h2 class="s-title">أكثر من 2000 طبيب وأخصائية</h2><div class="testimonials-grid"><div class="testi-card"><div class="testi-stars">★★★★★</div><p class="testi-text">الكورس غيّر طريقة تعاملي مع المريض كلياً.</p><div class="testi-author"><div class="testi-avatar">دس</div><div><div class="testi-name">د. سارة المنصور</div><div class="testi-role">طبيبة تجميل — الرياض</div></div></div></div><div class="testi-card"><div class="testi-stars">★★★★★</div><p class="testi-text">53 ساعة من المحتوى الاحترافي بـ 20 دولار فقط!</p><div class="testi-author"><div class="testi-avatar">دم</div><div><div class="testi-name">د. مريم الهاشمي</div><div class="testi-role">أخصائية جلدية — دبي</div></div></div></div><div class="testi-card"><div class="testi-stars">★★★★★</div><p class="testi-text">المحتوى يستحق عشرة أضعاف سعره.</p><div class="testi-author"><div class="testi-avatar">دأ</div><div><div class="testi-name">د. أحمد العبدالله</div><div class="testi-role">طبيب تجميل — الكويت</div></div></div></div><div class="testi-card"><div class="testi-stars">★★★★★</div><p class="testi-text">ديـنـتـيـكو موثوق 100%.</p><div class="testi-author"><div class="testi-avatar">دن</div><div><div class="testi-name">د. نورة الجابري</div><div class="testi-role">طبيبة عامة — عمان</div></div></div></div></div></section>
+<section class="section" id="faq"><div class="s-eyebrow">الأسئلة الشائعة</div><h2 class="s-title">كل ما توّد معرفته</h2><div class="faq-list"><div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">كيف يتم تسليم الكورس؟<span class="faq-arrow">▼</span></button><div class="faq-a">بعد إتمام الشراء، تتواصل معنا عبر التليغرام وتحصل على رابط الوصول الكامل فوراً.</div></div><div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">هل الوصول للأبد؟<span class="faq-arrow">▼</span></button><div class="faq-a">نعم، وصولك مدى الحياة مع جميع التحديثات المستقبلية.</div></div><div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">ما هي الشهادة؟<span class="faq-arrow">▼</span></button><div class="faq-a">شهادة إتمام رقمية معتمدة من RA Academy.</div></div><div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">هل يناسبني كمبتدئ؟<span class="faq-arrow">▼</span></button><div class="faq-a">نعم! يبدأ من الأساسيات ويتدرج نحو التقنيات المتقدمة.</div></div><div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">طرق الدفع؟<span class="faq-arrow">▼</span></button><div class="faq-a">Visa، Mastercard، Apple Pay، Google Pay، Klarna، Skrill.</div></div></div></section>
+<footer><div style="font-size:22px;font-weight:900">ديـنـتـيـكو</div><div class="footer-copy">© 2026 ديـنـتـيـكو لكورسات طب الأسنان — جميع الحقوق محفوظة</div></footer>
 <a href="https://wa.me/447400753956" class="wa-float" target="_blank">💬</a>
-
-<script>
-function smoothTo(id){
-  const el=document.getElementById(id);
-  if(el){el.scrollIntoView({behavior:'smooth',block:'start'})}
-}
-
-// Nav links smooth scroll
-document.querySelectorAll('a[href^="#"]').forEach(a=>{
-  a.addEventListener('click',e=>{
-    const id=a.getAttribute('href').slice(1);
-    const el=document.getElementById(id);
-    if(el){e.preventDefault();el.scrollIntoView({behavior:'smooth',block:'start'})}
-  })
-})
-
-function toggleFaq(btn){
-  const item=btn.closest('.faq-item');
-  const isOpen=item.classList.contains('open');
-  document.querySelectorAll('.faq-item.open').forEach(i=>i.classList.remove('open'));
-  if(!isOpen)item.classList.add('open');
-}
-
-// Intersection observer for subtle fade-in
-const io=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting)e.target.style.opacity='1';
-  });
-},{threshold:0.1});
-document.querySelectorAll('.inside-card,.preview-card,.testi-card,.course-card').forEach(el=>{
-  el.style.opacity='0';
-  el.style.transition='opacity 0.5s ease';
-  io.observe(el);
-});
-</script>
-</body>
-</html>
+<script>function toggleFaq(btn){const item=btn.closest('.faq-item');const isOpen=item.classList.contains('open');document.querySelectorAll('.faq-item.open').forEach(i=>i.classList.remove('open'));if(!isOpen)item.classList.add('open');}</script>
+</body></html>
