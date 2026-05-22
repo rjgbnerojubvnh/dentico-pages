@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dentico — لوحة الصفحات</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Tajawal',sans-serif;background:#F5F0E8;color:#1A1A1A;min-height:100vh}
+nav{background:#2E4036;padding:0 48px;height:60px;display:flex;align-items:center;justify-content:space-between}
+.logo{color:#fff;font-size:20px;font-weight:800}
+.logo span{color:#C9A84C}
+.nav-admin{color:rgba(255,255,255,0.7);text-decoration:none;font-size:14px;font-weight:600;transition:color 0.2s}
+.nav-admin:hover{color:#C9A84C}
+.container{max-width:1100px;margin:0 auto;padding:48px 24px}
+h1{font-size:28px;font-weight:900;margin-bottom:6px}
+.sub{font-size:15px;color:#7A7A7A;margin-bottom:40px}
+.pages-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px}
+.page-card{
+  background:#fff;border:1px solid rgba(46,64,54,0.12);
+  border-radius:16px;overflow:hidden;
+  transition:all 0.25s;
+}
+.page-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,0.08)}
+.card-thumb{
+  height:160px;background:#2E4036;
+  display:flex;align-items:center;justify-content:center;
+  font-size:48px;position:relative;overflow:hidden;
+}
+.card-thumb img{width:100%;height:100%;object-fit:cover;opacity:0.6}
+.card-body{padding:20px}
+.card-title{font-size:16px;font-weight:800;margin-bottom:6px}
+.card-url{font-size:12px;color:#7A7A7A;margin-bottom:16px;direction:ltr;text-align:right}
+.card-actions{display:flex;gap:10px}
+.btn-view{
+  flex:1;padding:9px;border-radius:8px;
+  background:#2E4036;color:#fff;
+  border:none;font-family:'Tajawal',sans-serif;
+  font-size:14px;font-weight:700;cursor:pointer;
+  text-decoration:none;text-align:center;transition:all 0.2s;
+}
+.btn-view:hover{background:#3A5246}
+.btn-edit{
+  flex:1;padding:9px;border-radius:8px;
+  background:transparent;color:#2E4036;
+  border:1.5px solid #2E4036;
+  font-family:'Tajawal',sans-serif;
+  font-size:14px;font-weight:700;cursor:pointer;
+  text-decoration:none;text-align:center;transition:all 0.2s;
+}
+.btn-edit:hover{background:rgba(46,64,54,0.06)}
+.add-card{
+  background:transparent;border:2px dashed rgba(46,64,54,0.25);
+  border-radius:16px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  min-height:260px;cursor:pointer;transition:all 0.2s;
+  text-decoration:none;
+}
+.add-card:hover{border-color:#2E4036;background:rgba(46,64,54,0.04)}
+.add-icon{font-size:40px;margin-bottom:12px;opacity:0.4}
+.add-text{font-size:15px;font-weight:700;color:#2E4036;opacity:0.6}
+</style>
+</head>
+<body>
+<nav>
+  <div class="logo">Dentico <span>Pages</span></div>
+  <a href="/admin/" class="nav-admin">⚙️ لوحة التحكم</a>
+</nav>
+<div class="container">
+  <h1>صفحات الكورسات</h1>
+  <p class="sub">كل landing page مخصصة لكورس — عدّل أي صفحة من لوحة التحكم</p>
+  <div class="pages-grid" id="pagesGrid">
+    <!-- يتعبئ تلقائياً من pages.json -->
+  </div>
+</div>
+<script>
+const pages=[
+  {
+    id:"botox-filler",
+    title:"RA Summit — Botox & Filler",
+    emoji:"💉",
+    url:"/pages/botox-filler.html",
+    shopify:"https://dentalcourse.store/products/ra-summit-botox-and-filler-online-course-raj-acquilla-with-2024-updates"
+  }
+];
+
+const grid=document.getElementById('pagesGrid');
+pages.forEach(p=>{
+  grid.innerHTML+=`
+  <div class="page-card">
+    <div class="card-thumb">
+      <span>${p.emoji}</span>
+    </div>
+    <div class="card-body">
+      <div class="card-title">${p.title}</div>
+      <div class="card-url">${p.url}</div>
+      <div class="card-actions">
+        <a href="${p.url}" target="_blank" class="btn-view">👁 معاينة</a>
+        <a href="/admin/#edit=${p.id}" class="btn-edit">✏️ تعديل</a>
+      </div>
+    </div>
+  </div>`;
+});
+
+grid.innerHTML+=`
+<a href="/admin/#new" class="add-card">
+  <div class="add-icon">+</div>
+  <div class="add-text">أضف صفحة جديدة</div>
+</a>`;
+</script>
+</body>
+</html>

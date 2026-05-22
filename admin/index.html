@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لوحة التحكم — Dentico</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --green:#2E4036;--green2:#3A5246;--gold:#C9A84C;
+  --cream:#F5F0E8;--white:#fff;
+  --border:rgba(46,64,54,0.12);--text:#1A1A1A;--text2:#4A4A4A;--text3:#7A7A7A;
+}
+body{font-family:'Tajawal',sans-serif;background:#F0EBE0;color:var(--text);direction:rtl}
+
+/* LAYOUT */
+.layout{display:grid;grid-template-columns:320px 1fr;min-height:100vh}
+
+/* SIDEBAR */
+.sidebar{
+  background:var(--green);position:sticky;top:0;height:100vh;
+  overflow-y:auto;display:flex;flex-direction:column;
+}
+.sidebar-logo{
+  padding:20px 24px;border-bottom:1px solid rgba(255,255,255,0.1);
+  display:flex;align-items:center;gap:10px;
+}
+.sidebar-logo span{font-size:18px;font-weight:900;color:#fff}
+.sidebar-logo em{font-style:normal;color:var(--gold)}
+.sidebar-nav{padding:12px 0;flex:1}
+.nav-section{padding:8px 20px 4px;font-size:11px;font-weight:700;color:rgba(255,255,255,0.35);letter-spacing:2px;text-transform:uppercase}
+.nav-item{
+  display:flex;align-items:center;gap:10px;
+  padding:11px 20px;font-size:14px;font-weight:600;
+  color:rgba(255,255,255,0.7);cursor:pointer;
+  transition:all 0.15s;border:none;background:none;
+  width:100%;text-align:right;
+}
+.nav-item:hover{background:rgba(255,255,255,0.08);color:#fff}
+.nav-item.active{background:rgba(255,255,255,0.12);color:#fff}
+.nav-item .ni-icon{font-size:18px;width:22px;text-align:center;flex-shrink:0}
+.sidebar-footer{padding:16px 20px;border-top:1px solid rgba(255,255,255,0.1)}
+.btn-preview-live{
+  width:100%;background:var(--gold);color:var(--green);
+  border:none;padding:11px;border-radius:8px;
+  font-family:'Tajawal',sans-serif;font-size:14px;font-weight:800;
+  cursor:pointer;transition:all 0.2s;
+}
+.btn-preview-live:hover{filter:brightness(1.1)}
+
+/* MAIN */
+.main{background:var(--cream);overflow-y:auto}
+.topbar{
+  background:var(--white);border-bottom:1px solid var(--border);
+  padding:0 32px;height:58px;
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:10;
+}
+.topbar-title{font-size:16px;font-weight:800}
+.topbar-actions{display:flex;gap:10px;align-items:center}
+.btn-save{
+  background:var(--green);color:#fff;border:none;
+  padding:9px 24px;border-radius:8px;
+  font-family:'Tajawal',sans-serif;font-size:14px;font-weight:800;
+  cursor:pointer;transition:all 0.2s;
+}
+.btn-save:hover{background:var(--green2)}
+.btn-save.saved{background:#27AE60}
+.btn-outline{
+  background:transparent;color:var(--green);
+  border:1.5px solid var(--green);padding:8px 18px;border-radius:8px;
+  font-family:'Tajawal',sans-serif;font-size:14px;font-weight:700;
+  cursor:pointer;transition:all 0.2s;text-decoration:none;
+}
+.btn-outline:hover{background:rgba(46,64,54,0.06)}
+
+/* PANEL */
+.panel{padding:28px 32px;display:none}
+.panel.active{display:block}
+.panel-title{font-size:20px;font-weight:900;margin-bottom:4px}
+.panel-sub{font-size:14px;color:var(--text3);margin-bottom:28px}
+
+/* SECTIONS */
+.editor-section{
+  background:var(--white);border:1px solid var(--border);
+  border-radius:14px;margin-bottom:16px;overflow:hidden;
+}
+.es-header{
+  padding:16px 20px;display:flex;align-items:center;
+  justify-content:space-between;cursor:pointer;
+  border-bottom:1px solid var(--border);
+  background:rgba(46,64,54,0.02);
+}
+.es-header:hover{background:rgba(46,64,54,0.04)}
+.es-title{font-size:15px;font-weight:800;display:flex;align-items:center;gap:8px}
+.es-icon{font-size:18px}
+.es-arrow{transition:transform 0.2s;font-size:12px;color:var(--text3)}
+.es-body{padding:20px;display:none}
+.es-body.open{display:block}
+
+/* FORM FIELDS */
+.field{margin-bottom:18px}
+.field label{
+  display:block;font-size:13px;font-weight:700;
+  color:var(--text2);margin-bottom:6px;
+}
+.field input,.field textarea,.field select{
+  width:100%;padding:10px 14px;
+  border:1px solid var(--border);border-radius:8px;
+  font-family:'Tajawal',sans-serif;font-size:14px;
+  color:var(--text);background:var(--cream);outline:none;
+  transition:border 0.2s;resize:vertical;
+}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--green)}
+.field textarea{min-height:80px}
+.field-hint{font-size:12px;color:var(--text3);margin-top:4px}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+
+/* COLOR PICKER */
+.color-field{display:flex;align-items:center;gap:10px}
+.color-field input[type=color]{
+  width:44px;height:36px;padding:2px;
+  border:1px solid var(--border);border-radius:8px;
+  cursor:pointer;background:var(--cream);
+}
+.color-field input[type=text]{flex:1}
+
+/* TOGGLE */
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:6px 0}
+.toggle-label{font-size:14px;font-weight:600;color:var(--text2)}
+.toggle{
+  width:44px;height:24px;background:#ccc;border-radius:100px;
+  position:relative;cursor:pointer;transition:background 0.2s;border:none;
+}
+.toggle.on{background:var(--green)}
+.toggle::after{
+  content:'';position:absolute;top:3px;right:3px;
+  width:18px;height:18px;background:#fff;border-radius:50%;
+  transition:transform 0.2s;
+}
+.toggle.on::after{transform:translateX(-20px)}
+
+/* CARDS EDITOR */
+.cards-list{display:flex;flex-direction:column;gap:10px;margin-bottom:14px}
+.card-item{
+  background:var(--cream);border:1px solid var(--border);
+  border-radius:10px;padding:14px 16px;
+  display:flex;gap:12px;align-items:flex-start;
+}
+.card-item-icon{font-size:22px;flex-shrink:0;margin-top:2px}
+.card-item-body{flex:1}
+.card-item-body input{
+  width:100%;padding:7px 10px;border:1px solid var(--border);
+  border-radius:6px;font-family:'Tajawal',sans-serif;font-size:13px;
+  background:#fff;margin-bottom:6px;color:var(--text);outline:none;
+}
+.card-item-body input:focus{border-color:var(--green)}
+.card-item-del{
+  background:none;border:none;color:#ccc;cursor:pointer;
+  font-size:18px;padding:4px;transition:color 0.2s;
+}
+.card-item-del:hover{color:#E05555}
+.btn-add-card{
+  width:100%;padding:10px;border:1.5px dashed rgba(46,64,54,0.25);
+  border-radius:8px;background:none;
+  font-family:'Tajawal',sans-serif;font-size:14px;font-weight:700;
+  color:var(--text3);cursor:pointer;transition:all 0.2s;
+}
+.btn-add-card:hover{border-color:var(--green);color:var(--green)}
+
+/* PRICING CARDS */
+.pricing-editor{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.price-card-edit{
+  background:var(--cream);border:1px solid var(--border);
+  border-radius:10px;padding:14px;
+}
+.price-card-edit label{font-size:11px;font-weight:700;color:var(--text3);display:block;margin-bottom:4px;margin-top:10px}
+.price-card-edit label:first-child{margin-top:0}
+.price-card-edit input{
+  width:100%;padding:7px 10px;border:1px solid var(--border);
+  border-radius:6px;font-family:'Tajawal',sans-serif;
+  font-size:13px;background:#fff;color:var(--text);outline:none;
+}
+.price-card-edit input:focus{border-color:var(--green)}
+
+/* TESTIMONIALS */
+.testi-item{
+  background:var(--cream);border:1px solid var(--border);
+  border-radius:10px;padding:14px 16px;margin-bottom:10px;
+}
+.testi-item-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.testi-item-title{font-size:13px;font-weight:700;color:var(--text2)}
+
+/* FAQ */
+.faq-item-edit{
+  background:var(--cream);border:1px solid var(--border);
+  border-radius:10px;padding:14px 16px;margin-bottom:10px;
+  display:flex;gap:10px;align-items:flex-start;
+}
+.faq-item-edit-body{flex:1;display:flex;flex-direction:column;gap:8px}
+.faq-item-edit-body input,.faq-item-edit-body textarea{
+  width:100%;padding:8px 10px;border:1px solid var(--border);
+  border-radius:6px;font-family:'Tajawal',sans-serif;font-size:13px;
+  background:#fff;color:var(--text);outline:none;resize:vertical;
+}
+.faq-item-edit-body input:focus,.faq-item-edit-body textarea:focus{border-color:var(--green)}
+
+/* SAVED TOAST */
+.toast{
+  position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(80px);
+  background:var(--green);color:#fff;padding:12px 28px;
+  border-radius:100px;font-size:14px;font-weight:700;
+  transition:transform 0.3s;z-index:999;
+}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+/* PREVIEW FRAME */
+.preview-panel{padding:0;height:calc(100vh - 58px)}
+.preview-toolbar{
+  padding:12px 20px;background:var(--white);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:12px;
+}
+.device-btn{
+  padding:6px 14px;border-radius:6px;border:1px solid var(--border);
+  background:none;font-family:'Tajawal',sans-serif;font-size:13px;
+  cursor:pointer;transition:all 0.2s;font-weight:600;
+}
+.device-btn.active,.device-btn:hover{background:var(--green);color:#fff;border-color:var(--green)}
+#previewFrame{
+  width:100%;border:none;
+  height:calc(100vh - 115px);
+  transition:width 0.3s;
+  display:block;margin:0 auto;
+}
+</style>
+</head>
+<body>
+<div class="layout">
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <span>Dentico <em>Admin</em></span>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-section">الصفحة</div>
+    <button class="nav-item active" onclick="showPanel('hero')">
+      <span class="ni-icon">🏠</span> قسم الهيرو
+    </button>
+    <button class="nav-item" onclick="showPanel('content')">
+      <span class="ni-icon">📦</span> محتوى الكورس
+    </button>
+    <button class="nav-item" onclick="showPanel('preview-videos')">
+      <span class="ni-icon">▶️</span> المحاضرات التجريبية
+    </button>
+    <button class="nav-item" onclick="showPanel('instructor')">
+      <span class="ni-icon">👨‍⚕️</span> المدرب
+    </button>
+    <button class="nav-item" onclick="showPanel('pricing')">
+      <span class="ni-icon">💰</span> الأسعار
+    </button>
+    <button class="nav-item" onclick="showPanel('testimonials')">
+      <span class="ni-icon">⭐</span> آراء الأطباء
+    </button>
+    <button class="nav-item" onclick="showPanel('faq')">
+      <span class="ni-icon">❓</span> الأسئلة الشائعة
+    </button>
+    <div class="nav-section">التصميم</div>
+    <button class="nav-item" onclick="showPanel('design')">
+      <span class="ni-icon">🎨</span> الألوان والخطوط
+    </button>
+    <button class="nav-item" onclick="showPanel('settings')">
+      <span class="ni-icon">⚙️</span> الإعدادات
+    </button>
+    <div class="nav-section">معاينة</div>
+    <button class="nav-item" onclick="showPanel('preview')">
+      <span class="ni-icon">👁</span> معاينة الصفحة
+    </button>
+  </nav>
+  <div class="sidebar-footer">
+    <button class="btn-preview-live" onclick="exportPage()">⬇️ تصدير الصفحة</button>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+  <div class="topbar">
+    <div class="topbar-title" id="panelTitle">🏠 قسم الهيرو</div>
+    <div class="topbar-actions">
+      <a href="../pages/botox-filler.html" target="_blank" class="btn-outline">👁 معاينة</a>
+      <button class="btn-save" id="saveBtn" onclick="saveAll()">💾 حفظ التغييرات</button>
+    </div>
+  </div>
+
+  <!-- ═══ PANEL: HERO ═══ -->
+  <div class="panel active" id="panel-hero">
+    <div class="panel-title">🏠 قسم الهيرو</div>
+    <p class="panel-sub">أول ما يشوفه الزبون — اجعله مقنعاً</p>
+
+    <div class="editor-section">
+      <div class="es-header" onclick="toggleSection(this)">
+        <span class="es-title"><span class="es-icon">📝</span> العنوان الرئيسي</span>
+        <span class="es-arrow">▼</span>
+      </div>
+      <div class="es-body open">
+        <div class="field">
+          <label>السطر الأول</label>
+          <input type="text" id="h_title1" value="كورس البوتوكس والفيلر الاحترافي">
+        </div>
+        <div class="field">
+          <label>السطر الثاني (بالأخضر)</label>
+          <input type="text" id="h_title2" value="من التشريح حتى الإتقان">
+        </div>
+        <div class="field">
+          <label>الوصف المختصر</label>
+          <textarea id="h_desc">كورس شامل يغطي تقنيات البوتوكس والفيلر من الأساسيات حتى المستوى المتقدم، مع تشريح وجهي وخرائط أوعية وحالات حقيقية — مع تحديثات 2024 كاملة.</textarea>
+        </div>
+        <div class="field">
+          <label>الشارة (Badge)</label>
+          <input type="text" id="h_badge" value="كورس إلكتروني احترافي">
+        </div>
+      </div>
+    </div>
+
+    <div class="editor-section">
+      <div class="es-header" onclick="toggleSection(this)">
+        <span class="es-title"><span class="es-icon">✅</span> قائمة المميزات</span>
+        <span class="es-arrow">▼</span>
+      </div>
+      <div class="es-body open">
+        <div class="cards-list" id="featuresList"></div>
+        <button class="btn-add-card" onclick="addFeature()">+ أضف ميزة</button>
+      </div>
+    </div>
+
+    <div class="editor-section">
+      <div class="es-header" onclick="toggleSection(this)">
+        <span class="es-title"><span class="es-icon">⭐</span> التقييم</span>
+        <span class="es-arrow">▼</span>
+      </div>
+      <div class="es-body open">
+        <div class="field-row">
+          <div class="field">
+            <label>نص التقييم</label>
+            <input type="text" id="h_stars_text" value="4.9 — أكثر من 2000 طبيب وأخصائية">
+          </div>
+          <div class="field">
+            <label>عدد النجوم (1-5)</label>
+            <input type="number" id="h_stars_count" value="5" min="1" max="5">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="editor-section">
+      <div class="es-header" onclick="toggleSection(this)">
+        <span class="es-title"><span class="es-icon">🖼</span> صورة الهيرو</span>
+        <span class="es-arrow">▼</span>
+      </div>
+      <div class="es-body open">
+        <div class="field">
+          <label>رابط الصورة (URL)</label>
+          <input type="text" id="h_image" value="https://dentalcourse.store/cdn/shop/files/ra-summit-botox-and-filler-online-course-raj-acquilla-with-2024-updates-1238124555.jpg?v=1778640251&width=1200">
+          <div class="field-hint">ضع رابط الصورة مباشرة — يفضل صورة عريضة 1200x800</div>
+        </div>
+        <div class="field">
+          <label>نص الكابشن على الصورة</label>
+          <input type="text" id="h_caption" value="شاهدي 6 محاضرات تجريبية مجانًا">
+        </div>
+      </div>
+    </div>
+
+    <div class="editor-section">
+      <div class="es-header" onclick="toggleSection(this)">
+        <span class="es-title"><span class="es-icon">🔗</span> روابط الأزرار</span>
+        <span class="es-arrow">▼</span>
+      </div>
+      <div class="es-body open">
+        <div class="field">
+          <label>رابط "اشتري الآن" (شوبيفاي)</label>
+          <input type="text" id="h_buy_link" value="https://dentalcourse.store/products/ra-summit-botox-and-filler-online-course-raj-acquilla-with-2024-updates">
+        </div>
+        <div class="field">
+          <label>نص زر الشراء</label>
+          <input type="text" id="h_buy_text" value="اشتري الآن ⚡">
+        </div>
+        <div class="field">
+          <label>نص زر المحاضرة التجريبية</label>
+          <input type="text" id="h_trial_text" value="▶ شاهد محاضرة تجريبية مجانًا">
+        </div>
+        <div class="field">
+          <label>نص الضمان</label>
+          <input type="text" id="h_guarantee" value="ضمان استرداد كامل خلال 7 أيام · تسليم فوري">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ PANEL: PRICING ═══ -->
+  <div class="panel" id="panel-pricing">
+    <div class="panel-title">💰 الأسعار</div>
+    <p class="panel-sub">عدّل أسعار الكورس لكل فئة</p>
+
+    <div class="editor-section">
+      <div class="es-header" onclick="toggleSection(this)">
+        <span class="es-title"><span class="es-icon">💵</span> بلوك السعر في الهيرو</span>
+        <span class="es-arrow">▼</span>
+      </div>
+      <div class="es-body open">
+        <div class="field-row">
+          <div class="field">
+            <label>السعر الأصلي (مشطوب)</label>
+            <input type="text" id="p_old" value="$350">
+          </div>
+          <div class="field">
+            <label>السعر الجديد</label>
+            <input type="text" id="p_new" value="$20">
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>نص الخصم (Badge)</label>
+            <input type="text" id="p_badge" value="وفّر 94%">
+          </div>
+          <div class="field">
+            <label>سعر العراق</label>
+            <input type="text" id="p_iraq" value="20,000 دينار">
+          </div>
+        </div>
+        <div class="field">
+          <label>نص سعر العراق كامل</label>
+          <input type="text" id="p_iraq_full" value="🇮🇶 للأطباء داخل العراق: 20,000 دينار فقط">
+        </div>
+      </div>
+    </div>
+
+    <div class="editor-section">
+      <div class="es-header" onclick="toggleSection(this)">
+        <span class="es-title"><span class="es-icon">📊</span> بطاقات الأسعار (قسم منفصل)</span>
+        <span class="es-arrow">▼</span>
+      </div>
+      <div class="es-body open">
+        <div class="pricing-editor">
+          <div class="price-card-edit">
+            <label>العنوان</label>
+            <input type="text" id="pc1_title" value="🌍 خارج العراق">
+            <label>السعر</label>
+            <input type="text" id="pc1_price" value="$20">
+            <label>السعر الأصلي</label>
+            <input type="text" id="pc1_old" value="$350">
+            <label>نص الزر</label>
+            <input type="text" id="pc1_btn" value="اشتري الآن">
+          </div>
+          <div class="price-card-edit" style="border:2px solid var(--gold)">
+            <label>العنوان (البطاقة المميزة)</label>
+            <input type="text" id="pc2_title" value="🇮🇶 داخل العراق">
+            <label>السعر</label>
+            <input type="text" id="pc2_price" value="20,000">
+            <label>الوحدة</label>
+            <input type="text" id="pc2_unit" value="دينار عراقي فقط">
+            <label>نص الزر</label>
+            <input type="text" id="pc2_btn" value="اشتري الآن ⚡">
+          </div>
+          <div class="price-card-edit">
+            <label>العنوان</label>
+            <input type="text" id="pc3_title" value="💬 التواصل المباشر">
+            <label>نص السعر</label>
+            <input type="text" id="pc3_price" value="واتساب">
+            <label>الوصف</label>
+            <input type="text" id="pc3_sub" value="للاستفسار قبل الشراء">
+            <label>نص الزر</label>
+            <input type="text" id="pc3_btn" value="تواصل معنا">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ PANEL: CONTENT ═══ -->
+  <div class="panel" id="panel-content">
+    <div class="panel-title">📦 محتوى الكورس</div>
+    <p class="panel-sub">عدّل كاردات "كل ما ستحصل عليه"</p>
+
+    <div class="editor-section">
+      <div class="es-header" onclick="toggleSection(this)">
+        <span class="es-title"><span class="es-icon">📝</span> عنوان القسم</span>
+        <span class="es-arrow">▼</span>
+      </div>
+      <div class="es-body open">
+        <div class="field-row">
+          <div class="field">
+            <label>العنوان</label>
+            <input type="text" id="c_title" value="كل ما ستحصلين عليه">
+          </div>
+          <div class="field">
+            <label>العنوان الفرعي</label>
+            <input type="text" id="c_sub" value="تغطي مكتبة مشمولة بالكورس كل جوانب حقن البوتوكس والفيلر بدقة علمية">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="editor-section">
+      <div class="es-header" onclick="toggleSection(this)">
+        <span class="es-title"><span class="es-icon">🃏</span> الكاردات</span>
+        <span class="es-arrow">▼</span>
+      </div>
+      <div class="es-body open">
+        <div id="contentCardsList"></div>
+        <button class="btn-add-card" onclick="addContentCard()">+ أضف كارد</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ PANEL: INSTRUCTOR ═══ -->
+  <div class="panel" id="panel-instructor">
+    <div class="panel-title">👨‍⚕️ المدرب</div>
+    <p class="panel-sub">معلومات وبيانات المدرب</p>
+
+    <div class="editor-section">
+      <div class="es-header" onclick="toggleSection(this)">
+        <span class="es-title"><span class="es-icon">👤</span> معلومات المدرب</span>
+        <span class="es-arrow">▼</span>
+      </div>
+      <div class="es-body open">
+        <div class="field-row">
+          <div class="field">
+            <label>اسم المدرب</label>
+            <input type="text" id="i_name" value="Dr. Raj Acquilla">
+          </div>
+          <div class="field">
+            <label>اللقب / التخصص</label>
+            <input type="text" id="i_title" value="متخصص طب التجميل — مؤسس RA Academy">
+          </div>
+        </div>
+        <div class="field">
+          <label>السيرة الذاتية</label>
+          <textarea id="i_bio" style="min-height:120px">دكتور راج أكويلا من أبرز أطباء التجميل على مستوى العالم ومؤسس RA Academy. متخصص في حقن البوتوكس والفيلر لأكثر من 14 عاماً، يُعدّ من أكثر المدربين طلباً في أوروبا وآسيا.</textarea>
+        </div>
+        <div class="field">
+          <label>صورة المدرب (URL)</label>
+          <input type="text" id="i_image" value="https://dentalcourse.store/cdn/shop/files/ra-summit-botox-and-filler-online-course-raj-acquilla-with-2024-updates-1238124555.jpg?v=1778640251&width=800">
+        </div>
+      </div>
+    </div>
+
+    <div class="editor-section">
+      <div class="es-header" onclick="toggleSection(this)">
+        <span class="es-title"><span class="es-icon">📊</span> الإحصائيات</span>
+        <span class="es-arrow">▼</span>
+      </div>
+      <div class="es-body open">
+        <div class="field-row">
+          <div class="field"><label>رقم ١</label><input type="text" id="i_stat1_num" value="+15K"></div>
+          <div class="field"><label>تسمية ١</label><input type="text" id="i_stat1_label" value="مريض حقيقي"></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label>رقم ٢</label><input type="text" id="i_stat2_num" value="+2000"></div>
+          <div class="field"><label>تسمية ٢</label><input type="text" id="i_stat2_label" value="طبيب درّبه"></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label>رقم ٣</label><input type="text" id="i_stat3_num" value="+14"></div>
+          <div class="field"><label>تسمية ٣</label><input type="text" id="i_stat3_label" value="سنة خبرة"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ PANEL: TESTIMONIALS ═══ -->
+  <div class="panel" id="panel-testimonials">
+    <div class="panel-title">⭐ آراء الأطباء</div>
+    <p class="panel-sub">عدّل أو أضف تقييمات جديدة</p>
+    <div id="testiList"></div>
+    <button class="btn-add-card" onclick="addTestimonial()" style="margin-top:10px">+ أضف تقييم</button>
+  </div>
+
+  <!-- ═══ PANEL: FAQ ═══ -->
+  <div class="panel" id="panel-faq">
+    <div class="panel-title">❓ الأسئلة الشائعة</div>
+    <p class="panel-sub">عدّل أو أضف أسئلة جديدة</p>
+    <div id="faqList"></div>
+    <button class="btn-add-card" onclick="addFaq()" style="margin-top:10px">+ أضف سؤال</button>
+  </div>
+
+  <!-- ═══ PANEL: PREVIEW VIDEOS ═══ -->
+  <div class="panel" id="panel-preview-videos">
+    <div class="panel-title">▶️ المحاضرات التجريبية</div>
+    <p class="panel-sub">عدّل بطاقات المحاضرات المجانية</p>
+    <div id="videosList"></div>
+    <button class="btn-add-card" onclick="addVideo()" style="margin-top:10px">+ أضف محاضرة</button>
+  </div>
+
+  <!-- ═══ PANEL: DESIGN ═══ -->
+  <div class="panel" id="panel-design">
+    <div class="panel-title">🎨 الألوان والتصميم</div>
+    <p class="panel-sub">خصّص ألوان الصفحة</p>
+
+    <div class="editor-section">
+      <div class="es-header" onclick="toggleSection(this)">
+        <span class="es-title"><span class="es-icon">🎨</span> الألوان الرئيسية</span>
+        <span class="es-arrow">▼</span>
+      </div>
+      <div class="es-body open">
+        <div class="field">
+          <label>اللون الرئيسي (الأخضر)</label>
+          <div class="color-field">
+            <input type="color" id="c_primary" value="#2E4036" oninput="document.getElementById('c_primary_text').value=this.value">
+            <input type="text" id="c_primary_text" value="#2E4036" oninput="document.getElementById('c_primary').value=this.value">
+          </div>
+        </div>
+        <div class="field">
+          <label>اللون الذهبي (الأزرار والتمييز)</label>
+          <div class="color-field">
+            <input type="color" id="c_gold" value="#C9A84C" oninput="document.getElementById('c_gold_text').value=this.value">
+            <input type="text" id="c_gold_text" value="#C9A84C" oninput="document.getElementById('c_gold').value=this.value">
+          </div>
+        </div>
+        <div class="field">
+          <label>لون الخلفية</label>
+          <div class="color-field">
+            <input type="color" id="c_bg" value="#F5F0E8" oninput="document.getElementById('c_bg_text').value=this.value">
+            <input type="text" id="c_bg_text" value="#F5F0E8" oninput="document.getElementById('c_bg').value=this.value">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="editor-section">
+      <div class="es-header" onclick="toggleSection(this)">
+        <span class="es-title"><span class="es-icon">📊</span> شريط الإحصائيات</span>
+        <span class="es-arrow">▼</span>
+      </div>
+      <div class="es-body open">
+        <div class="field-row">
+          <div class="field"><label>رقم ١</label><input type="text" id="s1_num" value="53+"></div>
+          <div class="field"><label>تسمية ١</label><input type="text" id="s1_label" value="ساعة محتوى HD"></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label>رقم ٢</label><input type="text" id="s2_num" value="+2000"></div>
+          <div class="field"><label>تسمية ٢</label><input type="text" id="s2_label" value="طبيب وأخصائية"></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label>رقم ٣</label><input type="text" id="s3_num" value="+14"></div>
+          <div class="field"><label>تسمية ٣</label><input type="text" id="s3_label" value="سنة خبرة المدرب"></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label>رقم ٤</label><input type="text" id="s4_num" value="2024"></div>
+          <div class="field"><label>تسمية ٤</label><input type="text" id="s4_label" value="آخر تحديث"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ PANEL: SETTINGS ═══ -->
+  <div class="panel" id="panel-settings">
+    <div class="panel-title">⚙️ الإعدادات العامة</div>
+    <p class="panel-sub">إعدادات الصفحة والروابط</p>
+
+    <div class="editor-section">
+      <div class="es-header" onclick="toggleSection(this)">
+        <span class="es-title"><span class="es-icon">🔗</span> روابط التواصل</span>
+        <span class="es-arrow">▼</span>
+      </div>
+      <div class="es-body open">
+        <div class="field">
+          <label>رقم واتساب (مع كود الدولة)</label>
+          <input type="text" id="set_wa" value="447400753956">
+          <div class="field-hint">بدون + في البداية</div>
+        </div>
+        <div class="field">
+          <label>البريد الإلكتروني</label>
+          <input type="text" id="set_email" value="support@dentalcourse.store">
+        </div>
+        <div class="field">
+          <label>رابط تليغرام</label>
+          <input type="text" id="set_tg" value="https://t.me/dntl_coo">
+        </div>
+      </div>
+    </div>
+
+    <div class="editor-section">
+      <div class="es-header" onclick="toggleSection(this)">
+        <span class="es-title"><span class="es-icon">🌐</span> SEO</span>
+        <span class="es-arrow">▼</span>
+      </div>
+      <div class="es-body open">
+        <div class="field">
+          <label>عنوان الصفحة (Tab Title)</label>
+          <input type="text" id="set_title" value="أكاديمية ديـنـتـيـكو | كورس البوتوكس والفيلر الاحترافي">
+        </div>
+        <div class="field">
+          <label>وصف الصفحة (Meta Description)</label>
+          <textarea id="set_desc">كورس بوتوكس وفيلر المتقدم — أكاديمية ديـنـتـيـكو. تفاصيل الكورس، محاضرات تجريبية مجانية، ودعم مدى الحياة.</textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="editor-section">
+      <div class="es-header" onclick="toggleSection(this)">
+        <span class="es-title"><span class="es-icon">👁</span> إظهار/إخفاء الأقسام</span>
+        <span class="es-arrow">▼</span>
+      </div>
+      <div class="es-body open">
+        <div class="toggle-row">
+          <span class="toggle-label">شريط الإحصائيات</span>
+          <button class="toggle on" onclick="this.classList.toggle('on')"></button>
+        </div>
+        <div class="toggle-row">
+          <span class="toggle-label">المحاضرات التجريبية</span>
+          <button class="toggle on" onclick="this.classList.toggle('on')"></button>
+        </div>
+        <div class="toggle-row">
+          <span class="toggle-label">قسم المدرب</span>
+          <button class="toggle on" onclick="this.classList.toggle('on')"></button>
+        </div>
+        <div class="toggle-row">
+          <span class="toggle-label">آراء الأطباء</span>
+          <button class="toggle on" onclick="this.classList.toggle('on')"></button>
+        </div>
+        <div class="toggle-row">
+          <span class="toggle-label">الأسئلة الشائعة</span>
+          <button class="toggle on" onclick="this.classList.toggle('on')"></button>
+        </div>
+        <div class="toggle-row">
+          <span class="toggle-label">كورسات أخرى</span>
+          <button class="toggle on" onclick="this.classList.toggle('on')"></button>
+        </div>
+        <div class="toggle-row">
+          <span class="toggle-label">زر واتساب العائم</span>
+          <button class="toggle on" onclick="this.classList.toggle('on')"></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ PANEL: PREVIEW ═══ -->
+  <div class="panel preview-panel" id="panel-preview">
+    <div class="preview-toolbar">
+      <span style="font-size:14px;font-weight:700">معاينة الصفحة</span>
+      <button class="device-btn active" onclick="setDevice('100%',this)">🖥 Desktop</button>
+      <button class="device-btn" onclick="setDevice('768px',this)">📱 Tablet</button>
+      <button class="device-btn" onclick="setDevice('390px',this)">📱 Mobile</button>
+    </div>
+    <iframe id="previewFrame" src="../pages/botox-filler.html"></iframe>
+  </div>
+
+</main>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">✅ تم الحفظ بنجاح!</div>
+
+<script>
+// ── DEFAULT DATA ──
+let data = {
+  features: [
+    "53+ ساعة محتوى HD مع أبرز المتخصصين العالميين",
+    "وصول مدى الحياة مع جميع التحديثات المستقبلية",
+    "شهادة إتمام رقمية معتمدة من RA Academy",
+    "تسليم فوري عبر تليغرام بعد الشراء"
+  ],
+  contentCards: [
+    {icon:"🎥", title:"53+ ساعة فيديو HD", desc:"محاضرات، نقاشات، وعروض حية مع أبرز المتخصصين"},
+    {icon:"🏅", title:"شهادة إلكترونية", desc:"شهادة إتمام معتمدة رقمياً تصلك فور إكمال الكورس"},
+    {icon:"♾️", title:"وصول مدى الحياة", desc:"ادفع مرة واحتفظ بالمحتوى إلى الأبد مع التحديثات"},
+    {icon:"🧠", title:"تشريح ووقاية", desc:"مناطق الخطر وطائرات الحقن الآمنة"},
+    {icon:"💉", title:"جلسات بوتوكس متقدمة", desc:"الجبهة، الغضبة، حول العين، الماستر وأكثر"},
+    {icon:"💋", title:"فيلر بكل تقنياته", desc:"Russian lip، tenting، microbolus وغيرها"}
+  ],
+  testimonials: [
+    {name:"د. سارة المنصور", role:"طبيبة تجميل — الرياض", text:"الكورس غيّر طريقة تعاملي مع المريض كلياً — الآن أفهم التشريح بعمق وأقدر أتجنب المناطق الخطرة بثقة عالية.", stars:5},
+    {name:"د. مريم الهاشمي", role:"أخصائية جلدية — دبي", text:"53 ساعة من المحتوى الاحترافي بـ 20 دولار فقط — لا يصدّق! أفضل استثمار في مسيرتي المهنية.", stars:5},
+    {name:"د. أحمد العبدالله", role:"طبيب تجميل — الكويت", text:"ما توقعت المستوى يكون هذا — المحتوى يستحق عشرة أضعاف سعره. أنصح فيه كل طبيب تجميل.", stars:5},
+    {name:"د. نورة الجابري", role:"طبيبة عامة — عمان", text:"أخذت الكورس قبل ما أبدأ عيادتي وكان القرار الصح. ديـنـتـيـكو موثوق 100%.", stars:5}
+  ],
+  faqs: [
+    {q:"كيف يتم تسليم الكورس؟", a:"بعد إتمام الشراء، تتواصل معنا عبر التليغرام وتحصل على رابط الوصول الكامل للكورس فوراً."},
+    {q:"هل الوصول للأبد أم محدود بوقت؟", a:"وصولك مدى الحياة تماماً — ادفع مرة واحدة واحتفظ بالمحتوى إلى الأبد، بما في ذلك جميع التحديثات المستقبلية."},
+    {q:"ما هي الشهادة التي سأحصل عليها؟", a:"تحصل على شهادة إتمام رقمية معتمدة من RA Academy بعد إكمال الكورس."},
+    {q:"هل يناسبني الكورس كمبتدئ؟", a:"نعم! الكورس مصمم ليناسب جميع المستويات — يبدأ من الأساسيات ويتدرج نحو التقنيات المتقدمة."},
+    {q:"ما هي طرق الدفع المتاحة؟", a:"نقبل Visa، Mastercard، Apple Pay، Google Pay، Klarna، Skrill، وAmex. جميع المعاملات آمنة ومشفرة."}
+  ],
+  videos: [
+    {title:"رسم الوجه بدقة رقمية — خريطة العضلات والأوعية", duration:"32 دقيقة", meta:"د. راج أكويلا · مقدمة الكورس"},
+    {title:"حق البوتوكس في منطقة النظرة", duration:"28 دقيقة", meta:"د. راج أكويلا · الوحدة الثانية"},
+    {title:"قراءة وجه المريض وخطة العلاج الأولى", duration:"41 دقيقة", meta:"د. راج أكويلا · التقييم والتخطيط"},
+    {title:"الفيلر التحت عيني: أمان وعلاج", duration:"22 دقيقة", meta:"د. راج أكويلا · منطقة الخطر"},
+    {title:"إدارة المضاعفات والطوارئ", duration:"35 دقيقة", meta:"د. راج أكويلا · السلامة أولاً"},
+    {title:"نقاش البوتوكس والفيلر والطموزون", duration:"19 دقيقة", meta:"د. راج أكويلا · نقاش الخبراء"}
+  ]
+};
+
+// Load from localStorage if exists
+const saved = localStorage.getItem('dentico_data');
+if(saved) data = JSON.parse(saved);
+
+// ── RENDER LISTS ──
+function renderFeatures(){
+  document.getElementById('featuresList').innerHTML = data.features.map((f,i)=>`
+    <div class="card-item">
+      <span class="card-item-icon">✅</span>
+      <div class="card-item-body">
+        <input type="text" value="${f}" oninput="data.features[${i}]=this.value" placeholder="نص الميزة">
+      </div>
+      <button class="card-item-del" onclick="removeItem('features',${i})">✕</button>
+    </div>`).join('');
+}
+
+function renderContentCards(){
+  document.getElementById('contentCardsList').innerHTML = data.contentCards.map((c,i)=>`
+    <div class="card-item">
+      <div class="card-item-body">
+        <input type="text" value="${c.icon}" oninput="data.contentCards[${i}].icon=this.value" placeholder="أيقونة (emoji)" style="max-width:80px;display:inline-block;margin-left:6px">
+        <input type="text" value="${c.title}" oninput="data.contentCards[${i}].title=this.value" placeholder="العنوان">
+        <input type="text" value="${c.desc}" oninput="data.contentCards[${i}].desc=this.value" placeholder="الوصف">
+      </div>
+      <button class="card-item-del" onclick="removeItem('contentCards',${i})">✕</button>
+    </div>`).join('');
+}
+
+function renderTestimonials(){
+  document.getElementById('testiList').innerHTML = data.testimonials.map((t,i)=>`
+    <div class="testi-item">
+      <div class="testi-item-header">
+        <span class="testi-item-title">تقييم ${i+1}</span>
+        <button class="card-item-del" onclick="removeItem('testimonials',${i})">✕</button>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>الاسم</label><input type="text" value="${t.name}" oninput="data.testimonials[${i}].name=this.value"></div>
+        <div class="field"><label>المنصب / المدينة</label><input type="text" value="${t.role}" oninput="data.testimonials[${i}].role=this.value"></div>
+      </div>
+      <div class="field"><label>نص التقييم</label><textarea oninput="data.testimonials[${i}].text=this.value">${t.text}</textarea></div>
+      <div class="field"><label>عدد النجوم</label><input type="number" value="${t.stars}" min="1" max="5" oninput="data.testimonials[${i}].stars=+this.value" style="max-width:80px"></div>
+    </div>`).join('');
+}
+
+function renderFaqs(){
+  document.getElementById('faqList').innerHTML = data.faqs.map((f,i)=>`
+    <div class="faq-item-edit">
+      <div class="faq-item-edit-body">
+        <input type="text" value="${f.q}" oninput="data.faqs[${i}].q=this.value" placeholder="السؤال">
+        <textarea oninput="data.faqs[${i}].a=this.value" placeholder="الجواب">${f.a}</textarea>
+      </div>
+      <button class="card-item-del" onclick="removeItem('faqs',${i})">✕</button>
+    </div>`).join('');
+}
+
+function renderVideos(){
+  document.getElementById('videosList').innerHTML = data.videos.map((v,i)=>`
+    <div class="card-item">
+      <div class="card-item-body">
+        <input type="text" value="${v.title}" oninput="data.videos[${i}].title=this.value" placeholder="عنوان المحاضرة">
+        <input type="text" value="${v.duration}" oninput="data.videos[${i}].duration=this.value" placeholder="المدة (مثال: 32 دقيقة)" style="max-width:160px;display:inline-block;margin-left:6px">
+        <input type="text" value="${v.meta}" oninput="data.videos[${i}].meta=this.value" placeholder="المدرب · الوحدة">
+      </div>
+      <button class="card-item-del" onclick="removeItem('videos',${i})">✕</button>
+    </div>`).join('');
+}
+
+// ── ADD / REMOVE ──
+function addFeature(){ data.features.push("ميزة جديدة"); renderFeatures(); }
+function addContentCard(){ data.contentCards.push({icon:"📌",title:"عنوان جديد",desc:"وصف الكارد"}); renderContentCards(); }
+function addTestimonial(){ data.testimonials.push({name:"اسم الطبيب",role:"التخصص — المدينة",text:"نص التقييم هنا...",stars:5}); renderTestimonials(); }
+function addFaq(){ data.faqs.push({q:"سؤال جديد؟",a:"الجواب هنا"}); renderFaqs(); }
+function addVideo(){ data.videos.push({title:"عنوان المحاضرة",duration:"30 دقيقة",meta:"المدرب · الوحدة"}); renderVideos(); }
+
+function removeItem(key,i){ data[key].splice(i,1); renderAll(); }
+
+function renderAll(){
+  renderFeatures(); renderContentCards(); renderTestimonials(); renderFaqs(); renderVideos();
+}
+
+// ── PANEL NAVIGATION ──
+const panelTitles = {
+  hero:'🏠 قسم الهيرو', content:'📦 محتوى الكورس',
+  'preview-videos':'▶️ المحاضرات التجريبية', instructor:'👨‍⚕️ المدرب',
+  pricing:'💰 الأسعار', testimonials:'⭐ آراء الأطباء',
+  faq:'❓ الأسئلة الشائعة', design:'🎨 الألوان والتصميم',
+  settings:'⚙️ الإعدادات', preview:'👁 معاينة الصفحة'
+};
+function showPanel(id){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n=>{
+    if(n.getAttribute('onclick')?.includes(id)) n.classList.add('active');
+  });
+  document.getElementById('panelTitle').textContent = panelTitles[id]||'';
+}
+
+// ── TOGGLE SECTION ──
+function toggleSection(header){
+  const body = header.nextElementSibling;
+  const arrow = header.querySelector('.es-arrow');
+  body.classList.toggle('open');
+  arrow.style.transform = body.classList.contains('open') ? '' : 'rotate(-90deg)';
+}
+
+// ── SAVE ──
+function saveAll(){
+  localStorage.setItem('dentico_data', JSON.stringify(data));
+  const btn = document.getElementById('saveBtn');
+  btn.textContent = '✅ تم الحفظ!';
+  btn.classList.add('saved');
+  const toast = document.getElementById('toast');
+  toast.classList.add('show');
+  setTimeout(()=>{ btn.textContent='💾 حفظ التغييرات'; btn.classList.remove('saved'); toast.classList.remove('show'); }, 2500);
+}
+
+// ── EXPORT ──
+function exportPage(){
+  const link = document.createElement('a');
+  link.href = '../pages/botox-filler.html';
+  link.download = 'botox-filler.html';
+  link.click();
+}
+
+// ── DEVICE PREVIEW ──
+function setDevice(w, btn){
+  document.getElementById('previewFrame').style.width = w;
+  document.querySelectorAll('.device-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+// ── INIT ──
+renderAll();
+</script>
+</body>
+</html>
